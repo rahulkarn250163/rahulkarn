@@ -1,29 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>rahul karn</title>
-  <style>
-    /* Center the text both vertically & horizontally */
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      background-color: #fafafa;
-    }
-    h1 {
-      font-size: 3rem;
-      color: #333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul Karn — Software & AI Engineer</title>
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP (Animation Library) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for Background Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- jsPDF for CV Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles for a crisp, professional grayscale look */
+        :root {
+            --bg-dark: #0d0d0d;
+            --text-light: #e5e5e5;
+            --text-secondary: #a3a3a3;
+            --accent1: #fafafa; /* Crisp off-white */
+            --accent2: #cccccc;
+            --card-bg: rgba(38, 38, 38, 0.75);
+            --card-border: rgba(250, 250, 250, 0.15);
+            --glow: rgba(250, 250, 250, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* The 3D background canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        /* Enhanced Glassmorphism Card Effect */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            border: 1px solid var(--card-border);
+            border-radius: 1.5rem; /* 24px */
+            padding: 2.5rem; /* 40px */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            position: relative;
+        }
+
+        /* Section Header Styles */
+        .section-sub-heading {
+            font-size: 1.125rem; /* 18px */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent1);
+        }
+
+        .section-heading {
+            font-weight: 800;
+            color: var(--text-light);
+            font-size: clamp(2.5rem, 5vw, 3.5rem); /* Responsive font size */
+        }
+        
+        /* Timeline style for experience and education */
+        .timeline-list li {
+            position: relative;
+            padding-left: 2.5rem; /* 40px */
+            padding-bottom: 2rem; /* 32px */
+            border-left: 2px solid var(--card-border);
+        }
+        .timeline-list li:last-child {
+            border-left: none;
+            padding-bottom: 0;
+        }
+        .timeline-list li::before {
+            content: '';
+            position: absolute;
+            left: -10px; /* Adjust to center on the line */
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--accent1);
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 10px var(--glow);
+        }
+        
+        /* Styling for the navigation dots */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--text-secondary);
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-dot.active {
+            background-color: var(--accent1);
+            transform: scale(1.5);
+            box-shadow: 0 0 15px var(--glow);
+        }
+        
+        /* Button Styles */
+        .primary-btn {
+            background-color: var(--accent1);
+            color: #000000;
+        }
+        .primary-btn:hover {
+             background-color: #cccccc;
+        }
+        .secondary-btn {
+            border-color: var(--accent1);
+            color: var(--accent1);
+        }
+        .secondary-btn:hover {
+            background-color: var(--card-border);
+        }
+    </style>
 </head>
-<body>
-  <h1>rahul karn</h1>
+<body class="w-full h-full">
+    <canvas id="bg-canvas"></canvas>
+    
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+        <a href="#hero" class="nav-dot active" aria-label="Go to Hero section"></a>
+        <a href="#about" class="nav-dot" aria-label="Go to About section"></a>
+        <a href="#experience" class="nav-dot" aria-label="Go to Experience section"></a>
+        <a href="#education" class="nav-dot" aria-label="Go to Education section"></a>
+        <a href="#skills" class="nav-dot" aria-label="Go to Skills section"></a>
+        <a href="#projects" class="nav-dot" aria-label="Go to Projects section"></a>
+        <a href="#languages" class="nav-dot" aria-label="Go to Languages section"></a>
+        <a href="#contact" class="nav-dot" aria-label="Go to Contact section"></a>
+    </nav>
+
+    <main class="relative z-0">
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative w-full h-screen mx-auto flex flex-col justify-center items-center text-center">
+            <div class="px-6">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white">
+                    Hi, I'm <span class="text-[var(--accent1)]">Rahul Karn</span>
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto">
+                    A Software & AI Engineer crafting the next generation of intelligent, high-impact applications.
+                </p>
+            </div>
+            <div class="absolute bottom-10 w-full flex justify-center items-center">
+                <a href="#about" aria-label="Scroll to next section">
+                    <div class="w-[35px] h-[64px] rounded-3xl border-4 border-[var(--text-secondary)] flex justify-center items-start p-2">
+                        <div class="w-3 h-3 rounded-full bg-[var(--text-secondary)] animate-bounce"></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="section-container py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card">
+                    <p class="section-sub-heading">Introduction</p>
+                    <h2 class="section-heading">Overview.</h2>
+                </div>
+                <p class="animated-card mt-4 text-[var(--text-secondary)] text-lg leading-relaxed max-w-4xl">
+                    With over 7 years of experience architecting back-end services and rich client apps, I bridge the gap between robust software engineering and cutting-edge artificial intelligence. Currently pursuing both an MBA and an MSc in Data Science, I thrive on clean code, agile processes, and integrating intelligent features—from RAG chatbots to predictive analytics—into every project for a truly immersive user experience.
+                </p>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE SECTION -->
+        <section id="experience" class="section-container py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card">
+                    <p class="section-sub-heading">My Journey</p>
+                    <h2 class="section-heading">Work Experience.</h2>
+                </div>
+                <div class="mt-12 flex flex-col">
+                    <ul class="timeline-list">
+                         <li class="animated-card">
+                            <h3 class="text-2xl font-bold text-white">Software Development Officer</h3>
+                            <p class="text-lg font-semibold text-[var(--text-secondary)]" style="margin:0;">Nepal Life Insurance Company Ltd.</p>
+                            <span class="text-sm text-[var(--text-secondary)]">Nov 2018 – Present</span>
+                            <ul class="mt-4 list-disc list-inside space-y-2 text-[var(--text-secondary)]">
+                                <li>Architected and managed web applications using .NET Core, MVC, and Web API.</li>
+                                <li>Led optimization of database systems through advanced SQL and schema design.</li>
+                                <li>Prototyped AI models, including RAG pipelines, to enhance policy information systems.</li>
+                            </ul>
+                        </li>
+                        <li class="animated-card">
+                            <h3 class="text-2xl font-bold text-white">Associate Software Developer</h3>
+                            <p class="text-lg font-semibold text-[var(--text-secondary)]" style="margin:0;">Innovative Ghar Nepal</p>
+                            <span class="text-sm text-[var(--text-secondary)]">Oct 2017 – Nov 2018</span>
+                            <ul class="mt-4 list-disc list-inside space-y-2 text-[var(--text-secondary)]">
+                                <li>Developed ASP.NET MVC applications following best practices and design patterns.</li>
+                                <li>Built responsive, user-friendly interfaces with HTML, CSS, and jQuery.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- EDUCATION SECTION -->
+        <section id="education" class="section-container py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card">
+                    <p class="section-sub-heading">My Academic Path</p>
+                    <h2 class="section-heading">Education.</h2>
+                </div>
+                <div class="mt-12 flex flex-col">
+                    <ul class="timeline-list">
+                         <li class="animated-card">
+                            <h3 class="text-2xl font-bold text-white">MSc in Data Science & Computational Intelligence</h3>
+                            <p class="text-lg font-semibold text-[var(--text-secondary)]" style="margin:0;">Softwarica College / Coventry University</p>
+                            <span class="text-sm text-[var(--text-secondary)]">Mar 2025 – Present</span>
+                        </li>
+                        <li class="animated-card">
+                            <h3 class="text-2xl font-bold text-white">Master of Business Administration (MBA)</h3>
+                            <p class="text-lg font-semibold text-[var(--text-secondary)]" style="margin:0;">Indira Gandhi National Open University (IGNOU)</p>
+                            <span class="text-sm text-[var(--text-secondary)]">Jul 2024 – Present</span>
+                        </li>
+                        <li class="animated-card">
+                            <h3 class="text-2xl font-bold text-white">B.E. in Computer Engineering</h3>
+                            <p class="text-lg font-semibold text-[var(--text-secondary)]" style="margin:0;">Tribhuvan University</p>
+                            <span class="text-sm text-[var(--text-secondary)]">2013 – 2017</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="section-container py-16 md:py-24">
+             <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card">
+                    <p class="section-sub-heading">My Technical Arsenal</p>
+                    <h2 class="section-heading">Core Skills.</h2>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="animated-card glass-card">
+                        <h3 class="text-white text-xl font-bold text-center">Programming & Frameworks</h3>
+                        <ul class="mt-4 text-center text-[var(--text-secondary)] space-y-2">
+                            <li>C# & .NET (Core, MAUI)</li>
+                            <li>Python & R</li>
+                            <li>JavaScript (ES6+)</li>
+                            <li>SQL (T-SQL, PL/SQL)</li>
+                        </ul>
+                    </div>
+                    <div class="animated-card glass-card">
+                        <h3 class="text-white text-xl font-bold text-center">AI & Data Science</h3>
+                        <ul class="mt-4 text-center text-[var(--text-secondary)] space-y-2">
+                            <li>Retrieval-Augmented Generation</li>
+                            <li>Deep Learning (TensorFlow, PyTorch)</li>
+                            <li>AI Agent Creation</li>
+                            <li>Feature Extraction & EDA</li>
+                        </ul>
+                    </div>
+                    <div class="animated-card glass-card">
+                        <h3 class="text-white text-xl font-bold text-center">Databases, DevOps & Cloud</h3>
+                        <ul class="mt-4 text-center text-[var(--text-secondary)] space-y-2">
+                            <li>SQL Server & Oracle</li>
+                            <li>Power BI & ETL</li>
+                            <li>Azure, Docker & Kubernetes</li>
+                            <li>CI/CD Best Practices</li>
+                        </ul>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- PROJECTS SECTION -->
+        <section id="projects" class="section-container py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card">
+                    <p class="section-sub-heading">My Work</p>
+                    <h2 class="section-heading">Key Projects.</h2>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="animated-card glass-card">
+                        <h3 class="text-white font-bold text-2xl">Life Insurance Core Project</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">An end-to-end system with user and underwriting modules, featuring Fonepay QR integration.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">.NET 5</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">SQL Server</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">Kendo UI</span>
+                        </div>
+                    </div>
+                    <div class="animated-card glass-card">
+                        <h3 class="text-white font-bold text-2xl">Client Portal for Insurance Holders & Agents</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">A secure, scalable portal for clients and agents to manage policies and access information.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">.NET 8</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">Web API</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">SQL Server</span>
+                        </div>
+                    </div>
+                    <div class="animated-card glass-card">
+                        <h3 class="text-white font-bold text-2xl">CMS & APIs for Mobile App</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">A high-performance .NET 6 backend designed with the Repository Pattern and Dapper for our mobile application.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">.NET 6</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">Dapper</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">API Design</span>
+                        </div>
+                    </div>
+                     <div class="animated-card glass-card">
+                        <h3 class="text-white font-bold text-2xl">RAG for Insurance Q&A</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">Tuned a Retrieval-Augmented Generation pipeline to provide instant, accurate answers to policy questions.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">AI/ML</span>
+                            <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">Python</span>
+                             <span class="text-xs font-medium px-2 py-1 rounded bg-gray-700 text-gray-300">NLP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LANGUAGES SECTION -->
+        <section id="languages" class="section-container py-16 md:py-24">
+             <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card">
+                    <p class="section-sub-heading">Communication</p>
+                    <h2 class="section-heading">Languages.</h2>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="animated-card glass-card text-center">
+                        <h3 class="text-white text-xl font-bold">Nepali</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">Native</p>
+                    </div>
+                    <div class="animated-card glass-card text-center">
+                        <h3 class="text-white text-xl font-bold">English</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">Professional Working Proficiency</p>
+                    </div>
+                    <div class="animated-card glass-card text-center">
+                        <h3 class="text-white text-xl font-bold">Hindi</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">Conversational</p>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="section-container py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="animated-card glass-card overflow-hidden">
+                    <div class="p-8 text-center">
+                        <p class="section-sub-heading">Ready to Collaborate?</p>
+                        <h2 class="section-heading">Let's Build Something Amazing.</h2>
+                        <div class="mt-8 flex flex-wrap justify-center gap-6">
+                             <a href="mailto:rahulkarn2118@gmail.com" class="primary-btn py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-md transition-all duration-300 transform hover:scale-105">
+                               Say Hello
+                            </a>
+                            <a href="https://www.linkedin.com/in/rahulkarn52" target="_blank" class="secondary-btn border py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-md transition-all duration-300 transform hover:scale-105">
+                               View LinkedIn
+                            </a>
+                            <button id="download-cv" class="secondary-btn border py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-md transition-all duration-300 transform hover:scale-105">
+                               Download Resume
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- GSAP SCROLL ANIMATIONS ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const animatedCards = document.querySelectorAll('.animated-card');
+        animatedCards.forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: 'power3.out',
+            });
+        });
+        
+        // --- NAVIGATION DOTS LOGIC ---
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navDots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.getAttribute('href').substring(1) === entry.target.id) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => observer.observe(section));
+        
+        navDots.forEach(dot => {
+            dot.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // --- SUBTLE PARTICLE BACKGROUND ---
+        function initParticleBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            const count = 5000;
+            const positions = new Float32Array(count * 3);
+            for(let i = 0; i < count * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 20;
+            }
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.015,
+                color: '#a3a3a3', // Using secondary text color for particles
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            let mouseX = 0;
+            let mouseY = 0;
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            const clock = new THREE.Clock();
+            function animate() {
+                const elapsedTime = clock.getElapsedTime();
+                particles.rotation.y = elapsedTime * 0.05;
+                particles.rotation.x = elapsedTime * 0.02;
+
+                // Parallax effect
+                camera.position.x += ( (mouseX / window.innerWidth) * 2 - 1 - camera.position.x ) * 0.02;
+                camera.position.y += ( -( (mouseY / window.innerHeight) * 2 - 1 ) - camera.position.y ) * 0.02;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate();
+        }
+
+        // --- CV DOWNLOADER ---
+        function setupCVDownloader() {
+            const downloadButton = document.getElementById('download-cv');
+            if (!downloadButton) return;
+
+            downloadButton.addEventListener('click', () => {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'pt', 'a4');
+                let y = 40;
+                const margin = 40;
+                const contentWidth = doc.internal.pageSize.width - margin * 2;
+
+                // Helper to add text and manage Y position for one-page layout
+                const addText = (text, size, weight, options = {}) => {
+                    const { indent = 0, spacing = 0, x = margin } = options;
+                    doc.setFontSize(size).setFont(undefined, weight);
+                    const splitText = doc.splitTextToSize(text, contentWidth - x + margin - (options.indent || 0));
+                    doc.text(splitText, x, y);
+                    y += (doc.getTextDimensions(splitText).h) + spacing;
+                };
+
+                const addHeading = (text) => {
+                    y += 8;
+                    doc.setFontSize(12).setFont(undefined, 'bold');
+                    doc.text(text, margin, y);
+                    y += 4;
+                    doc.setDrawColor(163, 163, 163);
+                    doc.setLineWidth(0.5);
+                    doc.line(margin, y, margin + contentWidth, y);
+                    y += 12;
+                };
+
+                // --- Build PDF Content ---
+                // 1. Header
+                doc.setFontSize(24).setFont(undefined, 'bold').text('Rahul Karn', margin, y); y += 20;
+                doc.setFontSize(11).setFont(undefined, 'normal').text('Software & AI Engineer', margin, y); y += 12;
+                doc.setFontSize(9).setFont(undefined, 'normal').text('rahulkarn2118@gmail.com  •  +977 9863036368  •  linkedin.com/in/rahulkarn52', margin, y); y += 12;
+                
+                // 2. Professional Summary
+                addHeading('Professional Summary');
+                const summaryText = "With over 7 years of experience architecting back-end services and rich client apps, I bridge the gap between robust software engineering and cutting-edge artificial intelligence. Currently pursuing both an MBA and an MSc in Data Science, I thrive on clean code, agile processes, and integrating intelligent features—from RAG chatbots to predictive analytics—into every project for a truly immersive user experience.";
+                addText(summaryText, 9, 'normal');
+
+                // 3. Work Experience
+                addHeading('Work Experience');
+                document.querySelectorAll('#experience .timeline-list > li').forEach(item => {
+                    addText(item.querySelector('h3').innerText, 10, 'bold', { spacing: 2 });
+                    addText(item.querySelector('p').innerText + ' | ' + item.querySelector('span').innerText, 9, 'italic', { spacing: 4 });
+                    item.querySelectorAll('ul li').forEach(point => {
+                        addText(`•  ${point.innerText}`, 9, 'normal', { indent: 10, spacing: 1 });
+                    });
+                    y += 8;
+                });
+
+                // 4. Education
+                addHeading('Education');
+                document.querySelectorAll('#education .timeline-list > li').forEach(item => {
+                    addText(item.querySelector('h3').innerText, 10, 'bold', { spacing: 2 });
+                    addText(item.querySelector('p').innerText + ' | ' + item.querySelector('span').innerText, 9, 'italic');
+                    y += 8;
+                });
+
+                // 5. Core Skills
+                addHeading('Core Skills');
+                let skillsY = y;
+                const skillsX = [margin, margin + contentWidth / 3, margin + (contentWidth / 3) * 2];
+                let maxY = y;
+
+                document.querySelectorAll('#skills .glass-card').forEach((card, index) => {
+                    let currentY = skillsY;
+                    let currentX = skillsX[index];
+                    
+                    doc.setFontSize(10).setFont(undefined, 'bold');
+                    doc.text(card.querySelector('h3').innerText, currentX, currentY);
+                    currentY += 12;
+
+                    card.querySelectorAll('ul li').forEach(skill => {
+                        doc.setFontSize(9).setFont(undefined, 'normal');
+                        doc.text(`• ${skill.innerText}`, currentX, currentY);
+                        currentY += 11;
+                    });
+                    maxY = Math.max(maxY, currentY);
+                });
+                y = maxY;
+                
+                // 6. Key Projects
+                addHeading('Key Projects');
+                document.querySelectorAll('#projects .glass-card').forEach(card => {
+                    addText(card.querySelector('h3').innerText, 10, 'bold', { spacing: 2 });
+                    addText(card.querySelector('p').innerText, 9, 'normal', { indent: 10, spacing: 2 });
+                    const techs = Array.from(card.querySelectorAll('span')).map(s => s.innerText).join(', ');
+                    addText(`Technologies: ${techs}`, 8, 'italic', { indent: 10 });
+                    y += 8;
+                });
+
+                // 7. Languages
+                addHeading('Languages');
+                const langs = Array.from(document.querySelectorAll('#languages .glass-card')).map(card => `${card.querySelector('h3').innerText} (${card.querySelector('p').innerText})`).join('  •  ');
+                addText(langs, 10, 'normal');
+                
+                doc.save('Rahul_Karn_Resume.pdf');
+            });
+        }
+
+        // Initialize all scripts
+        initParticleBackground();
+        setupCVDownloader();
+    });
+    </script>
 </body>
 </html>
