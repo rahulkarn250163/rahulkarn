@@ -178,7 +178,7 @@
             <div class="px-6 text-center">
                 <div class="anim-wrapper">
                     <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white">
-                       Hi, I'm <span class="text-[var(--accent1)]">Rahul Karn</span>
+                        Hi, I'm <span class="text-[var(--accent1)]">Rahul Karn</span>
                     </h1>
                 </div>
                 <div class="anim-wrapper">
@@ -386,14 +386,14 @@
                         <h2 class="section-heading">Let's Build Something Amazing.</h2>
                         <div class="mt-8 flex flex-wrap justify-center gap-6">
                              <a href="mailto:rahulkarn2118@gmail.com" class="primary-btn py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-md transition-all duration-300 transform hover:scale-105">
-                                Say Hello
-                            </a>
+                                 Say Hello
+                             </a>
                              <a href="https://www.linkedin.com/in/rahulkarn52" target="_blank" class="secondary-btn border py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-md transition-all duration-300 transform hover:scale-105">
-                                View LinkedIn
-                            </a>
+                                 View LinkedIn
+                             </a>
                             <button id="download-cv" class="secondary-btn border py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-md transition-all duration-300 transform hover:scale-105">
-                                Download Resume
-                            </button>
+                                 Download Resume
+                             </button>
                         </div>
                     </div>
                 </div>
@@ -410,7 +410,7 @@
                 this.initAnimations();
                 this.initSnapScrolling();
                 this.initNavigation();
-                this.initParticleBackground();
+                this.init3DBackground();
                 this.initCVDownloader();
             },
 
@@ -537,50 +537,84 @@
                 });
             },
 
-            initParticleBackground() {
+            // === UPDATED 3D BACKGROUND CODE START ===
+            init3DBackground() {
                 const canvas = document.getElementById('bg-canvas');
                 if (!canvas) return;
+
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                camera.position.z = 5;
-                const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                camera.position.z = 5; // Start camera a bit back
+
+                const renderer = new THREE.WebGLRenderer({
+                    canvas,
+                    antialias: true,
+                    alpha: true
+                });
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                // A dynamic particle system for a "drifting through space" effect
                 const particlesGeometry = new THREE.BufferGeometry();
-                const count = 7000;
+                const count = 5000;
                 const positions = new Float32Array(count * 3);
-                for(let i = 0; i < count * 3; i++) {
-                    positions[i] = (Math.random() - 0.5) * 25;
+                const velocities = new Float32Array(count);
+
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    positions[i3] = (Math.random() - 0.5) * 30; // x
+                    positions[i3 + 1] = (Math.random() - 0.5) * 30; // y
+                    positions[i3 + 2] = (Math.random() - 0.5) * 50; // z
+                    
+                    velocities[i] = 0.01 + Math.random() * 0.04; // Random speed for each particle
                 }
+
                 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
                 const particlesMaterial = new THREE.PointsMaterial({
-                    size: 0.02,
-                    color: '#a0a0a0',
+                    size: 0.025,
+                    color: 0xffffff,
                     transparent: true,
                     blending: THREE.AdditiveBlending,
-                    depthWrite: false
+                    depthWrite: false,
+                    opacity: 0.8
                 });
                 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
                 scene.add(particles);
-                let mouseX = 0, mouseY = 0;
+
+                let mouseX = 0;
+                let mouseY = 0;
                 document.addEventListener('mousemove', (event) => {
-                    mouseX = event.clientX;
-                    mouseY = event.clientY;
+                    mouseX = (event.clientX / window.innerWidth) - 0.5;
+                    mouseY = (event.clientY / window.innerHeight) - 0.5;
                 });
-                const clock = new THREE.Clock();
+
                 const tick = () => {
-                    const elapsedTime = clock.getElapsedTime();
-                    particles.rotation.y = elapsedTime * 0.03;
-                    particles.rotation.x = elapsedTime * 0.01;
-                    const parallaxX = (mouseX / window.innerWidth) * 2 - 1;
-                    const parallaxY = -(mouseY / window.innerHeight) * 2 + 1;
-                    camera.position.x += (parallaxX - camera.position.x) * 0.02;
-                    camera.position.y += (parallaxY - camera.position.y) * 0.02;
-                    camera.lookAt(scene.position);
+                    // Animate particles
+                    const positions = particles.geometry.attributes.position.array;
+                    for (let i = 0; i < count; i++) {
+                        const i3 = i * 3;
+                        positions[i3 + 2] += velocities[i]; // Move particle on Z axis by its velocity
+
+                        // If particle is past the camera, reset its position to the back
+                        if (positions[i3 + 2] > camera.position.z) {
+                            positions[i3 + 2] = -25; // Reset z to the back
+                            positions[i3] = (Math.random() - 0.5) * 30; // New random X
+                            positions[i3 + 1] = (Math.random() - 0.5) * 30; // New random Y
+                        }
+                    }
+                    particles.geometry.attributes.position.needsUpdate = true;
+                    
+                    // Parallax effect
+                    const targetX = mouseX * 0.5;
+                    const targetY = -mouseY * 0.5;
+                    camera.rotation.y += (targetX - camera.rotation.y) * 0.05;
+                    camera.rotation.x += (targetY - camera.rotation.x) * 0.05;
+
                     renderer.render(scene, camera);
                     requestAnimationFrame(tick);
                 }
                 tick();
+
                 window.addEventListener('resize', () => {
                     camera.aspect = window.innerWidth / window.innerHeight;
                     camera.updateProjectionMatrix();
@@ -588,6 +622,7 @@
                     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 });
             },
+            // === UPDATED 3D BACKGROUND CODE END ===
 
             initCVDownloader() {
                 const downloadButton = document.getElementById('download-cv');
