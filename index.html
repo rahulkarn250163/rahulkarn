@@ -9,1113 +9,26 @@
         content="Lead .NET Core Full Stack Developer with 8+ years delivering enterprise digital transformation in insurance and financial services.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #0066cc;
-            --secondary-color: #0052a3;
-            --accent-color: #00d4ff;
-            --text-dark: #1a1a1a;
-            --text-light: #666;
-            --bg-light: #f8f9fa;
-            --white: #ffffff;
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.15);
-            --radius-card: 18px;
-            --radius-pill: 999px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.7;
-            color: var(--text-dark);
-            background: var(--white);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* ============================================
-           NAVIGATION - DESKTOP
-           ============================================ */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .btn-resume {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
-            white-space: nowrap;
-        }
-
-        .btn-resume:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 102, 204, 0.4);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-color);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        /* ============================================
-           HERO SECTION
-           ============================================ */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
-            padding-top: 80px;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 1s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            letter-spacing: -2px;
-        }
-
-        .hero-title-highlight {
-            background: linear-gradient(45deg, #00d4ff, #00ffaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.8;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: var(--white);
-            color: var(--primary-color);
-            padding: 1rem 2.5rem;
-            border-radius: var(--radius-pill);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            border: 2px solid var(--white);
-            border-radius: var(--radius-pill);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--white);
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            margin-top: 4rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--white);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-        }
-
-        /* ============================================
-           CONTAINER & SECTIONS
-           ============================================ */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        section {
-            padding: 7rem 0;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-subtitle {
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        .section-description {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* ============================================
-           ABOUT SECTION
-           ============================================ */
-        #about {
-            background: var(--bg-light);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.9;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .about-stat-item {
-            text-align: center;
-            padding: 2rem;
-            background: var(--white);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .about-stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .about-stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .about-stat-label {
-            font-size: 1rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        /* ============================================
-           SKILLS SECTION - 2x2 GRID (NO EMPTY SPACE)
-           ============================================ */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .skill-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .skill-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .skill-card h3 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .skill-card p {
-            color: var(--text-light);
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        /* ============================================
-           EXPERIENCE SECTION
-           ============================================ */
-        #experience {
-            background: var(--bg-light);
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding-left: 2rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -3.6rem;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            border: 4px solid var(--white);
-            box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.2);
-        }
-
-        .experience-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .experience-card:hover {
-            transform: translateX(10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .experience-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-company {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .experience-date {
-            color: var(--text-light);
-            font-weight: 500;
-            font-size: 0.95rem;
-            white-space: nowrap;
-        }
-
-        .experience-card ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .experience-card li {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            color: var(--text-light);
-            line-height: 1.7;
-        }
-
-        .experience-card li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        /* ============================================
-           EDUCATION SECTION
-           ============================================ */
-        .education-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .education-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border-top: 4px solid var(--primary-color);
-        }
-
-        .education-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .education-degree {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-
-        .education-institution {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .education-date {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* ============================================
-           PUBLICATIONS SECTION
-           ============================================ */
-        #publications {
-            background: var(--bg-light);
-        }
-
-        .publication-card {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow);
-            max-width: 800px;
-            margin: 0 auto;
-            transition: all 0.3s ease;
-        }
-
-        .publication-card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-
-        .publication-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .publication-details {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .publication-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .publication-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        /* ============================================
-           CONTACT SECTION
-           ============================================ */
-        #contact {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--white);
-            text-align: center;
-        }
-
-        #contact .section-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        #contact .section-title {
-            color: var(--white);
-        }
-
-        #contact .section-description {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .contact-methods {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .contact-item a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item a:hover {
-            text-decoration: underline;
-        }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
-        footer {
-            background: var(--text-dark);
-            color: var(--white);
-            text-align: center;
-            padding: 3rem 2rem;
-        }
-
-        footer p {
-            margin-bottom: 1rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        /* Bottom nav - hidden on desktop */
-        .bottom-nav {
-            display: none;
-        }
-
-        /* ============================================
-           TABLET RESPONSIVENESS (768px - 1024px)
-           ============================================ */
-        @media (max-width: 1024px) {
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-        }
-
-        /* ============================================
-           MOBILE RESPONSIVENESS (< 768px)
-           ============================================ */
-        @media (max-width: 768px) {
-
-            /* Mobile-optimized body */
-            body {
-                background: #f0f4f8;
-            }
-
-            section {
-                padding: 3.5rem 0;
-            }
-
-            .container {
-                padding: 0 1.25rem;
-            }
-
-            /* Mobile Navigation */
-            nav {
-                padding: 0;
-            }
-
-            .nav-container {
-                padding: 0.9rem 1.25rem;
-            }
-
-            .logo {
-                font-size: 1.3rem;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 80%;
-                max-width: 320px;
-                background: #ffffff;
-                flex-direction: column;
-                padding: 5rem 2rem 2rem;
-                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
-                transition: right 0.3s ease;
-                align-items: flex-start;
-                gap: 1.8rem;
-                overflow-y: auto;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links li {
-                width: 100%;
-            }
-
-            .nav-links li a {
-                font-size: 1.1rem;
-                display: block;
-                padding: 0.5rem 0;
-            }
-
-            .btn-resume {
-                width: 100%;
-                text-align: center;
-                padding: 0.9rem 1.5rem;
-            }
-
-            .hamburger {
-                display: flex;
-                z-index: 1001;
-            }
-
-            .hamburger.active span:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
-
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active span:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
-            }
-
-            /* Mobile Hero */
-            .hero {
-                min-height: 100svh;
-                padding: 5rem 0 6rem;
-            }
-
-            .hero-content {
-                padding: 1.25rem;
-            }
-
-            .hero-subtitle {
-                font-size: 0.8rem;
-                letter-spacing: 1.5px;
-                margin-bottom: 0.8rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                line-height: 1.3;
-                margin-bottom: 1.2rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-                margin-bottom: 2rem;
-                line-height: 1.6;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 0 1rem;
-            }
-
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                padding: 1rem 2rem;
-                font-size: 1rem;
-            }
-
-            .hero-stats {
-                gap: 2rem;
-                margin-top: 3rem;
-            }
-
-            .stat-number {
-                font-size: 2.2rem;
-            }
-
-            .stat-label {
-                font-size: 0.9rem;
-            }
-
-            /* Mobile Sections */
-            .section-header {
-                margin-bottom: 2.5rem;
-            }
-
-            .section-subtitle {
-                font-size: 0.85rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .section-description {
-                font-size: 1rem;
-            }
-
-            /* Mobile About */
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .about-text p {
-                font-size: 1rem;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-
-            .about-stat-item {
-                padding: 1.5rem 1rem;
-            }
-
-            .about-stat-number {
-                font-size: 2rem;
-            }
-
-            .about-stat-label {
-                font-size: 0.85rem;
-            }
-
-            /* Mobile Skills - Single Column */
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .skill-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .skill-card h3 {
-                font-size: 1.2rem;
-            }
-
-            .skill-card p {
-                font-size: 0.95rem;
-            }
-
-            /* Mobile Experience */
-            .timeline {
-                padding-left: 1.25rem;
-            }
-
-            .timeline::before {
-                width: 2px;
-            }
-
-            .timeline-item {
-                padding-left: 1.25rem;
-            }
-
-            .timeline-item::before {
-                width: 16px;
-                height: 16px;
-                left: -2.85rem;
-            }
-
-            .experience-card {
-                padding: 1.8rem 1.5rem;
-            }
-
-            .experience-header {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .experience-title {
-                font-size: 1.3rem;
-            }
-
-            .experience-company {
-                font-size: 1rem;
-            }
-
-            .experience-date {
-                font-size: 0.9rem;
-            }
-
-            .experience-card li {
-                font-size: 0.95rem;
-                margin-bottom: 0.8rem;
-            }
-
-            /* Mobile Education */
-            .education-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .education-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .education-degree {
-                font-size: 1.15rem;
-            }
-
-            .education-institution {
-                font-size: 1rem;
-            }
-
-            /* Mobile Publications */
-            .publication-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .publication-title {
-                font-size: 1.25rem;
-            }
-
-            .publication-details {
-                font-size: 1rem;
-            }
-
-            /* Mobile Contact */
-            .contact-methods {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .contact-icon {
-                width: 55px;
-                height: 55px;
-            }
-
-            .contact-item a {
-                font-size: 1rem;
-            }
-
-            /* Mobile Footer */
-            footer {
-                padding: 2.5rem 1.5rem 6rem;
-            }
-
-            /* App-style Bottom Navigation */
-            .bottom-nav {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 65px;
-                background: rgba(15, 23, 42, 0.97);
-                backdrop-filter: blur(20px);
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                padding: 0 0.5rem;
-                z-index: 1100;
-                border-top: 1px solid rgba(148, 163, 184, 0.2);
-                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-            }
-
-            .bottom-nav button {
-                flex: 1;
-                background: transparent;
-                border: none;
-                color: #cbd5e1;
-                font-size: 0.7rem;
-                font-weight: 500;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 4px;
-                border-radius: 12px;
-                padding: 0.5rem 0.25rem;
-                transition: all 0.2s ease;
-                cursor: pointer;
-            }
-
-            .bottom-nav button span {
-                font-size: 1.3rem;
-                transition: transform 0.2s ease;
-            }
-
-            .bottom-nav button.active {
-                background: rgba(59, 130, 246, 0.15);
-                color: #60a5fa;
-            }
-
-            .bottom-nav button.active span {
-                transform: scale(1.1);
-            }
-
-            .bottom-nav button:active {
-                transform: scale(0.95);
-            }
-
-            /* Round all cards on mobile */
-            .skill-card,
-            .experience-card,
-            .education-card,
-            .publication-card,
-            .about-stat-item {
-                border-radius: 16px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">RK</a>
+            <a href="#" class="logo">
+                <span class="logo-text">RK</span>
+                <span class="logo-dot"></span>
+            </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -1123,7 +36,13 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="Resume_Rahul_Karn.pdf" download class="btn-resume">Resume</a></li>
+                <li><a href="#" onclick="downloadResume(); return false;" class="btn-resume"><span>Resume</span><svg
+                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg></a></li>
             </ul>
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -1136,27 +55,53 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <p class="hero-subtitle">Welcome to my portfolio</p>
-            <h1>Hi, I'm <span class="hero-title-highlight">Rahul Karn</span></h1>
-            <p class="hero-description">Lead .NET Developer | Digital Transformation Leader | Emerging AI Engineer</p>
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Available for opportunities
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Hi, I'm</span>
+                <span class="title-name">Rahul Karn</span>
+            </h1>
+            <p class="hero-tagline">Lead .NET Developer <span class="separator">•</span> Digital Transformation Leader
+                <span class="separator">•</span> Emerging AI Engineer
+            </p>
+            <p class="hero-description">Building enterprise-grade solutions that drive digital innovation in insurance
+                and financial services.</p>
             <div class="hero-cta">
-                <a href="#contact" class="btn-primary">Get In Touch</a>
-                <a href="#experience" class="btn-secondary">View My Work</a>
+                <a href="#contact" class="btn-primary">
+                    <span>Get In Touch</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#experience" class="btn-secondary">
+                    <span>View My Work</span>
+                </a>
             </div>
             <div class="hero-stats">
                 <div class="stat-item">
-                    <span class="stat-number">8+</span>
+                    <span class="stat-number" data-target="8">0</span>
+                    <span class="stat-plus">+</span>
                     <span class="stat-label">Years Experience</span>
                 </div>
+                <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-number">50K+</span>
+                    <span class="stat-number" data-target="50">0</span>
+                    <span class="stat-plus">K+</span>
                     <span class="stat-label">Users Served</span>
                 </div>
+                <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-number">50%</span>
+                    <span class="stat-number" data-target="50">0</span>
+                    <span class="stat-plus">%</span>
                     <span class="stat-label">Performance Boost</span>
                 </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
@@ -1164,7 +109,7 @@
     <section id="about">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Get to know me</p>
+                <span class="section-tag">Get to know me</span>
                 <h2 class="section-title">About Me</h2>
             </div>
             <div class="about-content">
@@ -1205,31 +150,68 @@
     <section id="skills">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">My Expertise</p>
+                <span class="section-tag">My Expertise</span>
                 <h2 class="section-title">Technical Skills</h2>
                 <p class="section-description">Comprehensive expertise across modern technology stack with focus on
                     enterprise solutions</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <div class="skill-icon">💻</div>
+                    <div class="skill-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                    </div>
                     <h3>Languages & Frameworks</h3>
                     <p>ASP.NET Core, C#, .NET MVC, Python, Entity Framework, Razor, Laravel</p>
+                    <div class="skill-tags">
+                        <span>.NET</span><span>C#</span><span>Python</span>
+                    </div>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-icon">🗄️</div>
+                    <div class="skill-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <ellipse cx="12" cy="5" rx="9" ry="3" />
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                        </svg>
+                    </div>
                     <h3>Databases</h3>
                     <p>Oracle, SQL Server, T-SQL, Database Optimization, Schema Design</p>
+                    <div class="skill-tags">
+                        <span>Oracle</span><span>SQL Server</span><span>T-SQL</span>
+                    </div>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-icon">⚙️</div>
+                    <div class="skill-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                    </div>
                     <h3>Technologies</h3>
                     <p>REST APIs, Git, jQuery, Bootstrap, HTML5, CSS3, Chart.js</p>
+                    <div class="skill-tags">
+                        <span>REST API</span><span>Git</span><span>Bootstrap</span>
+                    </div>
                 </div>
                 <div class="skill-card">
-                    <div class="skill-icon">🚀</div>
+                    <div class="skill-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                        </svg>
+                    </div>
                     <h3>Specializations</h3>
                     <p>Digital Transformation, Insurance Core Systems, API-First Architecture, Agile/Scrum</p>
+                    <div class="skill-tags">
+                        <span>Digital Transformation</span><span>Agile</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1239,16 +221,21 @@
     <section id="experience">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">My Journey</p>
+                <span class="section-tag">My Journey</span>
                 <h2 class="section-title">Professional Experience</h2>
             </div>
             <div class="timeline">
                 <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
+                    </div>
                     <div class="experience-card">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Officer</h3>
-                                <p class="experience-company">Nepal Life Insurance Co. Ltd. | Kathmandu, Nepal</p>
+                                <p class="experience-company">Nepal Life Insurance Co. Ltd. <span class="location">•
+                                        Kathmandu, Nepal</span></p>
                             </div>
                             <span class="experience-date">January 2023 – Present</span>
                         </div>
@@ -1270,11 +257,16 @@
                 </div>
 
                 <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                        <div class="marker-line"></div>
+                    </div>
                     <div class="experience-card">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Junior Officer</h3>
-                                <p class="experience-company">Nepal Life Insurance Co. Ltd. | Kathmandu, Nepal</p>
+                                <p class="experience-company">Nepal Life Insurance Co. Ltd. <span class="location">•
+                                        Kathmandu, Nepal</span></p>
                             </div>
                             <span class="experience-date">November 2018 – December 2022</span>
                         </div>
@@ -1293,11 +285,15 @@
                 </div>
 
                 <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <div class="marker-dot"></div>
+                    </div>
                     <div class="experience-card">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Software Engineer</h3>
-                                <p class="experience-company">Innovative Ghar Nepal | Kathmandu, Nepal</p>
+                                <p class="experience-company">Innovative Ghar Nepal <span class="location">• Kathmandu,
+                                        Nepal</span></p>
                             </div>
                             <span class="experience-date">October 2017 – November 2018</span>
                         </div>
@@ -1319,24 +315,56 @@
     <section id="education">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Academic Background</p>
+                <span class="section-tag">Academic Background</span>
                 <h2 class="section-title">Education</h2>
             </div>
             <div class="education-grid">
                 <div class="education-card">
-                    <h3 class="education-degree">Master of Science in Data Science and Computational Intelligence</h3>
-                    <p class="education-institution">Coventry University</p>
-                    <p class="education-date">March 2025 – February 2027</p>
+                    <div class="education-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div class="education-content">
+                        <span class="education-status">In Progress</span>
+                        <h3 class="education-degree">Master of Science in Data Science and Computational Intelligence
+                        </h3>
+                        <p class="education-institution">Coventry University</p>
+                        <p class="education-date">March 2025 – February 2027</p>
+                    </div>
                 </div>
                 <div class="education-card">
-                    <h3 class="education-degree">Master of Business Administration (MBA) – Accounting and Finance</h3>
-                    <p class="education-institution">Indira Gandhi National Open University</p>
-                    <p class="education-date">July 2024 – July 2026</p>
+                    <div class="education-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div class="education-content">
+                        <span class="education-status">In Progress</span>
+                        <h3 class="education-degree">Master of Business Administration (MBA) – Accounting and Finance
+                        </h3>
+                        <p class="education-institution">Indira Gandhi National Open University</p>
+                        <p class="education-date">July 2024 – July 2026</p>
+                    </div>
                 </div>
                 <div class="education-card">
-                    <h3 class="education-degree">Bachelor of Engineering (BE) – Computer Science</h3>
-                    <p class="education-institution">Advanced College of Engineering and Management</p>
-                    <p class="education-date">October 2013 – December 2017</p>
+                    <div class="education-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div class="education-content">
+                        <span class="education-status completed">Completed</span>
+                        <h3 class="education-degree">Bachelor of Engineering (BE) – Computer Science</h3>
+                        <p class="education-institution">Advanced College of Engineering and Management</p>
+                        <p class="education-date">October 2013 – December 2017</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1346,14 +374,21 @@
     <section id="publications">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Research Work</p>
+                <span class="section-tag">Research Work</span>
                 <h2 class="section-title">Publications</h2>
             </div>
             <div class="publication-card">
+                <div class="publication-badge">IEEE Xplore</div>
                 <h3 class="publication-title">"Attendance and Security Assurance using Image Processing"</h3>
-                <p class="publication-details">IEEE Xplore, 2018 (ICCMC 2018)</p>
-                <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" class="publication-link">View
-                    Publication →</a>
+                <p class="publication-details">Published in IEEE ICCMC 2018</p>
+                <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" class="publication-link">
+                    <span>View Publication</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
@@ -1362,24 +397,46 @@
     <section id="contact">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Let's Connect</p>
+                <span class="section-tag">Let's Connect</span>
                 <h2 class="section-title">Get In Touch</h2>
                 <p class="section-description">I'm always open to discussing new opportunities, collaborations, or just
                     having a conversation about technology and innovation.</p>
             </div>
             <div class="contact-methods">
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <a href="mailto:rahulkarn2118@gmail.com">rahulkarn2118@gmail.com</a>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📱</div>
-                    <a href="tel:+9779863036368">+977 9863036368</a>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">💼</div>
-                    <a href="https://linkedin.com/in/rahulkarn52" target="_blank">LinkedIn Profile</a>
-                </div>
+                <a href="mailto:rahulkarn2118@gmail.com" class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">rahulkarn2118@gmail.com</span>
+                </a>
+                <a href="tel:+9779863036368" class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">Phone</span>
+                    <span class="contact-value">+977 9863036368</span>
+                </a>
+                <a href="https://linkedin.com/in/rahulkarn52" target="_blank" class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">LinkedIn</span>
+                    <span class="contact-value">linkedin.com/in/rahulkarn52</span>
+                </a>
             </div>
         </div>
     </section>
@@ -1387,12 +444,36 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Rahul Karn. All rights reserved.</p>
-            <p>Kalanki, Kathmandu, Nepal</p>
-            <div class="social-links">
-                <a href="https://linkedin.com/in/rahulkarn52" target="_blank" title="LinkedIn">💼</a>
-                <a href="https://github.com/rahulkarn" target="_blank" title="GitHub">💻</a>
-                <a href="mailto:rahulkarn2118@gmail.com" title="Email">📧</a>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">RK</span>
+                    <p>© 2025 Rahul Karn. All rights reserved.</p>
+                    <p class="footer-location">Kalanki, Kathmandu, Nepal</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/rahulkarn52" target="_blank" title="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/rahulkarn" target="_blank" title="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                    </a>
+                    <a href="mailto:rahulkarn2118@gmail.com" title="Email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
@@ -1400,108 +481,36 @@
     <!-- Mobile Bottom Navigation -->
     <div class="bottom-nav">
         <button data-target="#about" class="active">
-            <span>🏠</span>
-            About
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span>About</span>
         </button>
         <button data-target="#skills">
-            <span>🛠️</span>
-            Skills
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path
+                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+            <span>Skills</span>
         </button>
         <button data-target="#experience">
-            <span>💼</span>
-            Work
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+            <span>Work</span>
         </button>
         <button data-target="#contact">
-            <span>✉️</span>
-            Contact
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <span>Contact</span>
         </button>
     </div>
 
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-            });
-        });
-
-        // Smooth scroll for all anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Bottom nav functionality
-        document.querySelectorAll('.bottom-nav button').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetSelector = btn.getAttribute('data-target');
-                const target = document.querySelector(targetSelector);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-                // Update active state
-                document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // Update active bottom nav on scroll (optional enhancement)
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                const sections = ['about', 'skills', 'experience', 'contact'];
-                let currentSection = '';
-
-                sections.forEach(section => {
-                    const element = document.getElementById(section);
-                    if (element) {
-                        const rect = element.getBoundingClientRect();
-                        if (rect.top <= 150 && rect.bottom >= 150) {
-                            currentSection = section;
-                        }
-                    }
-                });
-
-                if (currentSection) {
-                    document.querySelectorAll('.bottom-nav button').forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.getAttribute('data-target') === `#${currentSection}`) {
-                            btn.classList.add('active');
-                        }
-                    });
-                }
-            }, 100);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
