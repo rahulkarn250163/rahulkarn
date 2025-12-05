@@ -551,10 +551,11 @@ body {
 
 .scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
+    display: none;
+    /* Hidden by default to prevent overlap */
     flex-direction: column;
     align-items: center;
     gap: 8px;
@@ -563,6 +564,14 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     animation: fadeInUp 1s ease-out 0.8s both;
+    z-index: 1;
+}
+
+/* Only show scroll indicator on very tall screens */
+@media (min-height: 900px) and (min-width: 1200px) {
+    .scroll-indicator {
+        display: flex;
+    }
 }
 
 .scroll-line {
