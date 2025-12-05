@@ -1369,10 +1369,26 @@ footer {
         right: 0;
     }
 
+    .nav-links li {
+        width: 100%;
+    }
+
     .nav-links a {
         font-size: var(--font-size-lg);
-        padding: var(--space-sm) 0;
+        padding: var(--space-md) var(--space-lg);
         color: var(--color-text-primary);
+        display: block;
+        width: 100%;
+        border-radius: var(--radius-md);
+        transition: all var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+        background: var(--color-bg-secondary);
+    }
+
+    .nav-links a::after {
+        display: none;
     }
 
     .hamburger {
