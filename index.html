@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Bookstore - Event-Driven Microservices Architecture</title>
+    <title>Online Bookstore - Architecture Comparison</title>
     <style>
         * {
             margin: 0;
@@ -27,7 +27,7 @@
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .header h1 {
@@ -39,11 +39,92 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .header h2 {
-            font-size: 1.4rem;
-            color: #10b981;
+        .header p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        /* Tab Navigation */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn.microservices {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+            color: #6ee7b7;
+            border: 2px solid #059669;
+        }
+
+        .tab-btn.microservices:hover,
+        .tab-btn.microservices.active {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.monolithic {
+            background: linear-gradient(135deg, #78350f, #92400e);
+            color: #fcd34d;
+            border: 2px solid #d97706;
+        }
+
+        .tab-btn.monolithic:hover,
+        .tab-btn.monolithic.active {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: white;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Architecture Header */
+        .arch-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .arch-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .arch-header.microservices h2 {
+            color: #10b981;
+        }
+
+        .arch-header.monolithic h2 {
+            color: #f59e0b;
         }
 
         .tags {
@@ -64,6 +145,8 @@
         .tag-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
         .tag-purple { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
         .tag-orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .tag-yellow { background: rgba(234, 179, 8, 0.2); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .tag-cyan { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
 
         /* Main Diagram */
         .diagram-container {
@@ -78,13 +161,21 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            background: linear-gradient(90deg, #059669, #0d9488);
             color: white;
             padding: 10px 18px;
             border-radius: 10px;
             font-weight: 600;
             font-size: 0.9rem;
+        }
+
+        .badge-microservices {
+            background: linear-gradient(90deg, #059669, #0d9488);
             box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+
+        .badge-monolithic {
+            background: linear-gradient(90deg, #d97706, #f59e0b);
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
         }
 
         .external-services {
@@ -115,7 +206,6 @@
             border-radius: 15px;
             border: 2px solid #475569;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .layer:hover {
@@ -179,6 +269,8 @@
         .arrow-cyan-orange { background: linear-gradient(to bottom, #06b6d4, #f97316); }
         .arrow-orange-green { background: linear-gradient(to bottom, #f97316, #10b981); }
         .arrow-purple { background: linear-gradient(to bottom, #8b5cf6, #3b82f6); }
+        .arrow-orange-amber { background: linear-gradient(to bottom, #f97316, #f59e0b); }
+        .arrow-amber-blue { background: linear-gradient(to bottom, #f59e0b, #3b82f6); }
 
         /* Gateway Layer */
         .gateway-items {
@@ -237,6 +329,7 @@
             gap: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s;
+            justify-content: center;
         }
 
         .service-box:hover {
@@ -350,7 +443,202 @@
         .db-elastic { background: linear-gradient(135deg, #ca8a04, #a16207); }
         .db-mongo { background: linear-gradient(135deg, #16a34a, #15803d); }
 
-        /* Order Flow */
+        /* ==================== MONOLITHIC STYLES ==================== */
+
+        /* Web Server Layer */
+        .webserver-box {
+            display: flex;
+            justify-content: center;
+        }
+
+        .webserver {
+            background: linear-gradient(90deg, #f97316, #f59e0b);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Monolith Application */
+        .monolith-container {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+            border: 3px solid #f59e0b;
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .monolith-title {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #d97706, #f59e0b);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .monolith-subtitle {
+            text-align: center;
+            color: #fbbf24;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        /* Modules Grid */
+        .modules-section {
+            margin-bottom: 20px;
+        }
+
+        .modules-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .module-box {
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .module-box:hover {
+            transform: scale(1.05);
+        }
+
+        .mod-user { background: linear-gradient(135deg, #0369a1, #0284c7); }
+        .mod-catalog { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+        .mod-cart { background: linear-gradient(135deg, #0d9488, #14b8a6); }
+        .mod-order { background: linear-gradient(135deg, #059669, #10b981); }
+        .mod-payment { background: linear-gradient(135deg, #65a30d, #84cc16); }
+        .mod-notification { background: linear-gradient(135deg, #ca8a04, #eab308); }
+        .mod-inventory { background: linear-gradient(135deg, #ea580c, #f97316); }
+        .mod-search { background: linear-gradient(135deg, #dc2626, #ef4444); }
+
+        /* Shared Components */
+        .shared-section {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px dashed #3b82f6;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .shared-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .shared-item {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Internal Communication */
+        .internal-comm {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .comm-box {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #c4b5fd;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Single Database */
+        .database-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .single-database {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            color: white;
+            padding: 25px 60px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
+            position: relative;
+        }
+
+        .db-icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .db-name-large {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .db-type {
+            font-size: 0.85rem;
+            color: #93c5fd;
+            margin-bottom: 10px;
+        }
+
+        .db-tables {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .table-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+        }
+
+        /* ==================== FLOW SECTION ==================== */
+
         .flow-section {
             margin-top: 40px;
             background: rgba(30, 41, 59, 0.5);
@@ -420,6 +708,13 @@
             font-family: monospace;
         }
 
+        .step-method {
+            color: #fbbf24;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+
         .flow-connector {
             flex: 1;
             height: 3px;
@@ -428,7 +723,75 @@
             min-width: 30px;
         }
 
-        /* Key Features */
+        /* ==================== COMPARISON SECTION ==================== */
+
+        .comparison-section {
+            margin-top: 40px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #334155;
+        }
+
+        .comparison-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .pros-card, .cons-card {
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .pros-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.1));
+            border: 1px solid #059669;
+        }
+
+        .cons-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.1));
+            border: 1px solid #dc2626;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pros-card .card-title { color: #34d399; }
+        .cons-card .card-title { color: #f87171; }
+
+        .card-list {
+            list-style: none;
+        }
+
+        .card-list li {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pros-card .card-list li::before { content: "✓"; color: #34d399; }
+        .cons-card .card-list li::before { content: "✗"; color: #f87171; }
+
+        /* ==================== FEATURES GRID ==================== */
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -462,6 +825,21 @@
             border-color: #b91c1c;
         }
 
+        .feature-card-orange {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.2));
+            border-color: #ea580c;
+        }
+
+        .feature-card-cyan {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.2));
+            border-color: #0891b2;
+        }
+
+        .feature-card-yellow {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(202, 138, 4, 0.2));
+            border-color: #ca8a04;
+        }
+
         .feature-icon {
             font-size: 2rem;
             margin-bottom: 10px;
@@ -477,10 +855,71 @@
         .feature-card-blue .feature-title { color: #60a5fa; }
         .feature-card-purple .feature-title { color: #a78bfa; }
         .feature-card-red .feature-title { color: #f87171; }
+        .feature-card-orange .feature-title { color: #fb923c; }
+        .feature-card-cyan .feature-title { color: #22d3ee; }
+        .feature-card-yellow .feature-title { color: #fbbf24; }
 
         .feature-desc {
             color: #94a3b8;
             font-size: 0.85rem;
+        }
+
+        /* ==================== ARCHITECTURE COMPARISON TABLE ==================== */
+
+        .arch-comparison {
+            margin-top: 40px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #334155;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        .comparison-table th {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        .comparison-table td {
+            color: #cbd5e1;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .comparison-table .aspect {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .comparison-table .mono-val {
+            color: #fbbf24;
+        }
+
+        .comparison-table .micro-val {
+            color: #34d399;
         }
 
         /* Footer */
@@ -491,19 +930,26 @@
             font-size: 0.85rem;
         }
 
-        /* Responsive */
+        /* ==================== RESPONSIVE ==================== */
+
         @media (max-width: 768px) {
             .header h1 { font-size: 1.8rem; }
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-grid, .modules-grid { grid-template-columns: repeat(2, 1fr); }
             .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .comparison-grid { grid-template-columns: 1fr; }
             .clients { gap: 25px; }
             .data-grid { gap: 10px; }
             .data-box { min-width: 100px; padding: 12px 15px; }
+            .tab-btn { padding: 12px 25px; font-size: 0.9rem; }
+            .comparison-table { font-size: 0.85rem; }
+            .comparison-table th, .comparison-table td { padding: 10px; }
         }
 
         @media (max-width: 480px) {
             .features-grid { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr 1fr; }
+            .services-grid, .modules-grid { grid-template-columns: 1fr 1fr; }
+            .tab-container { flex-direction: column; }
+            .tab-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -512,214 +958,517 @@
         <!-- Header -->
         <div class="header">
             <h1>Online Bookstore Order Processing System</h1>
-            <h2>Event-Driven Microservices Architecture</h2>
-            <div class="tags">
-                <span class="tag tag-green">Event-Driven</span>
-                <span class="tag tag-blue">Microservices</span>
-                <span class="tag tag-purple">Scalable</span>
-                <span class="tag tag-orange">Reliable</span>
+            <p>Compare Different Architecture Patterns</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-btn microservices active" onclick="showTab('microservices')">
+                <span>🚀</span> Event-Driven Microservices
+            </button>
+            <button class="tab-btn monolithic" onclick="showTab('monolithic')">
+                <span>🏛️</span> Monolithic Architecture
+            </button>
+        </div>
+
+        <!-- ==================== MICROSERVICES TAB ==================== -->
+        <div id="microservices-tab" class="tab-content active">
+            <div class="arch-header microservices">
+                <h2>Event-Driven Microservices Architecture</h2>
+                <div class="tags">
+                    <span class="tag tag-green">Event-Driven</span>
+                    <span class="tag tag-blue">Microservices</span>
+                    <span class="tag tag-purple">Scalable</span>
+                    <span class="tag tag-orange">Reliable</span>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <div class="architecture-badge badge-microservices">🏗️ Event-Driven Microservices</div>
+                <div class="external-services">
+                    <div class="external-badge badge-cdn">🌍 CDN</div>
+                    <div class="external-badge badge-stripe">💰 Stripe</div>
+                    <div class="external-badge badge-email">📧 Email/SMS</div>
+                </div>
+
+                <!-- Client Layer -->
+                <div class="layer client-layer">
+                    <div class="layer-label">Client Layer</div>
+                    <div class="clients">
+                        <div class="client-item">
+                            <div class="client-icon">🌐</div>
+                            <span class="client-label">Web App</span>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-icon">📱</div>
+                            <span class="client-label">Mobile App</span>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-icon">💻</div>
+                            <span class="client-label">PWA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow"><div class="arrow-line arrow-cyan-orange"></div></div>
+
+                <!-- API Gateway Layer -->
+                <div class="layer">
+                    <div class="layer-label">API Gateway Layer</div>
+                    <div class="gateway-items">
+                        <div class="gateway-box gateway-api"><span>🔒</span><span>API Gateway</span></div>
+                        <div class="gateway-box gateway-lb"><span>⚖️</span><span>Load Balancer</span></div>
+                    </div>
+                    <div class="gateway-features">
+                        <span class="feature-tag">Rate Limiting</span>
+                        <span class="feature-tag">JWT Validation</span>
+                        <span class="feature-tag">SSL/TLS</span>
+                    </div>
+                </div>
+
+                <div class="arrow"><div class="arrow-line arrow-orange-green"></div></div>
+
+                <!-- Microservices Layer -->
+                <div class="layer">
+                    <div class="layer-label">Microservices Layer</div>
+                    <div class="services-grid">
+                        <div class="service-box svc-user"><span>👤</span> User Service</div>
+                        <div class="service-box svc-catalog"><span>📚</span> Catalog Service</div>
+                        <div class="service-box svc-cart"><span>🛒</span> Cart Service</div>
+                        <div class="service-box svc-order"><span>📦</span> Order Service</div>
+                        <div class="service-box svc-payment"><span>💳</span> Payment Service</div>
+                        <div class="service-box svc-notification"><span>🔔</span> Notification Service</div>
+                        <div class="service-box svc-inventory"><span>📊</span> Inventory Service</div>
+                        <div class="service-box svc-search"><span>🔍</span> Search Service</div>
+                    </div>
+                </div>
+
+                <!-- Event Bus -->
+                <div class="event-bus-container">
+                    <div class="event-line"></div>
+                    <div class="event-bus">
+                        <div class="event-bus-title">📨 Event Bus</div>
+                        <div class="event-bus-subtitle">Kafka / RabbitMQ</div>
+                    </div>
+                    <div class="event-line event-line-right"></div>
+                </div>
+
+                <div class="event-labels">
+                    <span class="event-label event-publish">📤 Publish: OrderPlaced</span>
+                    <span class="event-label event-subscribe">📥 Subscribe: PaymentStatus</span>
+                    <span class="event-label event-notify">🔔 Event: SendNotification</span>
+                </div>
+
+                <div class="arrow"><div class="arrow-line arrow-purple"></div></div>
+
+                <!-- Data Layer -->
+                <div class="layer">
+                    <div class="layer-label">Data Layer</div>
+                    <div class="data-grid">
+                        <div class="data-box db-postgres">
+                            <div class="data-icon">🐘</div>
+                            <div class="data-name">PostgreSQL</div>
+                            <div class="data-desc">Orders, Users, Payments</div>
+                        </div>
+                        <div class="data-box db-redis">
+                            <div class="data-icon">⚡</div>
+                            <div class="data-name">Redis</div>
+                            <div class="data-desc">Cache, Sessions, Cart</div>
+                        </div>
+                        <div class="data-box db-elastic">
+                            <div class="data-icon">🔎</div>
+                            <div class="data-name">Elasticsearch</div>
+                            <div class="data-desc">Full-text Search</div>
+                        </div>
+                        <div class="data-box db-mongo">
+                            <div class="data-icon">🍃</div>
+                            <div class="data-name">MongoDB</div>
+                            <div class="data-desc">Logs, Notifications</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Flow -->
+            <div class="flow-section">
+                <div class="flow-title">📋 Event-Driven Order Processing Flow</div>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-icon step-1">📚</div>
+                        <div class="step-label">Browse Books</div>
+                        <div class="step-number">Step 1</div>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-2">🛒</div>
+                        <div class="step-label">Add to Cart</div>
+                        <div class="step-number">Step 2</div>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-3">📝</div>
+                        <div class="step-label">Place Order</div>
+                        <div class="step-number">Step 3</div>
+                        <div class="step-event">→ OrderPlaced</div>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-4">💳</div>
+                        <div class="step-label">Process Payment</div>
+                        <div class="step-number">Step 4</div>
+                        <div class="step-event">→ PaymentStatus</div>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-5">📊</div>
+                        <div class="step-label">Update Inventory</div>
+                        <div class="step-number">Step 5</div>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-6">🔔</div>
+                        <div class="step-label">Send Notification</div>
+                        <div class="step-number">Step 6</div>
+                        <div class="step-event">← Subscribe</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="features-grid">
+                <div class="feature-card feature-card-green">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Scalability</div>
+                    <div class="feature-desc">Auto-scaling with Kubernetes</div>
+                </div>
+                <div class="feature-card feature-card-blue">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">Reliability</div>
+                    <div class="feature-desc">Retry & Circuit Breaker</div>
+                </div>
+                <div class="feature-card feature-card-purple">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Event-Driven</div>
+                    <div class="feature-desc">Kafka Event Streaming</div>
+                </div>
+                <div class="feature-card feature-card-red">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Security</div>
+                    <div class="feature-desc">JWT + OAuth 2.0</div>
+                </div>
+            </div>
+
+            <div class="footer">
+                Event-Driven Microservices Architecture • Recommended Stack: ASP.NET Core + Kubernetes
             </div>
         </div>
 
-        <!-- Main Diagram -->
-        <div class="diagram-container">
-            <!-- Architecture Badge -->
-            <div class="architecture-badge">🏗️ Event-Driven Microservices</div>
-
-            <!-- External Services -->
-            <div class="external-services">
-                <div class="external-badge badge-cdn">🌍 CDN</div>
-                <div class="external-badge badge-stripe">💰 Stripe</div>
-                <div class="external-badge badge-email">📧 Email/SMS</div>
+        <!-- ==================== MONOLITHIC TAB ==================== -->
+        <div id="monolithic-tab" class="tab-content">
+            <div class="arch-header monolithic">
+                <h2>Monolithic Architecture</h2>
+                <div class="tags">
+                    <span class="tag tag-orange">Single Deployment</span>
+                    <span class="tag tag-blue">Unified Codebase</span>
+                    <span class="tag tag-yellow">Simple Setup</span>
+                    <span class="tag tag-cyan">Fast Development</span>
+                </div>
             </div>
 
-            <!-- Client Layer -->
-            <div class="layer client-layer">
-                <div class="layer-label">Client Layer</div>
-                <div class="clients">
-                    <div class="client-item">
-                        <div class="client-icon">🌐</div>
-                        <span class="client-label">Web App</span>
+            <div class="diagram-container">
+                <div class="architecture-badge badge-monolithic">🏛️ Monolithic Architecture</div>
+                <div class="external-services">
+                    <div class="external-badge badge-cdn">🌍 CDN</div>
+                    <div class="external-badge badge-stripe">💰 Stripe</div>
+                    <div class="external-badge badge-email">📧 Email/SMS</div>
+                </div>
+
+                <!-- Client Layer -->
+                <div class="layer client-layer">
+                    <div class="layer-label">Client Layer</div>
+                    <div class="clients">
+                        <div class="client-item">
+                            <div class="client-icon">🌐</div>
+                            <span class="client-label">Web App</span>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-icon">📱</div>
+                            <span class="client-label">Mobile App</span>
+                        </div>
+                        <div class="client-item">
+                            <div class="client-icon">💻</div>
+                            <span class="client-label">PWA</span>
+                        </div>
                     </div>
-                    <div class="client-item">
-                        <div class="client-icon">📱</div>
-                        <span class="client-label">Mobile App</span>
+                </div>
+
+                <div class="arrow"><div class="arrow-line arrow-cyan-orange"></div></div>
+
+                <!-- Web Server -->
+                <div class="layer">
+                    <div class="layer-label">Web Server Layer</div>
+                    <div class="webserver-box">
+                        <div class="webserver">
+                            <span>🖥️</span>
+                            <span>IIS / Kestrel Web Server</span>
+                        </div>
                     </div>
-                    <div class="client-item">
-                        <div class="client-icon">💻</div>
-                        <span class="client-label">PWA</span>
+                </div>
+
+                <div class="arrow"><div class="arrow-line arrow-orange-amber"></div></div>
+
+                <!-- Monolith Application -->
+                <div class="monolith-container">
+                    <div class="monolith-title">📦 Bookstore Application (Single Deployment)</div>
+                    <div class="monolith-subtitle">All modules run in a single process with shared memory</div>
+
+                    <div class="modules-section">
+                        <div class="modules-label">Application Modules</div>
+                        <div class="modules-grid">
+                            <div class="module-box mod-user"><span>👤</span> User Module</div>
+                            <div class="module-box mod-catalog"><span>📚</span> Catalog Module</div>
+                            <div class="module-box mod-cart"><span>🛒</span> Cart Module</div>
+                            <div class="module-box mod-order"><span>📦</span> Order Module</div>
+                            <div class="module-box mod-payment"><span>💳</span> Payment Module</div>
+                            <div class="module-box mod-notification"><span>🔔</span> Notification Module</div>
+                            <div class="module-box mod-inventory"><span>📊</span> Inventory Module</div>
+                            <div class="module-box mod-search"><span>🔍</span> Search Module</div>
+                        </div>
+                    </div>
+
+                    <div class="internal-comm">
+                        <div class="comm-box">
+                            <span>🔄</span>
+                            <span>Direct Method Calls (In-Process Communication)</span>
+                        </div>
+                    </div>
+
+                    <div class="shared-section">
+                        <div class="modules-label">Shared Components</div>
+                        <div class="shared-grid">
+                            <div class="shared-item"><span>🔐</span> Auth Middleware</div>
+                            <div class="shared-item"><span>📝</span> Logging Service</div>
+                            <div class="shared-item"><span>💾</span> Data Access Layer</div>
+                            <div class="shared-item"><span>🛡️</span> Validation</div>
+                            <div class="shared-item"><span>⚙️</span> Configuration</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow"><div class="arrow-line arrow-amber-blue"></div></div>
+
+                <!-- Single Database -->
+                <div class="layer">
+                    <div class="layer-label">Data Layer</div>
+                    <div class="database-container">
+                        <div class="single-database">
+                            <div class="db-icon-large">🐘</div>
+                            <div class="db-name-large">Single Database</div>
+                            <div class="db-type">PostgreSQL / SQL Server</div>
+                            <div class="db-tables">
+                                <span class="table-tag">Users</span>
+                                <span class="table-tag">Books</span>
+                                <span class="table-tag">Carts</span>
+                                <span class="table-tag">Orders</span>
+                                <span class="table-tag">Payments</span>
+                                <span class="table-tag">Notifications</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Arrow -->
-            <div class="arrow">
-                <div class="arrow-line arrow-cyan-orange"></div>
-            </div>
-
-            <!-- API Gateway Layer -->
-            <div class="layer">
-                <div class="layer-label">API Gateway Layer</div>
-                <div class="gateway-items">
-                    <div class="gateway-box gateway-api">
-                        <span>🔒</span>
-                        <span>API Gateway</span>
+            <!-- Order Flow -->
+            <div class="flow-section">
+                <div class="flow-title">📋 Synchronous Order Processing Flow</div>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-icon step-1">📚</div>
+                        <div class="step-label">Browse Books</div>
+                        <div class="step-number">Step 1</div>
+                        <div class="step-method">CatalogModule.GetBooks()</div>
                     </div>
-                    <div class="gateway-box gateway-lb">
-                        <span>⚖️</span>
-                        <span>Load Balancer</span>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-2">🛒</div>
+                        <div class="step-label">Add to Cart</div>
+                        <div class="step-number">Step 2</div>
+                        <div class="step-method">CartModule.AddItem()</div>
                     </div>
-                </div>
-                <div class="gateway-features">
-                    <span class="feature-tag">Rate Limiting</span>
-                    <span class="feature-tag">JWT Validation</span>
-                    <span class="feature-tag">SSL/TLS</span>
-                </div>
-            </div>
-
-            <!-- Arrow -->
-            <div class="arrow">
-                <div class="arrow-line arrow-orange-green"></div>
-            </div>
-
-            <!-- Microservices Layer -->
-            <div class="layer">
-                <div class="layer-label">Microservices Layer</div>
-                <div class="services-grid">
-                    <div class="service-box svc-user"><span>👤</span> User Service</div>
-                    <div class="service-box svc-catalog"><span>📚</span> Catalog Service</div>
-                    <div class="service-box svc-cart"><span>🛒</span> Cart Service</div>
-                    <div class="service-box svc-order"><span>📦</span> Order Service</div>
-                    <div class="service-box svc-payment"><span>💳</span> Payment Service</div>
-                    <div class="service-box svc-notification"><span>🔔</span> Notification Service</div>
-                    <div class="service-box svc-inventory"><span>📊</span> Inventory Service</div>
-                    <div class="service-box svc-search"><span>🔍</span> Search Service</div>
-                </div>
-            </div>
-
-            <!-- Event Bus -->
-            <div class="event-bus-container">
-                <div class="event-line"></div>
-                <div class="event-bus">
-                    <div class="event-bus-title">📨 Event Bus</div>
-                    <div class="event-bus-subtitle">Kafka / RabbitMQ</div>
-                </div>
-                <div class="event-line event-line-right"></div>
-            </div>
-
-            <!-- Event Labels -->
-            <div class="event-labels">
-                <span class="event-label event-publish">📤 Publish: OrderPlaced</span>
-                <span class="event-label event-subscribe">📥 Subscribe: PaymentStatus</span>
-                <span class="event-label event-notify">🔔 Event: SendNotification</span>
-            </div>
-
-            <!-- Arrow -->
-            <div class="arrow">
-                <div class="arrow-line arrow-purple"></div>
-            </div>
-
-            <!-- Data Layer -->
-            <div class="layer">
-                <div class="layer-label">Data Layer</div>
-                <div class="data-grid">
-                    <div class="data-box db-postgres">
-                        <div class="data-icon">🐘</div>
-                        <div class="data-name">PostgreSQL</div>
-                        <div class="data-desc">Orders, Users, Payments</div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-3">📝</div>
+                        <div class="step-label">Place Order</div>
+                        <div class="step-number">Step 3</div>
+                        <div class="step-method">OrderModule.Create()</div>
                     </div>
-                    <div class="data-box db-redis">
-                        <div class="data-icon">⚡</div>
-                        <div class="data-name">Redis</div>
-                        <div class="data-desc">Cache, Sessions, Cart</div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-4">💳</div>
+                        <div class="step-label">Process Payment</div>
+                        <div class="step-number">Step 4</div>
+                        <div class="step-method">PaymentModule.Process()</div>
                     </div>
-                    <div class="data-box db-elastic">
-                        <div class="data-icon">🔎</div>
-                        <div class="data-name">Elasticsearch</div>
-                        <div class="data-desc">Full-text Search</div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-5">📊</div>
+                        <div class="step-label">Update Inventory</div>
+                        <div class="step-number">Step 5</div>
+                        <div class="step-method">InventoryModule.Update()</div>
                     </div>
-                    <div class="data-box db-mongo">
-                        <div class="data-icon">🍃</div>
-                        <div class="data-name">MongoDB</div>
-                        <div class="data-desc">Logs, Notifications</div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step">
+                        <div class="step-icon step-6">🔔</div>
+                        <div class="step-label">Send Notification</div>
+                        <div class="step-number">Step 6</div>
+                        <div class="step-method">NotificationModule.Send()</div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Pros and Cons -->
+            <div class="comparison-section">
+                <div class="comparison-title">⚖️ Monolithic Architecture - Advantages & Disadvantages</div>
+                <div class="comparison-grid">
+                    <div class="pros-card">
+                        <div class="card-title"><span>✅</span> Advantages</div>
+                        <ul class="card-list">
+                            <li>Simple to develop and deploy initially</li>
+                            <li>Easy debugging and testing</li>
+                            <li>No network latency between modules</li>
+                            <li>Simple transaction management (ACID)</li>
+                            <li>Lower infrastructure costs</li>
+                            <li>Straightforward IDE support</li>
+                        </ul>
+                    </div>
+                    <div class="cons-card">
+                        <div class="card-title"><span>❌</span> Disadvantages</div>
+                        <ul class="card-list">
+                            <li>Limited scalability (scale entire app)</li>
+                            <li>Single point of failure</li>
+                            <li>Technology stack lock-in</li>
+                            <li>Longer deployment cycles</li>
+                            <li>Difficult to maintain as it grows</li>
+                            <li>Team coordination challenges</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Features -->
+            <div class="features-grid">
+                <div class="feature-card feature-card-orange">
+                    <div class="feature-icon">📦</div>
+                    <div class="feature-title">Single Deployment</div>
+                    <div class="feature-desc">One package to deploy</div>
+                </div>
+                <div class="feature-card feature-card-blue">
+                    <div class="feature-icon">🗄️</div>
+                    <div class="feature-title">Single Database</div>
+                    <div class="feature-desc">Unified data storage</div>
+                </div>
+                <div class="feature-card feature-card-cyan">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Fast Calls</div>
+                    <div class="feature-desc">In-process communication</div>
+                </div>
+                <div class="feature-card feature-card-yellow">
+                    <div class="feature-icon">🔧</div>
+                    <div class="feature-title">Simple Setup</div>
+                    <div class="feature-desc">Minimal infrastructure</div>
+                </div>
+            </div>
+
+            <div class="footer">
+                Monolithic Architecture • Best for: Small teams, MVPs, Simple applications • Stack: ASP.NET Core MVC
             </div>
         </div>
 
-        <!-- Order Flow Section -->
-        <div class="flow-section">
-            <div class="flow-title">📋 Event-Driven Order Processing Flow</div>
-            <div class="flow-steps">
-                <div class="flow-step">
-                    <div class="step-icon step-1">📚</div>
-                    <div class="step-label">Browse Books</div>
-                    <div class="step-number">Step 1</div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-icon step-2">🛒</div>
-                    <div class="step-label">Add to Cart</div>
-                    <div class="step-number">Step 2</div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-icon step-3">📝</div>
-                    <div class="step-label">Place Order</div>
-                    <div class="step-number">Step 3</div>
-                    <div class="step-event">→ OrderPlaced</div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-icon step-4">💳</div>
-                    <div class="step-label">Process Payment</div>
-                    <div class="step-number">Step 4</div>
-                    <div class="step-event">→ PaymentStatus</div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-icon step-5">📊</div>
-                    <div class="step-label">Update Inventory</div>
-                    <div class="step-number">Step 5</div>
-                </div>
-                <div class="flow-connector"></div>
-                <div class="flow-step">
-                    <div class="step-icon step-6">🔔</div>
-                    <div class="step-label">Send Notification</div>
-                    <div class="step-number">Step 6</div>
-                    <div class="step-event">← Subscribe</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Key Features -->
-        <div class="features-grid">
-            <div class="feature-card feature-card-green">
-                <div class="feature-icon">📈</div>
-                <div class="feature-title">Scalability</div>
-                <div class="feature-desc">Auto-scaling with Kubernetes</div>
-            </div>
-            <div class="feature-card feature-card-blue">
-                <div class="feature-icon">🔄</div>
-                <div class="feature-title">Reliability</div>
-                <div class="feature-desc">Retry & Circuit Breaker</div>
-            </div>
-            <div class="feature-card feature-card-purple">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-title">Event-Driven</div>
-                <div class="feature-desc">Kafka Event Streaming</div>
-            </div>
-            <div class="feature-card feature-card-red">
-                <div class="feature-icon">🔒</div>
-                <div class="feature-title">Security</div>
-                <div class="feature-desc">JWT + OAuth 2.0</div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            Event-Driven Microservices Architecture • Recommended Stack: ASP.NET Core + Kubernetes
+        <!-- ==================== ARCHITECTURE COMPARISON TABLE ==================== -->
+        <div class="arch-comparison">
+            <div class="comparison-title">📊 Architecture Comparison</div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>🏛️ Monolithic</th>
+                        <th>🚀 Event-Driven Microservices</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="aspect">Deployment</td>
+                        <td class="mono-val">Single package</td>
+                        <td class="micro-val">Multiple independent services</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Database</td>
+                        <td class="mono-val">Single shared database</td>
+                        <td class="micro-val">Database per service</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Communication</td>
+                        <td class="mono-val">Direct method calls</td>
+                        <td class="micro-val">Kafka/RabbitMQ events</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Scalability</td>
+                        <td class="mono-val">Scale entire application</td>
+                        <td class="micro-val">Scale individual services</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Complexity</td>
+                        <td class="mono-val">Simple</td>
+                        <td class="micro-val">Complex</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Initial Cost</td>
+                        <td class="mono-val">Low</td>
+                        <td class="micro-val">High</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Fault Isolation</td>
+                        <td class="mono-val">Single point of failure</td>
+                        <td class="micro-val">Isolated failures</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Technology Stack</td>
+                        <td class="mono-val">Single stack</td>
+                        <td class="micro-val">Polyglot (multiple stacks)</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Team Size</td>
+                        <td class="mono-val">Small teams</td>
+                        <td class="micro-val">Large distributed teams</td>
+                    </tr>
+                    <tr>
+                        <td class="aspect">Best For</td>
+                        <td class="mono-val">MVPs, Startups, Simple apps</td>
+                        <td class="micro-val">Enterprise, Large-scale systems</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+
+            // Add active class to clicked button
+            document.querySelector('.tab-btn.' + tabName).classList.add('active');
+        }
+    </script>
 </body>
 </html>
