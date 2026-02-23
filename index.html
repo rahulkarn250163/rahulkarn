@@ -1,145 +1,1497 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Karn - Lead .NET Developer | Digital Transformation Leader</title>
-    <meta name="description"
-        content="Lead .NET Core Full Stack Developer with 8+ years delivering enterprise digital transformation in insurance and financial services.">
+    <title>Rahul Karn — Enterprise Systems Architect</title>
+    <meta name="description" content="Enterprise Systems Architect with 8+ years designing mission-critical platforms in InsurTech & Financial Services. AI-Driven Transformation Leader.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+/* ============================================================
+   RAHUL KARN PORTFOLIO — Premium Light Theme
+   Inspired by Vercel + Stripe design language
+   ============================================================ */
 
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+    --bg:           #FFFFFF;
+    --bg-alt:       #F7F7F8;
+    --bg-hover:     #F0F0F2;
+    --border:       #E4E4E7;
+    --border-hover: #C4C4CC;
+    --text-1:       #09090B;
+    --text-2:       #3F3F46;
+    --text-3:       #71717A;
+    --text-4:       #A1A1AA;
+    --accent:       #4F46E5;
+    --accent-2:     #7C3AED;
+    --accent-light: #EEF2FF;
+    --accent-mid:   #C7D2FE;
+    --success:      #059669;
+    --success-bg:   #ECFDF5;
+    --warning:      #D97706;
+    --warning-bg:   #FFFBEB;
+
+    --font-display: 'Bricolage Grotesque', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+
+    --nav-h:        68px;
+    --container:    1160px;
+    --radius-sm:    8px;
+    --radius:       14px;
+    --radius-lg:    20px;
+
+    --shadow-sm:    0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow:       0 4px 16px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.04);
+    --shadow-lg:    0 12px 40px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.05);
+    --shadow-hover: 0 20px 50px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-1);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+
+/* ── Layout Utilities ─────────────────────────────────────── */
+.container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.section { padding: 100px 0; }
+.section-alt { background: var(--bg-alt); }
+
+/* ── Navbar ───────────────────────────────────────────────── */
+#navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    height: var(--nav-h);
+    transition: all .3s ease;
+}
+
+#navbar.scrolled {
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.logo-mark {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-1);
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    list-style: none;
+}
+
+.nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-3);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: color .2s, background .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text-1);
+    background: var(--bg-hover);
+}
+
+.nav-cta {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    background: var(--text-1) !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: opacity .2s, transform .2s !important;
+}
+
+.nav-cta:hover {
+    opacity: .85 !important;
+    transform: translateY(-1px);
+    background: var(--text-1) !important;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+    border-radius: 6px;
+    margin-left: auto;
+    transition: background .2s;
+}
+
+.hamburger:hover { background: var(--bg-hover); }
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-1);
+    border-radius: 2px;
+    transition: all .3s ease;
+    transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Hero Section ─────────────────────────────────────────── */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: var(--nav-h);
+}
+
+.hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(79,70,229,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,70,229,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+.hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 700px;
+    background: radial-gradient(ellipse at center, rgba(79,70,229,.10) 0%, rgba(124,58,237,.05) 40%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero .container { position: relative; z-index: 1; }
+
+.hero-inner {
+    max-width: 820px;
+    padding: 80px 0;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-sm);
+}
+
+.badge-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    flex-shrink: 0;
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(5,150,105,.4); }
+    70% { box-shadow: 0 0 0 8px rgba(5,150,105,0); }
+    100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 7vw, 78px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--text-1);
+    margin-bottom: 28px;
+}
+
+.hero-title em {
+    font-style: italic;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-sub {
+    font-size: 18px;
+    color: var(--text-3);
+    max-width: 580px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+.hero-sub strong { color: var(--text-2); font-weight: 600; }
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 10px;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 14px rgba(79,70,229,.3);
+}
+
+.btn-primary:hover {
+    background: #4338CA;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79,70,229,.4);
+}
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    background: transparent;
+    color: var(--text-2);
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: all .2s;
+}
+
+.btn-ghost:hover {
+    border-color: var(--border-hover);
+    color: var(--text-1);
+    background: var(--bg-hover);
+}
+
+.hero-metrics {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 32px;
+}
+
+.metric:first-child { padding-left: 0; }
+
+.metric-number {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-1);
+    line-height: 1;
+    letter-spacing: -1.5px;
+}
+
+.metric-suffix {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+}
+
+.metric-label {
+    font-size: 12px;
+    color: var(--text-4);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.metric-sep {
+    width: 1px;
+    height: 44px;
+    background: var(--border);
+    flex-shrink: 0;
+}
+
+/* Scroll hint */
+.scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-4);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    animation: bob 2.5s ease-in-out infinite;
+}
+
+.scroll-wheel {
+    width: 22px;
+    height: 36px;
+    border: 2px solid var(--border-hover);
+    border-radius: 11px;
+    position: relative;
+}
+
+.scroll-wheel::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 3px;
+    animation: scroll-dot 2s ease-in-out infinite;
+}
+
+@keyframes scroll-dot {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    80% { transform: translateX(-50%) translateY(14px); opacity: 0; }
+}
+
+@keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ── Marquee ──────────────────────────────────────────────── */
+.marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
+    overflow: hidden;
+    padding: 18px 0;
+}
+
+.marquee-track {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-inner {
+    display: inline-block;
+    animation: marquee-scroll 35s linear infinite;
+}
+
+.marquee-inner span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-3);
+    padding: 0 4px;
+}
+
+.marquee-inner .dot {
+    color: var(--border-hover);
+    padding: 0 8px;
+}
+
+@keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ── Section Shared Styles ────────────────────────────────── */
+.section-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 14px;
+}
+
+.section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    color: var(--text-1);
+    margin-bottom: 20px;
+}
+
+.section-heading em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-desc {
+    font-size: 17px;
+    color: var(--text-3);
+    max-width: 540px;
+    line-height: 1.65;
+}
+
+.section-header-row {
+    margin-bottom: 64px;
+}
+
+/* ── About Section ────────────────────────────────────────── */
+.about-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 80px;
+    align-items: start;
+}
+
+.about-left { position: sticky; top: 100px; }
+
+.about-body p {
+    font-size: 17px;
+    color: var(--text-2);
+    line-height: 1.75;
+    margin-bottom: 20px;
+}
+
+.about-body p:last-child { margin-bottom: 0; }
+.about-body strong { color: var(--text-1); font-weight: 600; }
+
+.inline-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.about-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px 22px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.about-card:hover {
+    border-color: var(--accent-mid);
+    box-shadow: var(--shadow);
+}
+
+.about-card-number {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-1);
+    letter-spacing: -1px;
+}
+
+.about-card-label {
+    font-size: 13px;
+    color: var(--text-3);
+    font-weight: 500;
+}
+
+/* ── Skills Grid ──────────────────────────────────────────── */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.skill-card {
+    padding: 28px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color .25s, box-shadow .25s, transform .25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s ease;
+}
+
+.skill-card:hover {
+    border-color: var(--accent-mid);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+}
+
+.skill-card:hover::before { transform: scaleX(1); }
+
+.skill-card-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    border-radius: 10px;
+    color: var(--accent);
+    margin-bottom: 18px;
+}
+
+.skill-card-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 10px;
+    letter-spacing: -.3px;
+}
+
+.skill-card-desc {
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.65;
+    margin-bottom: 18px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skill-tags span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: .3px;
+}
+
+/* ── Timeline / Experience ────────────────────────────────── */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 196px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--border) 5%, var(--border) 95%, transparent);
+}
+
+.timeline-block {
+    display: grid;
+    grid-template-columns: 196px 1fr;
+    gap: 0 48px;
+    align-items: start;
+}
+
+.timeline-aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 24px;
+    padding-right: 48px;
+    position: relative;
+}
+
+.timeline-aside::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 30px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    z-index: 1;
+}
+
+.timeline-date {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-3);
+    text-align: right;
+    line-height: 1.4;
+}
+
+.timeline-badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 3px 8px;
+    border-radius: 100px;
+}
+
+.timeline-badge.current {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.timeline-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.timeline-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow);
+}
+
+.timeline-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.tl-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -.4px;
+    margin-bottom: 4px;
+}
+
+.tl-company {
+    font-size: 14px;
+    color: var(--text-3);
+    font-weight: 500;
+}
+
+.tl-loc { color: var(--text-4); }
+
+.tl-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-3);
+    flex-shrink: 0;
+}
+
+.tl-phase {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    background: var(--bg-alt);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    margin-top: 8px;
+}
+
+.phase-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.phase-date {
+    font-size: 12px;
+    color: var(--text-4);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.tl-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.tl-list li {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.65;
+    padding-left: 18px;
+    position: relative;
+}
+
+.tl-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: .6;
+}
+
+.tl-list li strong { color: var(--text-1); font-weight: 600; }
+
+.tl-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.highlight-chip {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid var(--accent-mid);
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: .2px;
+}
+
+/* ── Deliverables ─────────────────────────────────────────── */
+.deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.deliverable-card {
+    padding: 28px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all .25s;
+}
+
+.deliverable-card:hover {
+    border-color: var(--accent-mid);
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+}
+
+.dc-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    border-radius: 10px;
+    color: var(--accent);
+    margin-bottom: 16px;
+}
+
+.deliverable-card h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 10px;
+    letter-spacing: -.3px;
+}
+
+.deliverable-card p {
+    font-size: 14px;
+    color: var(--text-3);
+    line-height: 1.65;
+}
+
+/* ── Education ────────────────────────────────────────────── */
+.edu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.edu-card {
+    padding: 28px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all .25s;
+}
+
+.edu-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow);
+}
+
+.cert-card {
+    border-color: var(--accent-mid);
+    background: linear-gradient(135deg, var(--bg) 0%, var(--accent-light) 100%);
+}
+
+.edu-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.edu-status {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+}
+
+.edu-status.active { background: var(--warning-bg); color: var(--warning); }
+.edu-status.done { background: var(--success-bg); color: var(--success); }
+.edu-status.cert { background: var(--accent-light); color: var(--accent); }
+
+.edu-year {
+    font-size: 12px;
+    color: var(--text-4);
+    font-weight: 500;
+}
+
+.edu-degree {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 8px;
+    letter-spacing: -.3px;
+    line-height: 1.35;
+}
+
+.edu-inst {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    margin-bottom: 4px;
+}
+
+.edu-detail {
+    font-size: 13px;
+    color: var(--text-4);
+}
+
+/* ── Publication ──────────────────────────────────────────── */
+.pub-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow .3s;
+    max-width: 720px;
+}
+
+.pub-card:hover { box-shadow: var(--shadow-lg); }
+
+.pub-card-inner {
+    padding: 40px 48px;
+    position: relative;
+}
+
+.pub-card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.pub-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+}
+
+.pub-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -.4px;
+    line-height: 1.35;
+    margin-bottom: 12px;
+}
+
+.pub-venue {
+    font-size: 15px;
+    color: var(--text-3);
+    margin-bottom: 28px;
+}
+
+.pub-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    border: 1px solid var(--accent-mid);
+    background: var(--accent-light);
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all .2s;
+}
+
+.pub-link:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79,70,229,.3);
+}
+
+/* ── Contact ──────────────────────────────────────────────── */
+.contact-layout {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 80px;
+    align-items: start;
+}
+
+.contact-left { position: sticky; top: 100px; }
+
+.contact-desc {
+    font-size: 16px;
+    color: var(--text-3);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    margin-top: 8px;
+}
+
+.contact-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+}
+
+.avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse-ring 2s infinite;
+}
+
+.contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all .2s;
+    cursor: pointer;
+}
+
+.contact-card:hover {
+    border-color: var(--accent-mid);
+    box-shadow: var(--shadow);
+    transform: translateX(4px);
+}
+
+.cc-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    border-radius: 10px;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.cc-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cc-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--text-4);
+}
+
+.cc-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.cc-arrow {
+    color: var(--text-4);
+    transition: transform .2s, color .2s;
+}
+
+.contact-card:hover .cc-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer {
+    background: var(--text-1);
+    color: white;
+    padding: 40px 0;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #818CF8 0%, #A78BFA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-copy {
+    font-size: 14px;
+    color: rgba(255,255,255,.45);
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    font-size: 14px;
+    color: rgba(255,255,255,.45);
+    font-weight: 500;
+    transition: color .2s;
+}
+
+.footer-links a:hover { color: white; }
+
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+
+.footer-social a {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    color: rgba(255,255,255,.5);
+    transition: all .2s;
+}
+
+.footer-social a:hover {
+    background: rgba(255,255,255,.15);
+    color: white;
+}
+
+/* ── Mobile Bottom Nav ────────────────────────────────────── */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+    z-index: 999;
+}
+
+.bottom-nav button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    color: var(--text-4);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    transition: color .2s;
+}
+
+.bottom-nav button.active,
+.bottom-nav button:hover { color: var(--accent); }
+
+/* ── Scroll Reveal Animations ─────────────────────────────── */
+.reveal-item {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+}
+
+.reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero items have faster, staggered reveal */
+.hero .reveal-item:nth-child(1) { transition-delay: .1s; }
+.hero .reveal-item:nth-child(2) { transition-delay: .2s; }
+.hero .reveal-item:nth-child(3) { transition-delay: .3s; }
+.hero .reveal-item:nth-child(4) { transition-delay: .4s; }
+.hero .reveal-item:nth-child(5) { transition-delay: .5s; }
+
+/* Stagger for grid children */
+.skills-grid .reveal-item:nth-child(2) { transition-delay: .08s; }
+.skills-grid .reveal-item:nth-child(3) { transition-delay: .16s; }
+.skills-grid .reveal-item:nth-child(4) { transition-delay: .24s; }
+.skills-grid .reveal-item:nth-child(5) { transition-delay: .32s; }
+.skills-grid .reveal-item:nth-child(6) { transition-delay: .40s; }
+
+.edu-grid .reveal-item:nth-child(2) { transition-delay: .08s; }
+.edu-grid .reveal-item:nth-child(3) { transition-delay: .16s; }
+.edu-grid .reveal-item:nth-child(4) { transition-delay: .24s; }
+
+.deliverables-grid .reveal-item:nth-child(2) { transition-delay: .08s; }
+.deliverables-grid .reveal-item:nth-child(3) { transition-delay: .16s; }
+.deliverables-grid .reveal-item:nth-child(4) { transition-delay: .24s; }
+
+.contact-right .reveal-item:nth-child(2) { transition-delay: .08s; }
+.contact-right .reveal-item:nth-child(3) { transition-delay: .16s; }
+.contact-right .reveal-item:nth-child(4) { transition-delay: .24s; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .about-layout { grid-template-columns: 1fr; gap: 40px; }
+    .about-left { position: static; }
+    .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    .contact-left { position: static; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline::before { left: 0; display: none; }
+    .timeline-block { grid-template-columns: 1fr; gap: 12px; }
+    .timeline-aside { flex-direction: row; align-items: center; padding: 0; }
+    .timeline-aside::after { display: none; }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .section { padding: 72px 0; }
+    .hero-inner { padding: 60px 0 80px; }
+    .nav-links { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(255,255,255,.98); flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: 24px 20px; gap: 4px; overflow-y: auto; }
+    .nav-links.open { display: flex; animation: slide-down .25s ease; }
+    .hamburger { display: flex; }
+    .bottom-nav { display: flex; }
+    .hero-metrics { flex-direction: column; gap: 24px; }
+    .metric-sep { display: none; }
+    .metric { padding: 0; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .deliverables-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .scroll-hint { display: none; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .footer-links { display: none; }
+    .pub-card-inner { padding: 28px 24px; }
+    .tl-phase { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { letter-spacing: -1.5px; }
+    .about-grid { grid-template-columns: 1fr 1fr; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .hero-actions .btn-primary, .hero-actions .btn-ghost { width: 100%; justify-content: center; }
+}
+
+@keyframes slide-down {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Reduced Motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    .reveal-item { opacity: 1; transform: none; }
+}
+
+</style>
+</head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
 
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <span class="logo-text">RK</span>
-                <span class="logo-dot"></span>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <span class="logo-mark">RK</span>
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
+                <li><a href="#skills">Expertise</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#education">Education</a></li>
-                <li><a href="#publications">Publications</a></li>
+                <li><a href="#publications">Research</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#" onclick="downloadResume(); return false;" class="btn-resume"><span>Resume</span><svg
-                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" />
-                        </svg></a></li>
+                <li>
+                    <a href="#" onclick="downloadResume(); return false;" class="nav-cta">
+                        Download CV
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </a>
+                </li>
             </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                Available for opportunities
-            </div>
-            <h1 class="hero-title">
-                <span class="title-line">Hi, I'm</span>
-                <span class="title-name">Rahul Karn</span>
-            </h1>
-            <p class="hero-tagline">Lead .NET Developer <span class="separator">•</span> Digital Transformation Leader
-                <span class="separator">•</span> Emerging AI Engineer
-            </p>
-            <p class="hero-description">Building enterprise-grade solutions that drive digital innovation in insurance
-                and financial services.</p>
-            <div class="hero-cta">
-                <a href="#contact" class="btn-primary">
-                    <span>Get In Touch</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </a>
-                <a href="#experience" class="btn-secondary">
-                    <span>View My Work</span>
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number" data-target="8">0</span>
-                    <span class="stat-plus">+</span>
-                    <span class="stat-label">Years Experience</span>
+    <section class="hero" id="hero">
+        <div class="hero-grid-bg"></div>
+        <div class="hero-glow"></div>
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-badge reveal-item">
+                    <span class="badge-pulse"></span>
+                    Available for US Remote Consulting
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="50">0</span>
-                    <span class="stat-plus">K+</span>
-                    <span class="stat-label">Users Served</span>
+                <h1 class="hero-title reveal-item">
+                    Enterprise Systems<br>
+                    <em>Architect</em> &amp; AI<br>
+                    Transformation Lead
+                </h1>
+                <p class="hero-sub reveal-item">
+                    8+ years designing mission-critical platforms in <strong>InsurTech</strong> &amp; <strong>Financial Services</strong>. I architect new systems, modernize legacy platforms, and embed AI/ML into core business workflows.
+                </p>
+                <div class="hero-actions reveal-item">
+                    <a href="#contact" class="btn-primary">
+                        Let's Work Together
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#experience" class="btn-ghost">View My Work</a>
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="50">0</span>
-                    <span class="stat-plus">%</span>
-                    <span class="stat-label">Performance Boost</span>
+                <div class="hero-metrics reveal-item">
+                    <div class="metric">
+                        <span class="metric-number" data-target="8">0</span><span class="metric-suffix">+</span>
+                        <span class="metric-label">Years Experience</span>
+                    </div>
+                    <div class="metric-sep"></div>
+                    <div class="metric">
+                        <span class="metric-number" data-target="90">0</span><span class="metric-suffix">K+</span>
+                        <span class="metric-label">Users Served</span>
+                    </div>
+                    <div class="metric-sep"></div>
+                    <div class="metric">
+                        <span class="metric-number" data-target="50">0</span><span class="metric-suffix">%</span>
+                        <span class="metric-label">DB Performance Gain</span>
+                    </div>
+                    <div class="metric-sep"></div>
+                    <div class="metric">
+                        <span class="metric-number" data-target="100">0</span><span class="metric-suffix">B+</span>
+                        <span class="metric-label">NPR Assets Managed</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
+        <div class="scroll-hint">
+            <div class="scroll-wheel"></div>
             <span>Scroll</span>
-            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Get to know me</span>
-                <h2 class="section-title">About Me</h2>
+    <!-- Tech Marquee -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-inner">
+                <span>.NET 10/8 LTS</span><span class="dot">·</span>
+                <span>C# / ASP.NET Core</span><span class="dot">·</span>
+                <span>Azure Cloud</span><span class="dot">·</span>
+                <span>Semantic Kernel</span><span class="dot">·</span>
+                <span>ML.NET</span><span class="dot">·</span>
+                <span>Oracle / SQL Server</span><span class="dot">·</span>
+                <span>Duende IdentityServer</span><span class="dot">·</span>
+                <span>Docker / Kubernetes</span><span class="dot">·</span>
+                <span>Domain-Driven Design</span><span class="dot">·</span>
+                <span>Zero-Trust Security</span><span class="dot">·</span>
+                <span>CQRS / Event-Driven</span><span class="dot">·</span>
+                <span>RAG / Vector DBs</span><span class="dot">·</span>
+                <span>.NET 10/8 LTS</span><span class="dot">·</span>
+                <span>C# / ASP.NET Core</span><span class="dot">·</span>
+                <span>Azure Cloud</span><span class="dot">·</span>
+                <span>Semantic Kernel</span><span class="dot">·</span>
+                <span>ML.NET</span><span class="dot">·</span>
+                <span>Oracle / SQL Server</span><span class="dot">·</span>
+                <span>Duende IdentityServer</span><span class="dot">·</span>
+                <span>Docker / Kubernetes</span><span class="dot">·</span>
+                <span>Domain-Driven Design</span><span class="dot">·</span>
+                <span>Zero-Trust Security</span><span class="dot">·</span>
+                <span>CQRS / Event-Driven</span><span class="dot">·</span>
+                <span>RAG / Vector DBs</span><span class="dot">·</span>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Lead .NET Core Full Stack Developer with 8+ years of experience delivering enterprise digital
-                        transformation in insurance and financial services. Proven track record of designing and
-                        implementing mission-critical platforms with emphasis on scalability, reliability, and
-                        measurable business impact.</p>
-                    <p>Successfully led development of asset management platforms, premium calculation engines, and core
-                        insurance APIs serving 50,000+ users. Led cross-functional teams in agile environments to
-                        deliver complex technical solutions on schedule.</p>
-                    <p>Currently expanding expertise in AI and data science to integrate predictive analytics with .NET
-                        and cloud-native architectures.</p>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="about-layout">
+                <div class="about-left">
+                    <div class="section-label reveal-item">About Me</div>
+                    <h2 class="section-heading reveal-item">I architect systems that <em>scale under pressure</em></h2>
                 </div>
-                <div class="about-stats">
-                    <div class="about-stat-item">
-                        <span class="about-stat-number">3</span>
-                        <span class="about-stat-label">Graduate Degrees</span>
+                <div class="about-right">
+                    <div class="about-body reveal-item">
+                        <p>Enterprise Systems Architect with 8+ years designing, building, and modernizing mission-critical platforms in insurance and financial services. I architect new systems from the ground up, modernize legacy platforms to <strong>.NET 10/8 LTS</strong> and cloud-native stacks, and embed AI/ML into core business workflows.</p>
+                        <p>Engagements produce production-ready system designs: C4 blueprints, domain models, security architectures, data platform strategies, and phased execution plans. Currently pursuing <strong>MSc in Data Science</strong> at Coventry University to further bridge system architecture with cutting-edge analytics.</p>
+                        <p>Engagement model: <span class="inline-tag">Assessment &amp; Discovery</span> → <span class="inline-tag">System Design &amp; Blueprint</span> → <span class="inline-tag">Execution Leadership &amp; Delivery Guardrails</span></p>
                     </div>
-                    <div class="about-stat-item">
-                        <span class="about-stat-number">1</span>
-                        <span class="about-stat-label">IEEE Publication</span>
-                    </div>
-                    <div class="about-stat-item">
-                        <span class="about-stat-number">100%</span>
-                        <span class="about-stat-label">Dedication</span>
-                    </div>
-                    <div class="about-stat-item">
-                        <span class="about-stat-number">24/7</span>
-                        <span class="about-stat-label">Learning Mode</span>
+                    <div class="about-grid reveal-item">
+                        <div class="about-card">
+                            <span class="about-card-number">3</span>
+                            <span class="about-card-label">Graduate Degrees</span>
+                        </div>
+                        <div class="about-card">
+                            <span class="about-card-number">1</span>
+                            <span class="about-card-label">IEEE Publication</span>
+                        </div>
+                        <div class="about-card">
+                            <span class="about-card-number">6+</span>
+                            <span class="about-card-label">Engineers Led</span>
+                        </div>
+                        <div class="about-card">
+                            <span class="about-card-number">4h+</span>
+                            <span class="about-card-label">US ET Overlap/Day</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,70 +1499,72 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills">
+    <section id="skills" class="section section-alt">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">My Expertise</span>
-                <h2 class="section-title">Technical Skills</h2>
-                <p class="section-description">Comprehensive expertise across modern technology stack with focus on
-                    enterprise solutions</p>
+            <div class="section-header-row">
+                <div class="section-label reveal-item">Expertise</div>
+                <h2 class="section-heading reveal-item">Architecture &amp; Design<br><em>Competencies</em></h2>
+                <p class="section-desc reveal-item">Full-spectrum capabilities from system design to AI/ML integration, security architecture, and InsurTech domain expertise.</p>
             </div>
             <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <polyline points="16 18 22 12 16 6" />
-                            <polyline points="8 6 2 12 8 18" />
-                        </svg>
+                <div class="skill-card reveal-item">
+                    <div class="skill-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
                     </div>
-                    <h3>Languages & Frameworks</h3>
-                    <p>ASP.NET Core, C#, .NET MVC, Python, Entity Framework, Razor, Laravel</p>
+                    <h3 class="skill-card-title">System Design &amp; DDD</h3>
+                    <p class="skill-card-desc">Greenfield and brownfield architecture, domain-driven design, bounded contexts, CQRS/event-driven patterns, C4 modeling, GoF design patterns, ADRs.</p>
                     <div class="skill-tags">
-                        <span>.NET</span><span>C#</span><span>Python</span>
+                        <span>C4 Modeling</span><span>DDD</span><span>CQRS</span><span>Event-Driven</span><span>ADRs</span>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <ellipse cx="12" cy="5" rx="9" ry="3" />
-                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                        </svg>
+                <div class="skill-card reveal-item">
+                    <div class="skill-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                     </div>
-                    <h3>Databases</h3>
-                    <p>Oracle, SQL Server, T-SQL, Database Optimization, Schema Design</p>
+                    <h3 class="skill-card-title">AI/ML Architecture</h3>
+                    <p class="skill-card-desc">ML pipeline design for fraud detection, predictive underwriting, claims automation, risk scoring. RAG, Semantic Kernel, vector databases, ML.NET, Python model integration.</p>
                     <div class="skill-tags">
-                        <span>Oracle</span><span>SQL Server</span><span>T-SQL</span>
+                        <span>ML.NET</span><span>Semantic Kernel</span><span>RAG</span><span>Vector DBs</span><span>Python</span>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                        </svg>
+                <div class="skill-card reveal-item">
+                    <div class="skill-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <h3>Technologies</h3>
-                    <p>REST APIs, Git, jQuery, Bootstrap, HTML5, CSS3, Chart.js</p>
+                    <h3 class="skill-card-title">Security &amp; Compliance</h3>
+                    <p class="skill-card-desc">Zero-trust design, RBAC/ABAC, OAuth2/OIDC with Duende IdentityServer, BFF pattern, mTLS, OWASP Top 10, STRIDE threat modeling, secrets management.</p>
                     <div class="skill-tags">
-                        <span>REST API</span><span>Git</span><span>Bootstrap</span>
+                        <span>Zero-Trust</span><span>OAuth2/OIDC</span><span>mTLS</span><span>STRIDE</span><span>OWASP</span>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                        </svg>
+                <div class="skill-card reveal-item">
+                    <div class="skill-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
                     </div>
-                    <h3>Specializations</h3>
-                    <p>Digital Transformation, Insurance Core Systems, API-First Architecture, Agile/Scrum</p>
+                    <h3 class="skill-card-title">Platform &amp; Data Architecture</h3>
+                    <p class="skill-card-desc">API-first design, gateway patterns, idempotency, database architecture (Oracle/SQL Server/Azure SQL), query optimization, ETL/ELT, SLO/SLA engineering.</p>
                     <div class="skill-tags">
-                        <span>Digital Transformation</span><span>Agile</span>
+                        <span>Oracle</span><span>SQL Server</span><span>Azure SQL</span><span>ETL/ELT</span><span>API-First</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal-item">
+                    <div class="skill-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3 class="skill-card-title">Backend Engineering</h3>
+                    <p class="skill-card-desc">C#, .NET 10/8/6/5 (LTS migration path), ASP.NET Core, Entity Framework Core, MediatR, YARP reverse proxy, repository/service/CQRS patterns.</p>
+                    <div class="skill-tags">
+                        <span>C#</span><span>.NET 10/8</span><span>ASP.NET Core</span><span>EF Core</span><span>MediatR</span>
+                    </div>
+                </div>
+                <div class="skill-card reveal-item">
+                    <div class="skill-card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                    </div>
+                    <h3 class="skill-card-title">Cloud &amp; DevOps</h3>
+                    <p class="skill-card-desc">Azure (App Services, Functions, Key Vault, AD, SQL), Docker, Kubernetes, Azure DevOps CI/CD, Terraform, IaC, OpenTelemetry, Application Insights.</p>
+                    <div class="skill-tags">
+                        <span>Azure</span><span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>AZ-305</span>
                     </div>
                 </div>
             </div>
@@ -218,226 +1572,280 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience">
+    <section id="experience" class="section">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">My Journey</span>
-                <h2 class="section-title">Professional Experience</h2>
+            <div class="section-header-row">
+                <div class="section-label reveal-item">My Journey</div>
+                <h2 class="section-heading reveal-item">Professional<br><em>Experience</em></h2>
             </div>
             <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="marker-dot"></div>
-                        <div class="marker-line"></div>
+
+                <!-- Role 1 -->
+                <div class="timeline-block reveal-item">
+                    <div class="timeline-aside">
+                        <span class="timeline-date">Jan 2023 — Present</span>
+                        <span class="timeline-badge current">Current</span>
                     </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
+                    <div class="timeline-card">
+                        <div class="timeline-card-head">
                             <div>
-                                <h3 class="experience-title">Officer</h3>
-                                <p class="experience-company">Nepal Life Insurance Co. Ltd. <span class="location">•
-                                        Kathmandu, Nepal</span></p>
+                                <h3 class="tl-title">Officer — Lead Architect &amp; Platform Engineer</h3>
+                                <p class="tl-company">Nepal Life Insurance Co. Ltd. <span class="tl-loc">· Kathmandu, Nepal</span></p>
                             </div>
-                            <span class="experience-date">January 2023 – Present</span>
+                            <div class="tl-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            </div>
                         </div>
-                        <ul>
-                            <li>Led digital transformation initiatives to modernize legacy insurance systems and
-                                establish technology roadmaps aligned with business objectives</li>
-                            <li>Delivered comprehensive insurance core system modules including underwriting, product
-                                setup, and policy lifecycle management platform</li>
-                            <li>Architected secure user portal and REST APIs supporting 50,000+ users across web and
-                                mobile channels with real-time data synchronization</li>
-                            <li>Integrated payment gateway solutions enabling seamless digital transactions and improved
-                                customer experience</li>
-                            <li>Drove database optimization initiatives reducing query execution time by 50% and
-                                implemented strategic dashboards for data-driven decision-making</li>
-                            <li>Researched and evaluated AI tools for insurance analytics automation and predictive
-                                modeling capabilities</li>
+                        <div class="tl-phase">
+                            <span class="phase-label">Platform Architecture &amp; AI-Driven Transformation</span>
+                            <span class="phase-date">Jul 2024 – Present</span>
+                        </div>
+                        <ul class="tl-list">
+                            <li>Architect and lead development of mission-critical insurance platform modules (policy administration, underwriting, claims, digital channels); own system design decisions, integration architecture, and cross-vendor coordination</li>
+                            <li>Designed AI roadmap for insurance operations—fraud detection, predictive underwriting, claims triage automation, and customer analytics; authored executive use-case playbook and defined ML integration architecture for production systems</li>
+                            <li>Drove enterprise-wide system modernization—digitized policy issuance, claims processing, and agent onboarding; designed SLA frameworks with KPIs for uptime, resolution times, and delivery timelines</li>
+                            <li>Led database performance programs (query tuning, index optimization) and infrastructure cost-efficiency initiatives, delivering measurable savings across platforms</li>
+                        </ul>
+                        <div class="tl-phase">
+                            <span class="phase-label">System Architecture &amp; Secure Platform Delivery</span>
+                            <span class="phase-date">Jan 2023 – Jun 2024</span>
+                        </div>
+                        <ul class="tl-list">
+                            <li>Designed target-state system architecture for legacy insurance platform; created phased migration roadmap (monolith → modular → microservices-ready), defining domain boundaries, data ownership, and integration contracts; guided 6+ engineers through execution</li>
+                            <li>Designed and delivered enterprise portal and API ecosystem serving <strong>90,000+ active users</strong>; architected RBAC model, API governance standards, OWASP-aligned security controls, and high-availability operational guardrails</li>
+                            <li>Designed payment gateway flows with reconciliation patterns, idempotency controls, and audit-trail logging; delivered <strong>50% query-time reduction</strong> across Oracle/SQL Server through systematic performance engineering</li>
+                        </ul>
+                        <div class="tl-highlights">
+                            <div class="highlight-chip">90K+ Users</div>
+                            <div class="highlight-chip">50% DB Perf Gain</div>
+                            <div class="highlight-chip">6+ Engineers Led</div>
+                            <div class="highlight-chip">AI Roadmap Author</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 2 -->
+                <div class="timeline-block reveal-item">
+                    <div class="timeline-aside">
+                        <span class="timeline-date">Nov 2018 — Dec 2022</span>
+                    </div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-head">
+                            <div>
+                                <h3 class="tl-title">Software Engineer</h3>
+                                <p class="tl-company">Nepal Life Insurance Co. Ltd. <span class="tl-loc">· Kathmandu, Nepal</span></p>
+                            </div>
+                            <div class="tl-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            </div>
+                        </div>
+                        <ul class="tl-list">
+                            <li>Designed and built enterprise applications for asset management (<strong>NPR 100B+ portfolio</strong>), policy administration, and premium calculation using .NET Core/MVC with Oracle/SQL Server—handling sensitive financial data with security and audit controls</li>
+                            <li>Led development of premium calculator engine across 20+ product lines; standardized actuarial rules, reducing manual errors and improving sales efficiency by ~30%</li>
+                            <li>Designed secure onboarding system for 5,000+ agents/customers with eligibility validation, KYC workflows, and payment gateway integration</li>
+                            <li>Built API integrations connecting underwriting, policy issuance, and claims across core systems with error handling, retry logic, and reconciliation patterns</li>
+                        </ul>
+                        <div class="tl-highlights">
+                            <div class="highlight-chip">NPR 100B+ Portfolio</div>
+                            <div class="highlight-chip">20+ Product Lines</div>
+                            <div class="highlight-chip">5K+ Agents Onboarded</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 3 -->
+                <div class="timeline-block reveal-item">
+                    <div class="timeline-aside">
+                        <span class="timeline-date">Oct 2017 — Nov 2018</span>
+                    </div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-head">
+                            <div>
+                                <h3 class="tl-title">Software Engineer</h3>
+                                <p class="tl-company">Innovative Ghar Nepal <span class="tl-loc">· Kathmandu, Nepal</span></p>
+                            </div>
+                            <div class="tl-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                            </div>
+                        </div>
+                        <ul class="tl-list">
+                            <li>Owned end-to-end system design and development of a multi-tenant real-estate platform (ASP.NET MVC/C#); designed data model, repository-pattern architecture, RBAC, and shipped property listing, tenant management, and reporting modules</li>
+                            <li>Designed responsive interfaces ensuring cross-browser compatibility; performed comprehensive unit testing, debugging, and code reviews to maintain high coding standards</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="marker-dot"></div>
-                        <div class="marker-line"></div>
-                    </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Junior Officer</h3>
-                                <p class="experience-company">Nepal Life Insurance Co. Ltd. <span class="location">•
-                                        Kathmandu, Nepal</span></p>
-                            </div>
-                            <span class="experience-date">November 2018 – December 2022</span>
-                        </div>
-                        <ul>
-                            <li>Built enterprise web and database applications for asset management, policy
-                                administration, and premium calculation using .NET Core, MVC, Oracle, and SQL Server
-                            </li>
-                            <li>Led development of premium calculator utilities integrated with actuarial logic,
-                                streamlining quotation processes for sales teams</li>
-                            <li>Developed and launched secure online proposal application system for agent and customer
-                                onboarding, featuring real-time eligibility checks and payment gateway integration</li>
-                            <li>Assisted in initial setup and process optimization of insurance core system, supporting
-                                policy management, underwriting workflows, and REST API integrations</li>
-                        </ul>
-                    </div>
-                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker">
-                        <div class="marker-dot"></div>
-                        <div class="marker-line"></div>
+    <!-- Architecture Deliverables -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header-row">
+                <div class="section-label reveal-item">Deliverables</div>
+                <h2 class="section-heading reveal-item">Selected Architecture<br><em>Deliverables</em></h2>
+            </div>
+            <div class="deliverables-grid">
+                <div class="deliverable-card reveal-item">
+                    <div class="dc-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Software Engineer</h3>
-                                <p class="experience-company">Innovative Ghar Nepal <span class="location">• Kathmandu,
-                                        Nepal</span></p>
-                            </div>
-                            <span class="experience-date">October 2017 – November 2018</span>
-                        </div>
-                        <ul>
-                            <li>Developed and maintained ASP.NET MVC web applications using C#, Razor views, and
-                                Repository pattern for real estate management platform</li>
-                            <li>Designed responsive interfaces with HTML5, CSS3, Bootstrap, and jQuery ensuring
-                                cross-browser compatibility and optimal user experience</li>
-                            <li>Performed comprehensive unit testing, debugging, and code reviews to maintain high
-                                coding standards and application performance</li>
-                        </ul>
+                    <h3>System Architecture &amp; ADRs</h3>
+                    <p>C4 diagrams (Context, Container, Component), domain model, capability map, service boundaries, data ownership matrix, and 15+ ADRs covering integration, reliability, security.</p>
+                </div>
+                <div class="deliverable-card reveal-item">
+                    <div class="dc-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
+                    <h3>Security &amp; API Architecture</h3>
+                    <p>API versioning policy, error model, idempotency guidance, OWASP checklists, threat model templates, RBAC design documents, security review gates adopted across engineering teams.</p>
+                </div>
+                <div class="deliverable-card reveal-item">
+                    <div class="dc-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>AI Strategy &amp; Transformation</h3>
+                    <p>Executive AI use-case roadmap for insurance operations, modernization plans with business cases, phased timelines, risk matrices, and 12-month scalability projections.</p>
+                </div>
+                <div class="deliverable-card reveal-item">
+                    <div class="dc-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3>Performance &amp; Optimization</h3>
+                    <p>Database performance audits, infrastructure right-sizing, license utilization analyses, and ROI-driven cost optimization proposals with measurable business outcomes.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Education Section -->
-    <section id="education">
+    <section id="education" class="section">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Academic Background</span>
-                <h2 class="section-title">Education</h2>
+            <div class="section-header-row">
+                <div class="section-label reveal-item">Academic Background</div>
+                <h2 class="section-heading reveal-item">Education &amp;<br><em>Certifications</em></h2>
             </div>
-            <div class="education-grid">
-                <div class="education-card">
-                    <div class="education-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                        </svg>
+            <div class="edu-grid">
+                <div class="edu-card reveal-item">
+                    <div class="edu-card-top">
+                        <span class="edu-status active">In Progress</span>
+                        <span class="edu-year">2025 – 2027</span>
                     </div>
-                    <div class="education-content">
-                        <span class="education-status">In Progress</span>
-                        <h3 class="education-degree">Master of Science in Data Science and Computational Intelligence
-                        </h3>
-                        <p class="education-institution">Coventry University</p>
-                        <p class="education-date">March 2025 – February 2027</p>
-                    </div>
+                    <h3 class="edu-degree">MSc, Data Science &amp; Computational Intelligence</h3>
+                    <p class="edu-inst">Coventry University, UK (Distance)</p>
+                    <p class="edu-detail">Softwarica College · Expected Feb 2027</p>
                 </div>
-                <div class="education-card">
-                    <div class="education-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                        </svg>
+                <div class="edu-card reveal-item">
+                    <div class="edu-card-top">
+                        <span class="edu-status active">In Progress</span>
+                        <span class="edu-year">2024 – 2026</span>
                     </div>
-                    <div class="education-content">
-                        <span class="education-status">In Progress</span>
-                        <h3 class="education-degree">Master of Business Administration (MBA) – Accounting and Finance
-                        </h3>
-                        <p class="education-institution">Indira Gandhi National Open University</p>
-                        <p class="education-date">July 2024 – July 2026</p>
-                    </div>
+                    <h3 class="edu-degree">MBA, Finance</h3>
+                    <p class="edu-inst">Indira Gandhi National Open University (IGNOU)</p>
+                    <p class="edu-detail">Distance · Expected Jul 2026</p>
                 </div>
-                <div class="education-card">
-                    <div class="education-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                        </svg>
+                <div class="edu-card reveal-item">
+                    <div class="edu-card-top">
+                        <span class="edu-status done">Completed</span>
+                        <span class="edu-year">2013 – 2017</span>
                     </div>
-                    <div class="education-content">
-                        <span class="education-status completed">Completed</span>
-                        <h3 class="education-degree">Bachelor of Engineering (BE) – Computer Science</h3>
-                        <p class="education-institution">Advanced College of Engineering and Management</p>
-                        <p class="education-date">October 2013 – December 2017</p>
+                    <h3 class="edu-degree">BE, Computer Science &amp; Engineering</h3>
+                    <p class="edu-inst">Advanced College of Engineering</p>
+                    <p class="edu-detail">Tribhuvan University</p>
+                </div>
+                <div class="edu-card cert-card reveal-item">
+                    <div class="edu-card-top">
+                        <span class="edu-status cert">In Progress</span>
+                        <span class="edu-year">2025</span>
                     </div>
+                    <h3 class="edu-degree">Microsoft Certified: Azure Solutions Architect Expert</h3>
+                    <p class="edu-inst">Microsoft — AZ-305</p>
+                    <p class="edu-detail">Cloud Architecture Certification</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Publications Section -->
-    <section id="publications">
+    <section id="publications" class="section section-alt">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Research Work</span>
-                <h2 class="section-title">Publications</h2>
+            <div class="section-header-row">
+                <div class="section-label reveal-item">Research Work</div>
+                <h2 class="section-heading reveal-item">IEEE<br><em>Publication</em></h2>
             </div>
-            <div class="publication-card">
-                <div class="publication-badge">IEEE Xplore</div>
-                <h3 class="publication-title">"Attendance and Security Assurance using Image Processing"</h3>
-                <p class="publication-details">Published in IEEE ICCMC 2018</p>
-                <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" class="publication-link">
-                    <span>View Publication</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        <polyline points="15 3 21 3 21 9" />
-                        <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                </a>
+            <div class="pub-card reveal-item">
+                <div class="pub-card-inner">
+                    <div class="pub-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        IEEE Xplore · Peer-Reviewed
+                    </div>
+                    <h3 class="pub-title">"Attendance and Security Assurance using Image Processing"</h3>
+                    <p class="pub-venue">Published in IEEE ICCMC 2018 · International Conference on Computing Methodologies and Communication</p>
+                    <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" rel="noopener" class="pub-link">
+                        View on IEEE Xplore
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
+    <section id="contact" class="section">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Let's Connect</span>
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-description">I'm always open to discussing new opportunities, collaborations, or just
-                    having a conversation about technology and innovation.</p>
-            </div>
-            <div class="contact-methods">
-                <a href="mailto:rahulkarn2118@gmail.com" class="contact-card">
-                    <div class="contact-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
-                        </svg>
+            <div class="contact-layout">
+                <div class="contact-left reveal-item">
+                    <div class="section-label">Contact</div>
+                    <h2 class="section-heading">Let's build<br>something <em>remarkable</em></h2>
+                    <p class="contact-desc">Available for US remote consulting in InsurTech, Financial Services, and AI-Driven Transformation. Targeting $10–12K/month engagements. W-8BEN available on request.</p>
+                    <div class="contact-availability">
+                        <span class="avail-dot"></span>
+                        4h+ US Eastern overlap · Independent Contractor
                     </div>
-                    <span class="contact-label">Email</span>
-                    <span class="contact-value">rahulkarn2118@gmail.com</span>
-                </a>
-                <a href="tel:+9779863036368" class="contact-card">
-                    <div class="contact-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                        </svg>
-                    </div>
-                    <span class="contact-label">Phone</span>
-                    <span class="contact-value">+977 9863036368</span>
-                </a>
-                <a href="https://linkedin.com/in/rahulkarn52" target="_blank" class="contact-card">
-                    <div class="contact-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                            <rect x="2" y="9" width="4" height="12" />
-                            <circle cx="4" cy="4" r="2" />
-                        </svg>
-                    </div>
-                    <span class="contact-label">LinkedIn</span>
-                    <span class="contact-value">linkedin.com/in/rahulkarn52</span>
-                </a>
+                </div>
+                <div class="contact-right">
+                    <a href="mailto:rahulkarn2118@gmail.com" class="contact-card reveal-item">
+                        <div class="cc-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div class="cc-body">
+                            <span class="cc-label">Email</span>
+                            <span class="cc-value">rahulkarn2118@gmail.com</span>
+                        </div>
+                        <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="tel:+9779863036368" class="contact-card reveal-item">
+                        <div class="cc-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <div class="cc-body">
+                            <span class="cc-label">Phone</span>
+                            <span class="cc-value">+977 9863036368</span>
+                        </div>
+                        <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener" class="contact-card reveal-item">
+                        <div class="cc-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        </div>
+                        <div class="cc-body">
+                            <span class="cc-label">LinkedIn</span>
+                            <span class="cc-value">linkedin.com/in/rahulkarn52</span>
+                        </div>
+                        <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="https://rahulkarn.me" target="_blank" rel="noopener" class="contact-card reveal-item">
+                        <div class="cc-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        </div>
+                        <div class="cc-body">
+                            <span class="cc-label">Website</span>
+                            <span class="cc-value">rahulkarn.me</span>
+                        </div>
+                        <svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -445,73 +1853,242 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
+            <div class="footer-inner">
+                <div class="footer-left">
                     <span class="footer-logo">RK</span>
-                    <p>© 2025 Rahul Karn. All rights reserved.</p>
-                    <p class="footer-location">Kalanki, Kathmandu, Nepal</p>
+                    <p class="footer-copy">© 2025 Rahul Karn · Kalanki, Kathmandu, Nepal</p>
                 </div>
-                <div class="social-links">
-                    <a href="https://linkedin.com/in/rahulkarn52" target="_blank" title="LinkedIn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                            <rect x="2" y="9" width="4" height="12" />
-                            <circle cx="4" cy="4" r="2" />
-                        </svg>
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="#skills">Expertise</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://linkedin.com/in/rahulkarn52" target="_blank" aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                     </a>
-                    <a href="https://github.com/rahulkarn" target="_blank" title="GitHub">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                        </svg>
+                    <a href="https://github.com/rahulkarn" target="_blank" aria-label="GitHub">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
                     </a>
-                    <a href="mailto:rahulkarn2118@gmail.com" title="Email">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
-                        </svg>
+                    <a href="mailto:rahulkarn2118@gmail.com" aria-label="Email">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Bottom Navigation -->
-    <div class="bottom-nav">
-        <button data-target="#about" class="active">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            <span>About</span>
+    <!-- Mobile Bottom Nav -->
+    <div class="bottom-nav" id="bottomNav">
+        <button data-target="#hero">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>Home</span>
         </button>
         <button data-target="#skills">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path
-                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             <span>Skills</span>
         </button>
         <button data-target="#experience">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             <span>Work</span>
         </button>
         <button data-target="#contact">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span>Contact</span>
         </button>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+/* ============================================================
+   RAHUL KARN PORTFOLIO — Enhanced Script
+   ============================================================ */
 
+// ── Resume Download ────────────────────────────────────────
+function downloadResume() {
+    fetch('rahul_karn_resume.pdf')
+        .then(r => r.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = Object.assign(document.createElement('a'), { href: url, download: 'Rahul_Karn_Resume.pdf' });
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        })
+        .catch(() => window.open('rahul_karn_resume.pdf', '_blank'));
+}
+
+// ── Navbar ─────────────────────────────────────────────────
+const navbar    = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+hamburger.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+document.addEventListener('click', e => {
+    if (!navbar.contains(e.target)) {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// ── Active Nav Link on Scroll ──────────────────────────────
+const sections    = [...document.querySelectorAll('section[id]')];
+const navLinkEls  = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+
+const updateActiveLink = () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 140) current = s.id;
+    });
+    navLinkEls.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+    });
+};
+
+window.addEventListener('scroll', updateActiveLink, { passive: true });
+
+// ── Bottom Nav ─────────────────────────────────────────────
+const bottomNavBtns = document.querySelectorAll('.bottom-nav button');
+
+bottomNavBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const el = document.querySelector(btn.getAttribute('data-target'));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    bottomNavBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-target') === `#${current}`);
+    });
+}, { passive: true });
+
+// ── Smooth Scroll ──────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+    });
+});
+
+// ── Scroll Reveal via IntersectionObserver ─────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.reveal-item').forEach(el => revealObserver.observe(el));
+
+// ── Counter Animation ──────────────────────────────────────
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+
+const animateCounter = (el, from, to, duration) => {
+    let start = null;
+    const step = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / duration, 1);
+        el.textContent = Math.floor(easeOutCubic(p) * (to - from) + from);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = to;
+    };
+    requestAnimationFrame(step);
+};
+
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.dataset.target);
+            animateCounter(el, 0, target, 1800);
+            counterObserver.unobserve(el);
+        }
+    });
+}, { threshold: 0.6 });
+
+document.querySelectorAll('.metric-number').forEach(el => counterObserver.observe(el));
+
+// ── Parallax Orbs ──────────────────────────────────────────
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            const scrolled = window.scrollY;
+            const glow = document.querySelector('.hero-glow');
+            if (glow) glow.style.transform = `translateX(-50%) translateY(${scrolled * 0.2}px)`;
+            ticking = false;
+        });
+        ticking = true;
+    }
+}, { passive: true });
+
+// ── Card Tilt on Hover (subtle, desktop only) ─────────────
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.skill-card, .timeline-card, .about-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `translateY(-4px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
+
+// ── Init: Hero items visible on load ──────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('loaded');
+    // Force hero items to be visible with staggered delay
+    const heroItems = document.querySelectorAll('.hero .reveal-item');
+    heroItems.forEach((item, i) => {
+        setTimeout(() => item.classList.add('is-visible'), 100 + i * 120);
+    });
+});
+
+// ── Reduced Motion ─────────────────────────────────────────
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.style.setProperty('--transition', '0s');
+}
+
+// ── Console Easter Egg ─────────────────────────────────────
+console.log('%c👋 Hey there!', 'font-size:20px; font-weight:bold; color:#4F46E5;');
+console.log('%cEnterprise Systems Architect • .NET • AI/ML • InsurTech', 'font-size:13px; color:#6B7280;');
+console.log('%chttps://linkedin.com/in/rahulkarn52', 'font-size:12px; color:#7C3AED;');
+
+</script>
+</body>
 </html>
