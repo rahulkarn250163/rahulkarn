@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
-<title>Rahul Karn — Enterprise Systems Architect</title>
-<meta name="description" content="Enterprise Systems Architect with 8+ years designing mission-critical platforms in InsurTech &amp; Financial Services. AI-Driven Transformation Leader.">
+<title>Rahul Karn - Senior .NET Engineer · InsurTech &amp; Financial Systems</title>
+<meta name="description" content="Senior .NET engineer with 8+ years building production insurance and financial systems: policy admin, claims, payments, and agent portals at one of Nepal's largest life insurers. Open to senior remote engineering roles.">
 <script>
 (function(){var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t)}else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches){document.documentElement.setAttribute('data-theme','light')}})();
 </script>
-<meta property="og:title" content="Rahul Karn — Enterprise Systems Architect">
-<meta property="og:description" content="I architect enterprise platforms that handle real money, real users, and real regulatory pressure. 8+ years in InsurTech &amp; Financial Services.">
+<meta property="og:title" content="Rahul Karn - Senior .NET Engineer · InsurTech &amp; Financial Systems">
+<meta property="og:description" content="Senior .NET engineer with 8+ years building production insurance and financial systems. Open to senior remote engineering roles.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://xraone.com">
 <meta property="og:image" content="https://xraone.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rahul Karn — Enterprise Systems Architect">
-<meta name="twitter:description" content="I architect enterprise platforms that handle real money, real users, and real regulatory pressure.">
+<meta name="twitter:title" content="Rahul Karn - Senior .NET Engineer · InsurTech &amp; Financial Systems">
+<meta name="twitter:description" content="Senior .NET engineer with 8+ years building production insurance and financial systems.">
 <meta name="twitter:image" content="https://xraone.com/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>RK</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -384,6 +384,858 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
 @media(max-width:480px){.hero-actions{flex-direction:column;align-items:stretch}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+/* CLEAN WHITE REDESIGN */
+:root,
+[data-theme="light"]{
+  --bg:#ffffff;
+  --bg-elevated:#f7f9fc;
+  --bg-card:#ffffff;
+  --bg-card-h:#f8fafc;
+  --border:#e5eaf1;
+  --border-h:#cbd5e1;
+  --text-1:#101828;
+  --text-2:#475467;
+  --text-3:#667085;
+  --text-4:#98a2b3;
+  --accent:#2563eb;
+  --accent-h:#1d4ed8;
+  --accent-dim:#eff6ff;
+  --accent-mid:#bfdbfe;
+  --accent-glow:rgba(37,99,235,.16);
+  --accent2:#0f766e;
+  --accent2-dim:#ecfdf5;
+  --accent3:#b45309;
+  --accent3-dim:#fffbeb;
+  --success:#047857;
+  --success-dim:#ecfdf5;
+  --shadow:rgba(15,23,42,.06);
+  --shadow-lg:rgba(15,23,42,.1);
+  --noise-opacity:0;
+  --nav-bg:rgba(255,255,255,.92);
+  --font-display:'DM Sans',system-ui,sans-serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --nav-h:76px;
+  --container:1180px;
+}
+
+*,
+*::before,
+*::after{letter-spacing:0!important}
+
+html{background:#fff;scroll-padding-top:96px}
+body{
+  background:linear-gradient(180deg,#fff 0%,#f8fbff 44%,#fff 100%);
+  color:var(--text-2);
+  font-size:16px;
+  line-height:1.7;
+}
+body::before{display:none}
+::selection{background:#dbeafe;color:#0f172a}
+.container{max-width:var(--container);padding:0 32px}
+
+.skip-link{
+  background:var(--text-1);
+  color:#fff;
+  border-radius:0 0 8px 8px;
+}
+
+#navbar{
+  height:var(--nav-h);
+  background:#fff;
+  border-bottom:1px solid transparent;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+#navbar.scrolled{
+  background:#fff;
+  box-shadow:0 12px 40px rgba(15,23,42,.06);
+  border-bottom-color:var(--border);
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.nav-inner{padding:0 32px}
+.nav-logo{
+  font-family:var(--font-body);
+  font-size:1.05rem;
+  font-weight:800;
+  color:var(--text-1);
+}
+.nav-logo span{color:var(--accent);font-style:normal}
+.nav-logo::after{display:none}
+.nav-links{gap:2px}
+.nav-links a{
+  color:var(--text-3);
+  font-size:.9rem;
+  font-weight:650;
+  border-radius:8px;
+  padding:8px 12px;
+}
+.nav-links a::before{display:none!important}
+.nav-links a:hover,
+.nav-links a.active{
+  color:var(--accent);
+  background:#eff6ff;
+}
+.theme-toggle{display:none}
+.nav-cta{
+  background:var(--text-1)!important;
+  color:#fff!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+  padding:9px 14px!important;
+}
+.nav-cta:hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 10px 24px rgba(15,23,42,.14)!important;
+}
+.hamburger span{background:var(--text-1)}
+
+.hero{
+  min-height:88vh;
+  align-items:flex-start;
+  padding:calc(var(--nav-h) + 54px) 0 44px;
+  background:#fff;
+}
+.hero-bg-gradient{
+  background:linear-gradient(180deg,#f8fafc 0%,rgba(255,255,255,0) 58%);
+  opacity:1;
+}
+.hero-grid-overlay{
+  background-image:linear-gradient(rgba(15,23,42,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.04) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:linear-gradient(180deg,black 0%,transparent 72%);
+  -webkit-mask-image:linear-gradient(180deg,black 0%,transparent 72%);
+}
+.hero .container{position:relative;z-index:2}
+.hero-shell{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  align-items:center;
+  gap:72px;
+}
+.hero-content{max-width:760px}
+.hero-badge{
+  margin-bottom:24px;
+  padding:7px 12px;
+  border-radius:8px;
+  background:var(--success-dim);
+  border-color:#bbf7d0;
+  color:var(--success);
+  font-size:.86rem;
+  font-weight:700;
+  animation:fadeUp .55s var(--ease) .05s forwards;
+}
+.badge-pulse{background:var(--success)}
+.badge-pulse::after{display:none}
+.hero-title{
+  font-family:var(--font-body);
+  font-size:5rem;
+  font-weight:800;
+  line-height:1.02;
+  color:var(--text-1);
+  margin-bottom:24px;
+  max-width:820px;
+  animation:fadeUp .6s var(--ease) .12s forwards;
+}
+.hero-title em{
+  color:var(--accent);
+  -webkit-text-fill-color:currentColor;
+  background:none;
+}
+.hero-sub{
+  font-size:1.2rem;
+  line-height:1.75;
+  max-width:660px;
+  color:var(--text-2);
+  margin-bottom:34px;
+  animation:fadeUp .6s var(--ease) .18s forwards;
+}
+.hero-actions{gap:12px;animation:fadeUp .6s var(--ease) .24s forwards}
+.btn-primary,
+.btn-outline{
+  min-height:48px;
+  border-radius:8px;
+  padding:13px 18px;
+  font-size:.95rem;
+  font-weight:750;
+}
+.btn-primary{
+  background:var(--accent);
+  box-shadow:0 10px 26px var(--accent-glow);
+}
+.btn-primary:hover{
+  background:var(--accent-h);
+  transform:translateY(-1px);
+  box-shadow:0 14px 32px var(--accent-glow);
+}
+.btn-outline{
+  background:#fff;
+  color:var(--text-1);
+  border-color:var(--border);
+}
+.btn-outline:hover{
+  color:var(--accent);
+  border-color:var(--accent-mid);
+  background:#f8fbff;
+  transform:translateY(-1px);
+}
+.hero-profile{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:12px;
+  box-shadow:0 24px 70px rgba(15,23,42,.12);
+}
+.profile-image{
+  aspect-ratio:4/5;
+  overflow:hidden;
+  border-radius:8px;
+  background:#e2e8f0;
+}
+.profile-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+}
+.profile-copy{padding:18px 4px 4px}
+.profile-status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--success);
+  font-size:.82rem;
+  font-weight:750;
+}
+.profile-status::before{
+  content:'';
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--success);
+}
+.profile-copy h2{
+  margin-top:10px;
+  color:var(--text-1);
+  font-size:1.7rem;
+  line-height:1.15;
+}
+.profile-copy p{
+  margin-top:6px;
+  color:var(--text-3);
+  font-size:.95rem;
+  line-height:1.5;
+}
+.profile-stack{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:16px;
+}
+.profile-stack span{
+  padding:5px 8px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#f8fafc;
+  color:var(--text-2);
+  font-size:.78rem;
+  font-weight:700;
+}
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-top:44px;
+}
+.stat-card{
+  min-width:0;
+  border-radius:8px;
+  border-color:var(--border);
+  background:#fff;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(15,23,42,.05);
+}
+.stat-card::before{display:none}
+.stat-card:hover{
+  border-color:var(--border-h);
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px rgba(15,23,42,.08);
+}
+.stat-number{
+  font-family:var(--font-body);
+  font-size:2.4rem;
+  font-weight:850;
+  color:var(--text-1);
+}
+.stat-suffix{
+  font-family:var(--font-body);
+  font-size:1.15rem;
+  font-weight:850;
+  color:var(--accent);
+}
+.stat-label{
+  color:var(--text-3);
+  font-size:.8rem;
+  font-weight:750;
+  text-transform:none;
+}
+
+.marquee-wrap{
+  background:#fff;
+  border-color:var(--border);
+}
+.marquee-item{
+  color:var(--text-3);
+  font-size:.9rem;
+}
+.marquee-dot{background:var(--accent);opacity:.6}
+
+.section{padding:96px 0}
+.section-header{margin-bottom:42px}
+.section-label{
+  font-family:var(--font-body);
+  color:var(--accent);
+  font-size:.9rem;
+  font-weight:800;
+  text-transform:none;
+  margin-bottom:12px;
+}
+.section-label::before{
+  width:28px;
+  background:var(--accent);
+}
+.section-heading{
+  font-family:var(--font-body);
+  font-size:3.25rem;
+  font-weight:820;
+  line-height:1.1;
+  color:var(--text-1);
+  margin-bottom:16px;
+}
+.section-heading em{
+  font-style:normal;
+  color:var(--accent);
+}
+.section-desc{
+  color:var(--text-2);
+  font-size:1.05rem;
+  max-width:680px;
+}
+.reveal{transform:translateY(18px)}
+
+.about-layout{
+  grid-template-columns:300px minmax(0,1fr);
+  gap:56px;
+}
+.about-photo{border-radius:8px;box-shadow:0 16px 48px rgba(15,23,42,.12)}
+.about-photo::before{display:none}
+.about-photo-border,
+.about-photo-accent{display:none}
+.about-name-card,
+.engagement-block{
+  border-radius:8px;
+  border-color:var(--border);
+  background:#fff;
+  box-shadow:0 10px 30px rgba(15,23,42,.05);
+}
+.about-name-card h3,
+.about-text strong{color:var(--text-1)}
+.about-location svg,
+.highlight-text{color:var(--accent)}
+.about-text p{font-size:1.02rem;color:var(--text-2)}
+.about-human{
+  border-left-color:var(--accent);
+  color:var(--text-3);
+}
+.engagement-block{padding:28px}
+.engagement-step{
+  border-radius:8px;
+  background:#f8fafc;
+  border-color:var(--border);
+  color:var(--text-1);
+}
+.engagement-arrow{color:var(--accent)}
+
+.case-studies-grid{gap:14px}
+.case-card{
+  border-radius:8px;
+  border-color:var(--border);
+  background:#fff;
+  box-shadow:0 10px 30px rgba(15,23,42,.05);
+}
+.case-card::before{display:none}
+.case-card:hover,
+.case-card.open{
+  border-color:var(--border-h);
+  box-shadow:0 18px 42px rgba(15,23,42,.08);
+}
+.case-header{
+  padding:26px 28px;
+}
+.case-header:hover{background:#f8fafc}
+.case-title{
+  font-family:var(--font-body);
+  font-size:1.25rem;
+  font-weight:800;
+  color:var(--text-1);
+}
+.case-summary{color:var(--text-3)}
+.case-chip{
+  border-radius:6px;
+  border-color:#dbeafe;
+  background:#eff6ff;
+  color:var(--accent);
+  font-size:.72rem;
+}
+.case-toggle{
+  border-radius:8px;
+  border-color:var(--border);
+  background:#fff;
+}
+.case-content{
+  border-top:1px solid var(--border);
+  padding:28px;
+}
+.case-section-label{
+  font-family:var(--font-body);
+  color:var(--accent);
+  font-size:.83rem;
+  text-transform:none;
+}
+.case-section p,
+.case-section li{color:var(--text-2)}
+.case-section li::before{background:var(--accent)}
+.case-diagram{
+  border-radius:8px;
+  border-color:var(--border);
+  background:#f8fafc;
+}
+.case-diagram-label{
+  color:var(--text-3);
+  font-size:.78rem;
+  text-transform:none;
+}
+.arch-box{
+  border-radius:8px;
+  font-weight:750;
+}
+.arch-box.primary{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+.arch-box.secondary{background:#ecfeff;border-color:#a5f3fc;color:#0e7490}
+.arch-box.tertiary{background:#fffbeb;border-color:#fde68a;color:#b45309}
+.arch-box.success{background:#ecfdf5;border-color:#bbf7d0;color:#047857}
+.arch-box.neutral{background:#fff;border-color:var(--border);color:var(--text-2)}
+.arch-divider{width:100%;display:flex;align-items:center;gap:12px;color:var(--text-4);font-size:.78rem}
+.arch-divider::before,
+.arch-divider::after{content:'';height:1px;background:var(--border);flex:1}
+.arch-divider-label{white-space:nowrap}
+
+.case-metrics{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:24px;
+}
+.metric-card{
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:16px;
+  background:#fff;
+}
+.metric-label{
+  color:var(--text-3);
+  font-size:.82rem;
+  font-weight:750;
+}
+.metric-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:8px 0 10px;
+  color:var(--text-1);
+  font-weight:800;
+}
+.metric-before{color:var(--text-4)}
+.metric-after{color:var(--text-1)}
+.metric-arrow{color:var(--accent)}
+.metric-bar-wrap{
+  height:7px;
+  border-radius:6px;
+  background:#edf2f7;
+  overflow:hidden;
+}
+.metric-bar{
+  height:100%;
+  border-radius:6px;
+  background:var(--accent);
+}
+.metric-bar.good{background:var(--success)}
+.metric-bar.accent{background:var(--accent2)}
+
+.deliverables-grid,
+.skills-grid,
+.edu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.deliverable-card,
+.skill-card,
+.edu-card{
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#fff;
+  padding:24px;
+  box-shadow:0 10px 28px rgba(15,23,42,.05);
+}
+.deliverable-card:hover,
+.skill-card:hover,
+.edu-card:hover{
+  border-color:var(--border-h);
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px rgba(15,23,42,.08);
+}
+.deliverable-icon,
+.skill-icon{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  background:#eff6ff;
+  color:var(--accent);
+  margin-bottom:18px;
+}
+.deliverable-card h3,
+.skill-card h3,
+.edu-degree{
+  color:var(--text-1);
+  font-size:1.12rem;
+  font-weight:820;
+  line-height:1.3;
+}
+.deliverable-card p,
+.skill-card p,
+.edu-inst,
+.edu-detail,
+.edu-note{color:var(--text-2)}
+.deliverable-files,
+.skill-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:18px;
+}
+.deliverable-file,
+.skill-tags span,
+.highlight-chip,
+.edu-status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  background:#f8fafc;
+  color:var(--text-2);
+  padding:5px 8px;
+  font-size:.78rem;
+  font-weight:750;
+}
+
+.timeline{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.timeline-block{
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#fff;
+  padding:28px;
+  box-shadow:0 10px 28px rgba(15,23,42,.05);
+}
+.tl-head{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:18px;
+}
+.tl-title{
+  color:var(--text-1);
+  font-size:1.2rem;
+  font-weight:820;
+}
+.tl-company,
+.tl-loc,
+.tl-date{color:var(--text-3)}
+.tl-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+  min-width:150px;
+}
+.tl-badge.current,
+.edu-status.active,
+.edu-status.cert{
+  background:#ecfdf5;
+  color:var(--success);
+  border-color:#bbf7d0;
+}
+.edu-status.done{
+  background:#eff6ff;
+  color:var(--accent);
+  border-color:#bfdbfe;
+}
+.tl-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.tl-list li{
+  color:var(--text-2);
+  padding-left:18px;
+  position:relative;
+}
+.tl-list li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:.75em;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--accent);
+}
+.tl-list strong{color:var(--text-1)}
+.tl-highlights{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+
+.edu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.edu-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+.edu-year{color:var(--text-4);font-size:.86rem;font-weight:750}
+.edu-note a{color:var(--accent);font-weight:750}
+
+.contact-glow{display:none}
+.contact-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 420px;
+  gap:56px;
+  align-items:start;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#fff;
+  padding:36px;
+  box-shadow:0 18px 52px rgba(15,23,42,.08);
+}
+.contact-desc{
+  color:var(--text-2);
+  font-size:1.05rem;
+  line-height:1.75;
+  max-width:640px;
+}
+.contact-availability{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:22px;
+  color:var(--success);
+  font-weight:750;
+}
+.avail-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--success);
+}
+.contact-cards{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.contact-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#f8fafc;
+  padding:14px;
+}
+.contact-card:hover{
+  background:#fff;
+  border-color:var(--accent-mid);
+  transform:translateY(-1px);
+}
+.cc-icon{
+  width:38px;
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  background:#eff6ff;
+  color:var(--accent);
+  flex:0 0 auto;
+}
+.cc-body{min-width:0;flex:1}
+.cc-label{
+  display:block;
+  color:var(--text-4);
+  font-size:.78rem;
+  font-weight:750;
+}
+.cc-value{
+  display:block;
+  color:var(--text-1);
+  font-size:.93rem;
+  font-weight:750;
+  overflow-wrap:anywhere;
+}
+.cc-arrow{color:var(--text-4);flex:0 0 auto}
+
+footer{
+  border-top:1px solid var(--border);
+  background:#fff;
+  padding:32px 0 88px;
+}
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.footer-left{display:flex;align-items:center;gap:14px}
+.footer-logo{
+  color:var(--text-1);
+  font-weight:850;
+}
+.footer-logo span{color:var(--accent)}
+.footer-copy,
+.footer-links a{color:var(--text-3)}
+.footer-links,
+.footer-social{display:flex;align-items:center;gap:12px}
+.footer-links a:hover{color:var(--accent)}
+.footer-social a{
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--text-2);
+}
+.footer-social a:hover{color:var(--accent);border-color:var(--accent-mid);background:#eff6ff}
+
+.bottom-nav{display:none}
+
+@media(max-width:1024px){
+  .hero-shell{grid-template-columns:1fr 300px;gap:40px}
+  .hero-title{font-size:4rem}
+  .section-heading{font-size:2.65rem}
+  .deliverables-grid,
+  .skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .contact-layout{grid-template-columns:1fr}
+}
+
+@media(max-width:768px){
+  .container,
+  .nav-inner{padding:0 20px}
+  #navbar{background:#fff;border-bottom-color:var(--border)}
+  .nav-links{
+    position:fixed;
+    top:var(--nav-h);
+    left:12px;
+    right:12px;
+    display:none;
+    flex-direction:column;
+    align-items:stretch;
+    gap:4px;
+    padding:12px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:8px;
+    box-shadow:0 24px 70px rgba(15,23,42,.16);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px}
+  .hamburger{display:flex}
+  .hero{
+    min-height:auto;
+    padding:calc(var(--nav-h) + 34px) 0 32px;
+  }
+  .hero-shell{grid-template-columns:1fr;gap:28px}
+  .hero-title{font-size:3rem}
+  .hero-sub{font-size:1.05rem}
+  .hero-profile{max-width:360px}
+  .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:28px}
+  .section{padding:72px 0}
+  .section-heading{font-size:2.25rem}
+  .about-layout{grid-template-columns:1fr;gap:28px}
+  .about-photo-wrap{position:relative;top:auto;max-width:320px}
+  .case-header{padding:22px}
+  .case-content{padding:22px}
+  .case-metrics,
+  .deliverables-grid,
+  .skills-grid,
+  .edu-grid{grid-template-columns:1fr}
+  .tl-head{flex-direction:column}
+  .tl-meta{align-items:flex-start}
+  .contact-layout{padding:24px}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .footer-links{flex-wrap:wrap}
+  .bottom-nav{
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    z-index:900;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4px;
+    padding:6px;
+    background:rgba(255,255,255,.94);
+    border:1px solid var(--border);
+    border-radius:8px;
+    box-shadow:0 18px 50px rgba(15,23,42,.16);
+    backdrop-filter:blur(18px);
+  }
+  .bottom-nav button{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    min-height:48px;
+    border-radius:8px;
+    color:var(--text-3);
+    font-size:.72rem;
+    font-weight:750;
+  }
+  .bottom-nav button.active,
+  .bottom-nav button:hover{
+    background:#eff6ff;
+    color:var(--accent);
+  }
+}
+
+@media(max-width:480px){
+  .hero-title{font-size:2.45rem}
+  .hero-actions{align-items:stretch}
+  .btn-primary,
+  .btn-outline{justify-content:center;width:100%}
+  .hero-stats{grid-template-columns:1fr}
+  .stat-card{padding:18px}
+  .section-heading{font-size:2rem}
+  .contact-layout{padding:18px}
+}
 </style>
 </head>
 <body>
@@ -414,28 +1266,41 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
   <div class="hero-bg-gradient"></div>
   <div class="hero-grid-overlay"></div>
   <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge"><span class="badge-pulse"></span>Available for US Remote Consulting</div>
-      <h1 class="hero-title">I architect enterprise<br>platforms that handle<br><em>real stakes.</em></h1>
-      <p class="hero-sub">Real money. Real users. Real regulatory pressure. 8+ years building mission-critical systems in InsurTech &amp; Financial Services.</p>
-      <div class="hero-actions">
-        <a href="rahul_karn_resume.pdf" download="Rahul_Karn_Resume.pdf" class="btn-primary">Download CV <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
-        <a href="#contact" class="btn-outline">Let's Work Together <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <div class="hero-shell">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="badge-pulse"></span>Open to Senior Remote .NET Roles · 2026</div>
+        <h1 class="hero-title">Senior .NET engineer for insurance and financial systems.</h1>
+        <p class="hero-sub">I build and modernize production platforms across policy administration, claims, payments, agent portals, and regulated financial workflows.</p>
+        <div class="hero-actions">
+          <a href="rahul_karn_resume.pdf" download="Rahul_Karn_Resume.pdf" class="btn-primary">Download CV <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+          <a href="#contact" class="btn-outline">Get in Touch <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
       </div>
+      <aside class="hero-profile" aria-label="Rahul Karn profile">
+        <div class="profile-image">
+          <img src="rahul-headshot.png" alt="Rahul Karn" loading="eager">
+        </div>
+        <div class="profile-copy">
+          <span class="profile-status">Available for senior remote roles</span>
+          <h2>Rahul Karn</h2>
+          <p>Senior .NET Engineer · InsurTech &amp; Financial Systems</p>
+          <div class="profile-stack"><span>.NET 8</span><span>Azure</span><span>InsureTech ML</span><span>SQL Server</span></div>
+        </div>
+      </aside>
     </div>
     <div class="hero-stats">
       <div class="stat-card"><div><span class="stat-number count-up" data-target="8">0</span><span class="stat-suffix">+</span></div><span class="stat-label">Years Experience</span></div>
-      <div class="stat-card"><div><span class="stat-number count-up" data-target="90">0</span><span class="stat-suffix">K+</span></div><span class="stat-label">Users Served</span></div>
-      <div class="stat-card"><div><span class="stat-number count-up" data-target="50">0</span><span class="stat-suffix">%</span></div><span class="stat-label">DB Perf Gain</span></div>
-      <div class="stat-card"><div><span class="stat-number count-up" data-target="100">0</span><span class="stat-suffix">B+</span></div><span class="stat-label">NPR Assets</span></div>
+      <div class="stat-card"><div><span class="stat-number count-up" data-target="90">0</span><span class="stat-suffix">K+</span></div><span class="stat-label">Active Users</span></div>
+      <div class="stat-card"><div><span class="stat-number count-up" data-target="50">0</span><span class="stat-suffix">%</span></div><span class="stat-label">Query Latency Reduction</span></div>
+      <div class="stat-card"><div><span class="stat-number count-up" data-target="100">0</span><span class="stat-suffix">B+</span></div><span class="stat-label">NPR Portfolio Assets</span></div>
     </div>
   </div>
 </section>
 
 <div class="marquee-wrap">
   <div class="marquee-track" id="marqueeTrack">
-    <div class="marquee-item"><span class="marquee-dot"></span>.NET 10/8 LTS</div><div class="marquee-item"><span class="marquee-dot"></span>C# / ASP.NET Core</div><div class="marquee-item"><span class="marquee-dot"></span>Azure Cloud</div><div class="marquee-item"><span class="marquee-dot"></span>Semantic Kernel</div><div class="marquee-item"><span class="marquee-dot"></span>ML.NET</div><div class="marquee-item"><span class="marquee-dot"></span>Oracle / SQL Server</div><div class="marquee-item"><span class="marquee-dot"></span>Duende IdentityServer</div><div class="marquee-item"><span class="marquee-dot"></span>Docker / Kubernetes</div><div class="marquee-item"><span class="marquee-dot"></span>Domain-Driven Design</div><div class="marquee-item"><span class="marquee-dot"></span>Zero-Trust Security</div><div class="marquee-item"><span class="marquee-dot"></span>CQRS / Event-Driven</div><div class="marquee-item"><span class="marquee-dot"></span>RAG / Vector DBs</div><div class="marquee-item"><span class="marquee-dot"></span>Terraform / IaC</div><div class="marquee-item"><span class="marquee-dot"></span>OpenTelemetry</div><div class="marquee-item"><span class="marquee-dot"></span>gRPC / REST APIs</div>
-    <div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>.NET 10/8 LTS</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>C# / ASP.NET Core</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Azure Cloud</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Semantic Kernel</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>ML.NET</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Oracle / SQL Server</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Duende IdentityServer</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Docker / Kubernetes</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Domain-Driven Design</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Zero-Trust Security</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>CQRS / Event-Driven</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>RAG / Vector DBs</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Terraform / IaC</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>OpenTelemetry</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>gRPC / REST APIs</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>.NET 8 LTS</div><div class="marquee-item"><span class="marquee-dot"></span>C# / ASP.NET Core</div><div class="marquee-item"><span class="marquee-dot"></span>EF Core</div><div class="marquee-item"><span class="marquee-dot"></span>Azure</div><div class="marquee-item"><span class="marquee-dot"></span>ML.NET</div><div class="marquee-item"><span class="marquee-dot"></span>Oracle / SQL Server</div><div class="marquee-item"><span class="marquee-dot"></span>OAuth2 / OIDC</div><div class="marquee-item"><span class="marquee-dot"></span>RBAC</div><div class="marquee-item"><span class="marquee-dot"></span>OWASP</div><div class="marquee-item"><span class="marquee-dot"></span>Docker</div><div class="marquee-item"><span class="marquee-dot"></span>Domain-Driven Design</div><div class="marquee-item"><span class="marquee-dot"></span>Modular Monolith</div><div class="marquee-item"><span class="marquee-dot"></span>Git Flow</div><div class="marquee-item"><span class="marquee-dot"></span>CI/CD</div><div class="marquee-item"><span class="marquee-dot"></span>OpenTelemetry</div>
+    <div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>.NET 8 LTS</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>C# / ASP.NET Core</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>EF Core</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Azure</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>ML.NET</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Oracle / SQL Server</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>OAuth2 / OIDC</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>RBAC</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>OWASP</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Docker</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Domain-Driven Design</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Modular Monolith</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>Git Flow</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>CI/CD</div><div class="marquee-item" aria-hidden="true"><span class="marquee-dot"></span>OpenTelemetry</div>
   </div>
 </div>
 
@@ -444,7 +1309,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
   <div class="container">
     <div class="section-header reveal">
       <div class="section-label">About</div>
-      <h2 class="section-heading">Designing systems<br>that <em>endure</em></h2>
+      <h2 class="section-heading">A working engineer,<br><em>not a slide-deck consultant.</em></h2>
     </div>
     <div class="about-layout">
       <div class="reveal">
@@ -452,11 +1317,11 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
           <div class="about-photo">
             <div class="about-photo-border"></div>
             <div class="about-photo-accent"></div>
-            <img src="rahul-headshot.png" alt="Rahul Karn — Enterprise Systems Architect" loading="lazy">
+            <img src="rahul-headshot.png" alt="Rahul Karn - Senior .NET Engineer" loading="lazy">
           </div>
           <div class="about-name-card">
             <h3>Rahul Karn</h3>
-            <p>Enterprise Systems Architect</p>
+            <p>Senior .NET Engineer · InsurTech &amp; Financial Systems</p>
             <div class="about-location">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Kathmandu, Nepal
@@ -466,18 +1331,20 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
       </div>
       <div>
         <div class="about-text reveal">
-          <p><strong>Enterprise Systems Architect</strong> with 8+ years designing, building, and modernizing mission-critical platforms in insurance and financial services. I architect new systems from the ground up, modernize legacy platforms to <span class="highlight-text">.NET 10/8 LTS</span> and cloud-native stacks, and embed AI/ML into core business workflows — underwriting, claims, fraud detection, and predictive analytics.</p>
-          <p>Engagements produce production-ready system designs: C4 blueprints, domain models, security architectures, data platform strategies, and phased execution plans. Proven at scale: a <span class="highlight-text">90,000+ user platform</span>, <span class="highlight-text">50% database performance gains</span>, <span class="highlight-text">NPR 100B+ asset portfolio systems</span>, and 6+ engineer teams guided through complex transformations.</p>
-          <p class="about-human">Based in Kathmandu, I've been deep in Nepal's insurance infrastructure since 2017 — working US-Eastern hours and shipping systems that handle real money, real users, and real regulatory scrutiny.</p>
+          <p>I build production systems alongside the engineers shipping them, which keeps the architecture honest and the migration plans buildable.</p>
+          <p><strong>Senior .NET engineer</strong> with 8+ years building, modernizing, and operating mission-critical platforms in insurance and financial services. I build new systems from the ground up, modernize legacy platforms onto <span class="highlight-text">modern .NET stacks</span>, and bring data and AI thinking into core business workflows: underwriting, claims, payments, fraud, and predictive analytics.</p>
+          <p>Proven at scale across a <span class="highlight-text">90,000-user platform</span>, a <span class="highlight-text">~50% database performance program</span>, <span class="highlight-text">NPR 100B+ asset portfolio systems</span>, and a 6+ engineer team coordinated through phased modernization.</p>
+          <p>Combining hands-on engineering with formal training in <strong>data science (MSc, Coventry)</strong> and <strong>finance (MBA, IGNOU)</strong>, bringing analytical and business depth uncommon in core engineering roles.</p>
+          <p class="about-human">Based in Kathmandu, deep in Nepal's insurance infrastructure since 2017, working US-Eastern hours and shipping systems that handle real money, real users, and real regulatory scrutiny.</p>
         </div>
         <div class="engagement-block reveal">
-          <div class="engagement-meta"><span>Engagement Model</span><span class="sep">·</span><span>Remote · US-Eastern Overlap · W-8BEN Ready</span></div>
+          <div class="engagement-meta"><span>Availability</span><span class="sep">·</span><span>Open to senior remote roles · 4+ hrs US-Eastern overlap · W-8BEN ready</span></div>
           <div class="engagement-flow">
-            <span class="engagement-step">Assessment &amp; Discovery</span>
+            <span class="engagement-step">Intro Call</span>
             <span class="engagement-arrow">→</span>
-            <span class="engagement-step">System Design &amp; Blueprint</span>
+            <span class="engagement-step">Technical Deep-Dive</span>
             <span class="engagement-arrow">→</span>
-            <span class="engagement-step">Execution Leadership</span>
+            <span class="engagement-step">Build &amp; Ship</span>
           </div>
         </div>
       </div>
@@ -490,16 +1357,16 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
   <div class="container">
     <div class="section-header reveal">
       <div class="section-label">Case Studies</div>
-      <h2 class="section-heading">Architecture in<br><em>practice</em></h2>
-      <p class="section-desc">Real problems, real constraints, real outcomes. Each case represents production systems handling regulated financial operations.</p>
+      <h2 class="section-heading">Selected work,<br><em>in practice</em></h2>
+      <p class="section-desc">Real problems, real constraints, real outcomes. Production systems handling regulated financial transactions, built and shipped, not slide-deck designed.</p>
     </div>
     <div class="case-studies-grid">
       <!-- Case 1: Portal -->
       <div class="case-card reveal" id="case1">
         <div class="case-header" onclick="toggleCase('case1')">
           <div class="case-title-area">
-            <h3 class="case-title">90K-User Enterprise Portal — From Monolith to Modular</h3>
-            <p class="case-summary">Architected the complete platform serving 90,000+ users across policy, claims, and agent workflows.</p>
+            <h3 class="case-title">90,000-User Enterprise Portal: Monolith to Modular</h3>
+            <p class="case-summary">Owned the technical design and build of the platform serving 90,000+ users across policy, claims, and agent workflows.</p>
             <div class="case-chips"><span class="case-chip">90K+ Users</span><span class="case-chip">Monolith → Modular</span><span class="case-chip">RBAC</span><span class="case-chip">OWASP</span></div>
           </div>
           <div class="case-toggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
@@ -507,7 +1374,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
         <div class="case-body"><div class="case-content">
           <div class="case-section"><div class="case-section-label">Challenge</div><p>Legacy monolithic insurance platform couldn't scale, had no API layer, security was bolt-on, and adding features meant touching everything. 90,000+ users depended on it daily.</p></div>
           <div class="case-diagram">
-            <div class="case-diagram-label">Simplified Architecture — C4 Container View</div>
+            <div class="case-diagram-label">Simplified Architecture: C4 Container View</div>
             <div class="arch-diagram">
               <div class="arch-row"><div class="arch-box neutral">Agents / Customers<small>90K+ users</small></div><div class="arch-box neutral">Admin Portal<small>Internal ops</small></div><div class="arch-box neutral">Digital Channels<small>Web / Mobile</small></div></div>
               <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>HTTPS / API Gateway</span></div>
@@ -537,15 +1404,15 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
       <div class="case-card reveal reveal-delay-1" id="case2">
         <div class="case-header" onclick="toggleCase('case2')">
           <div class="case-title-area">
-            <h3 class="case-title">50% Database Performance Gain — Oracle/SQL Server at Scale</h3>
-            <p class="case-summary">Systematic performance engineering across the entire insurance data layer, cutting query times in half.</p>
-            <div class="case-chips"><span class="case-chip">50% Faster</span><span class="case-chip">P95 1200ms → 580ms</span><span class="case-chip">Oracle + SQL Server</span></div>
+            <h3 class="case-title">~50% Database Performance Gain: Oracle &amp; SQL Server at Scale</h3>
+            <p class="case-summary">Systematic performance engineering across the insurance data layer, query latency reduced ~50%.</p>
+            <div class="case-chips"><span class="case-chip">~50% Faster</span><span class="case-chip">Query Latency Reduced ~50%</span><span class="case-chip">Oracle + SQL Server</span></div>
           </div>
           <div class="case-toggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
         <div class="case-body"><div class="case-content">
           <div class="case-section"><div class="case-section-label">Challenge</div><p>Insurance platform's database layer was the bottleneck. Premium calculation engine timing out during peak loads. Query response times degrading as data grew. DB CPU regularly hitting 90%+.</p></div>
-          <div class="case-section"><div class="case-section-label">Approach</div><p>Ran a systematic database performance audit — captured execution plans, identified missing/redundant indexes, found expensive table scans in stored procedures, and mapped query patterns against actual workload.</p></div>
+          <div class="case-section"><div class="case-section-label">Approach</div><p>Ran a systematic database performance audit, captured execution plans, identified missing/redundant indexes, found expensive table scans in stored procedures, and mapped query patterns against actual workload.</p></div>
           <div class="case-section"><div class="case-section-label">Key Decisions</div><ul>
             <li>Rewrote critical stored procedures (eliminated cursor/loop patterns, moved to set-based operations)</li>
             <li>Redesigned indexing strategy based on actual query patterns (covering indexes for hot queries)</li>
@@ -554,12 +1421,12 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
             <li>.NET side: reduced over-fetching (DTO shaping), async + cancellation tokens, connection pooling</li>
             <li>Set up SLO definitions + monitoring dashboards for ongoing regression detection</li>
           </ul></div>
-          <div class="case-section"><div class="case-section-label">Outcome</div><p>50% reduction in query response times. Directly improved throughput for premium calculation engine across 20+ product lines.</p></div>
+          <div class="case-section"><div class="case-section-label">Outcome</div><p>~50% reduction in query latency. Directly improved throughput for premium calculation engine across 20+ product lines.</p></div>
           <div class="case-metrics">
-            <div class="metric-card"><div class="metric-label">P95 Query Latency</div><div class="metric-row"><span class="metric-before">1,200ms</span><span class="metric-arrow">→</span><span class="metric-after">580ms</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:52%"></div></div></div>
-            <div class="metric-card"><div class="metric-label">DB CPU Peak</div><div class="metric-row"><span class="metric-before">92%</span><span class="metric-arrow">→</span><span class="metric-after">54%</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:41%"></div></div></div>
+            <div class="metric-card"><div class="metric-label">Query Latency</div><div class="metric-row"><span class="metric-after">~50% reduction</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:50%"></div></div></div>
+            <div class="metric-card"><div class="metric-label">DB CPU at Peak</div><div class="metric-row"><span class="metric-after">Substantially lower</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:45%"></div></div></div>
             <div class="metric-card"><div class="metric-label">Timeout Incidents / Week</div><div class="metric-row"><span class="metric-before">12+</span><span class="metric-arrow">→</span><span class="metric-after">&lt;1</span></div><div class="metric-bar-wrap"><div class="metric-bar accent" style="width:92%"></div></div></div>
-            <div class="metric-card"><div class="metric-label">Peak Hour Throughput</div><div class="metric-row"><span class="metric-before">1×</span><span class="metric-arrow">→</span><span class="metric-after">2×</span></div><div class="metric-bar-wrap"><div class="metric-bar accent" style="width:100%"></div></div></div>
+            <div class="metric-card"><div class="metric-label">Peak-Hour Throughput</div><div class="metric-row"><span class="metric-after">Meaningfully higher</span></div><div class="metric-bar-wrap"><div class="metric-bar accent" style="width:80%"></div></div></div>
           </div>
         </div></div>
       </div>
@@ -568,16 +1435,16 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
       <div class="case-card reveal reveal-delay-2" id="case3">
         <div class="case-header" onclick="toggleCase('case3')">
           <div class="case-title-area">
-            <h3 class="case-title">Billion-Rupee Payment Architecture — Transaction Integrity at Scale</h3>
-            <p class="case-summary">Reliable payment flows for NPR 100B+ transaction volumes with zero duplicates and full auditability.</p>
+            <h3 class="case-title">Billion-Rupee Payment Architecture: Transaction Integrity at Scale</h3>
+            <p class="case-summary">Owned the design and build of the payment flow, reliable payments at NPR 100B+ volume with zero duplicates and full auditability.</p>
             <div class="case-chips"><span class="case-chip">NPR 100B+</span><span class="case-chip">Zero Duplicates</span><span class="case-chip">Full Auditability</span></div>
           </div>
           <div class="case-toggle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
         <div class="case-body"><div class="case-content">
-          <div class="case-section"><div class="case-section-label">Challenge</div><p>NPR 100B+ in asset portfolio transactions — premium collections, policy payouts, agent commissions. Existing flow had no reconciliation, no idempotency, failures tracked in spreadsheets.</p></div>
+          <div class="case-section"><div class="case-section-label">Challenge</div><p>NPR 100B+ in asset portfolio transactions: premium collections, policy payouts, agent commissions. Existing flow had no reconciliation, no idempotency, failures tracked in spreadsheets.</p></div>
           <div class="case-diagram">
-            <div class="case-diagram-label">Payment State Machine — Transaction Lifecycle</div>
+            <div class="case-diagram-label">Payment State Machine: Transaction Lifecycle</div>
             <div class="arch-diagram">
               <div class="arch-row"><div class="arch-box neutral">Client Request<small>Premium / Payout</small></div></div>
               <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Idempotency Key</span></div>
@@ -596,11 +1463,11 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
             <li>Payment state machine: Initiated → Authorized → Captured → Settled / Failed / Refunded</li>
             <li>Webhook/callback flows with retry logic + exponential backoff + circuit breakers</li>
             <li>Automated reconciliation comparing gateway records with internal state</li>
-            <li>Audit logging for regulatory compliance — immutable logs, correlation IDs</li>
+            <li>Audit logging for regulatory compliance: immutable logs, correlation IDs</li>
             <li>Security: tokenization, avoid storing PAN, least privilege, secret management</li>
           </ul></div>
           <div class="case-metrics">
-            <div class="metric-card"><div class="metric-label">Duplicate Rate</div><div class="metric-row"><span class="metric-before">~0.3%</span><span class="metric-arrow">→</span><span class="metric-after">0%</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:100%"></div></div></div>
+            <div class="metric-card"><div class="metric-label">Duplicate Transactions</div><div class="metric-row"><span class="metric-after">Eliminated by idempotency keys</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:100%"></div></div></div>
             <div class="metric-card"><div class="metric-label">Reconciliation Time</div><div class="metric-row"><span class="metric-before">2 days</span><span class="metric-arrow">→</span><span class="metric-after">Real-time</span></div><div class="metric-bar-wrap"><div class="metric-bar accent" style="width:100%"></div></div></div>
             <div class="metric-card"><div class="metric-label">Failed Payment Recovery</div><div class="metric-row"><span class="metric-before">Days</span><span class="metric-arrow">→</span><span class="metric-after">Minutes</span></div><div class="metric-bar-wrap"><div class="metric-bar good" style="width:95%"></div></div></div>
             <div class="metric-card"><div class="metric-label">Audit Prep Time</div><div class="metric-row"><span class="metric-before">2 weeks</span><span class="metric-arrow">→</span><span class="metric-after">1 day</span></div><div class="metric-bar-wrap"><div class="metric-bar accent" style="width:93%"></div></div></div>
@@ -615,39 +1482,39 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
 <section id="deliverables" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <div class="section-label">What You Get</div>
-      <h2 class="section-heading">Production-ready<br><em>deliverables</em></h2>
-      <p class="section-desc">Every engagement produces tangible architecture artifacts — not slide decks with boxes and arrows that collect dust.</p>
+      <div class="section-label">Deliverables</div>
+      <h2 class="section-heading">Artifacts produced<br><em>while shipping production systems</em></h2>
+      <p class="section-desc">Documentation, decision records, and reference materials produced over 8 years of building and operating insurance platforms, not slide decks or consulting deck residue.</p>
     </div>
     <div class="deliverables-grid">
       <div class="deliverable-card reveal">
         <div class="deliverable-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
         <h3>System Architecture</h3>
-        <p>C4 diagrams, domain models, capability maps, service boundaries, and data ownership matrices.</p>
+        <p>Domain models, service boundaries, data-ownership maps, and architecture decision records covering integration, reliability, and technology choices.</p>
         <div class="deliverable-files">
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>C4 Context / Container / Component</span>
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Domain Model &amp; Bounded Contexts</span>
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>15+ ADRs per engagement</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Domain Models &amp; Bounded Contexts</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Service &amp; Data Boundaries</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Architecture Decision Records</span>
         </div>
       </div>
       <div class="deliverable-card reveal reveal-delay-1">
         <div class="deliverable-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Security &amp; API Design</h3>
-        <p>OWASP-aligned security controls, RBAC/ABAC models, API governance, threat models, compliance checklists.</p>
+        <p>OWASP-aligned controls, RBAC models, API versioning and error contracts, and security review practices established for regulated financial systems.</p>
         <div class="deliverable-files">
           <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>API Versioning &amp; Error Model</span>
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>STRIDE Threat Model Templates</span>
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>RBAC Design Documents</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>OWASP Review Practices</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>RBAC Design</span>
         </div>
       </div>
       <div class="deliverable-card reveal reveal-delay-2">
         <div class="deliverable-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div>
-        <h3>AI &amp; Transformation</h3>
-        <p>Executive AI use-case playbooks, modernization plans with business cases, phased timelines, ROI projections.</p>
+        <h3>Modernization &amp; Roadmaps</h3>
+        <p>Phased modernization plans (monolith → modular), AI/ML use-case exploration for insurance, and roadmaps grounded in what the system can actually become.</p>
         <div class="deliverable-files">
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>AI Use-Case Roadmap</span>
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>ML Integration Architecture</span>
-          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>12-Month Scalability Plan</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Phased Modernization Plans</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>AI/ML Use-Case Exploration</span>
+          <span class="deliverable-file"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pragmatic Roadmaps</span>
         </div>
       </div>
     </div>
@@ -659,15 +1526,15 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
   <div class="container">
     <div class="section-header reveal">
       <div class="section-label">Expertise</div>
-      <h2 class="section-heading">Architecture &amp; design<br><em>competencies</em></h2>
+      <h2 class="section-heading">Capabilities, grouped by<br><em>what they solve</em></h2>
     </div>
     <div class="skills-grid">
-      <div class="skill-card reveal"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>System Design</h3><p>Greenfield and brownfield architecture, DDD, capability mapping, bounded contexts, event-driven/CQRS patterns, GoF design patterns.</p><div class="skill-tags"><span>DDD</span><span>C4 Model</span><span>CQRS</span><span>Event-Driven</span><span>ADRs</span></div></div>
-      <div class="skill-card reveal reveal-delay-1"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div><h3>AI/ML Architecture</h3><p>ML pipeline design for insurance/finance — fraud detection, predictive underwriting, claims automation, risk scoring with RAG and Semantic Kernel.</p><div class="skill-tags"><span>ML.NET</span><span>RAG</span><span>Semantic Kernel</span><span>Python</span><span>Vector DBs</span></div></div>
-      <div class="skill-card reveal reveal-delay-2"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Security &amp; Compliance</h3><p>Zero-trust design, RBAC/ABAC, OAuth2/OIDC, OWASP Top 10, STRIDE threat modeling, encryption, secrets management, audit trails.</p><div class="skill-tags"><span>Zero-Trust</span><span>OAuth2</span><span>OWASP</span><span>STRIDE</span><span>mTLS</span></div></div>
-      <div class="skill-card reveal reveal-delay-1"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><h3>Platform &amp; Data</h3><p>API-first design, gateway patterns, idempotency, payment protocols, database architecture, query optimization, ETL/ELT, capacity planning.</p><div class="skill-tags"><span>API-First</span><span>Oracle</span><span>SQL Server</span><span>Azure SQL</span><span>ETL</span></div></div>
-      <div class="skill-card reveal reveal-delay-2"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>InsurTech &amp; FinServ</h3><p>Core insurance systems — underwriting, policy admin, claims, payments, asset management, premium engines, KYC/AML, digital channels.</p><div class="skill-tags"><span>Insurance</span><span>Claims</span><span>Underwriting</span><span>Payments</span><span>KYC</span></div></div>
-      <div class="skill-card reveal reveal-delay-3"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><h3>Cloud &amp; DevOps</h3><p>Azure (App Services, Functions, Key Vault, AD), Docker, Kubernetes, CI/CD pipelines, Terraform, Infrastructure as Code, observability.</p><div class="skill-tags"><span>Azure</span><span>Docker</span><span>K8s</span><span>Terraform</span><span>CI/CD</span></div></div>
+      <div class="skill-card reveal"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>System Design</h3><p>Domain modeling, service boundaries, and architecture for new and legacy systems in insurance and finance.</p><div class="skill-tags"><span>DDD</span><span>C4 Model</span><span>ADRs</span><span>Modular Monolith</span><span>API Design</span></div></div>
+      <div class="skill-card reveal reveal-delay-1"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div><h3>Data &amp; AI/ML for Insurance</h3><p>Applied data and ML for insurance, exploring fraud detection, claims triage, and predictive underwriting on real policy and claims data.</p><div class="skill-tags"><span>ML.NET</span><span>Python</span><span>RAG</span><span>pandas</span><span>scikit-learn</span></div></div>
+      <div class="skill-card reveal reveal-delay-2"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Security &amp; Identity</h3><p>OAuth2/OIDC and RBAC for regulated financial platforms, OWASP-aligned controls, encryption, secrets management, and audit logging.</p><div class="skill-tags"><span>OAuth2</span><span>OIDC</span><span>RBAC</span><span>OWASP</span><span>Audit Logging</span></div></div>
+      <div class="skill-card reveal reveal-delay-1"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><h3>Platform &amp; Data</h3><p>API design, idempotency for payment flows, database architecture, query optimization, and ETL across Oracle and SQL Server estates.</p><div class="skill-tags"><span>API-First</span><span>Oracle</span><span>SQL Server</span><span>Azure SQL</span><span>ETL</span></div></div>
+      <div class="skill-card reveal reveal-delay-2"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>InsurTech &amp; FinServ</h3><p>Core insurance systems: underwriting, policy admin, claims, payments, asset management, premium engines, KYC/AML, digital channels.</p><div class="skill-tags"><span>Insurance</span><span>Claims</span><span>Underwriting</span><span>Payments</span><span>KYC</span></div></div>
+      <div class="skill-card reveal reveal-delay-3"><div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><h3>Cloud &amp; Delivery</h3><p>Azure (App Services, SQL, Key Vault), Docker, Git Flow, CI/CD pipelines, structured logging, and observability for production workloads.</p><div class="skill-tags"><span>Azure</span><span>Docker</span><span>CI/CD</span><span>Git Flow</span><span>OpenTelemetry</span></div></div>
     </div>
   </div>
 </section>
@@ -678,25 +1545,42 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
     <div class="section-header reveal"><div class="section-label">Experience</div><h2 class="section-heading">Professional<br><em>journey</em></h2></div>
     <div class="timeline">
       <div class="timeline-block reveal">
-        <div class="tl-head"><div><h3 class="tl-title">Officer — Lead Architect &amp; Platform Engineer</h3><p class="tl-company">Nepal Life Insurance Co. Ltd. <span class="tl-loc">· Kathmandu, Nepal</span></p></div><div class="tl-meta"><span class="tl-date">Jan 2023 – Present</span><span class="tl-badge current">Current</span></div></div>
+        <div class="tl-head"><div><h3 class="tl-title">Senior .NET Developer / Tech Lead</h3><p class="tl-company">Nepal Life Insurance Co. <span class="tl-loc">· Kathmandu, Nepal</span></p></div><div class="tl-meta"><span class="tl-date">Jan 2023 – Present</span><span class="tl-badge current">Current</span></div></div>
         <div class="tl-body">
-          <div class="tl-phase"><span class="phase-label">Platform Architecture &amp; AI-Driven Transformation</span><span class="phase-date">Jul 2024 – Present</span></div>
-          <ul class="tl-list"><li><strong>System design leadership:</strong> Architect and lead development of mission-critical insurance platform modules (policy administration, underwriting, claims, digital channels).</li><li><strong>AI/ML strategy:</strong> Designed AI roadmap for insurance operations — fraud detection, predictive underwriting, claims triage automation; authored executive use-case playbook.</li><li><strong>Digital transformation:</strong> Drove enterprise-wide system modernization — digitized policy issuance, claims processing, agent onboarding; designed SLA frameworks.</li><li><strong>Performance &amp; cost architecture:</strong> Led database performance programs and infrastructure cost-efficiency initiatives delivering measurable savings.</li></ul>
-          <div class="tl-phase"><span class="phase-label">System Architecture &amp; Secure Platform Delivery</span><span class="phase-date">Jan 2023 – Jun 2024</span></div>
-          <ul class="tl-list"><li><strong>Platform modernization:</strong> Designed target-state architecture; created phased migration roadmap (monolith → modular → microservices-ready), guiding 6+ engineers.</li><li><strong>Secure platform:</strong> Delivered enterprise portal and API ecosystem serving <strong>90,000+ active users</strong>; architected RBAC, API governance, OWASP-aligned security.</li><li><strong>Transaction architecture:</strong> Designed payment gateway flows with reconciliation patterns, idempotency. Delivered <strong>50% query-time reduction</strong>.</li></ul>
-          <div class="tl-highlights"><span class="highlight-chip">90K+ Users</span><span class="highlight-chip">50% Perf Gain</span><span class="highlight-chip">AI Roadmap</span><span class="highlight-chip">6+ Engineers</span></div>
+          <ul class="tl-list">
+            <li>Lead developer for the company's core insurance platform: policy administration, underwriting, claims, and digital channels, serving <strong>90,000+ active users</strong>.</li>
+            <li>Shipped enterprise portal and API ecosystem with RBAC, OAuth2/OIDC authentication, and OWASP-aligned security controls.</li>
+            <li>Drove database performance program: <strong>~50% reduction in query latency</strong> across Oracle and SQL Server through indexing, execution-plan analysis, and stored-procedure refactoring.</li>
+            <li>Designed payment gateway integration with idempotency keys, automated reconciliation, and audit logging, with zero duplicate transactions on <strong>NPR 100B+ volume</strong>.</li>
+            <li>Owned technical design reviews and authored RFCs covering data models, API contracts, and migration strategy for new modules.</li>
+            <li>Established code review standards, Git Flow branching, and CI/CD pipelines, reducing release cycle from monthly to bi-weekly.</li>
+            <li>Coordinated <strong>6+ engineers</strong> through phased modernization (monolith → modular); mentored junior/mid-level developers on .NET Core, async patterns, EF Core performance, and clean architecture.</li>
+            <li>Implemented observability stack (structured logging, health checks, performance counters) enabling sub-hour incident detection on production workloads.</li>
+            <li>Researching applied AI/ML for insurance use cases: fraud detection, claims triage, and predictive underwriting.</li>
+          </ul>
+          <div class="tl-highlights"><span class="highlight-chip">90K+ Users</span><span class="highlight-chip">~50% Perf Gain</span><span class="highlight-chip">NPR 100B+</span><span class="highlight-chip">6+ Engineers</span></div>
         </div>
       </div>
       <div class="timeline-block reveal">
-        <div class="tl-head"><div><h3 class="tl-title">Software Engineer</h3><p class="tl-company">Nepal Life Insurance Co. Ltd. <span class="tl-loc">· Kathmandu, Nepal</span></p></div><div class="tl-meta"><span class="tl-date">Nov 2018 – Dec 2022</span></div></div>
+        <div class="tl-head"><div><h3 class="tl-title">Software Engineer</h3><p class="tl-company">Nepal Life Insurance Co. <span class="tl-loc">· Kathmandu, Nepal</span></p></div><div class="tl-meta"><span class="tl-date">Nov 2018 – Dec 2022</span></div></div>
         <div class="tl-body">
-          <ul class="tl-list"><li>Designed and built enterprise applications for <strong>asset management (NPR 100B+ portfolio)</strong>, policy admin, and premium calculation using .NET Core with Oracle/SQL Server.</li><li>Led development of premium calculator engine across <strong>20+ product lines</strong>; standardized actuarial rules, improving sales efficiency by ~30%.</li><li>Designed secure onboarding system for 5,000+ agents/customers with KYC workflows and payment gateway integration.</li><li>Built API integrations connecting underwriting, policy issuance, and claims across core systems.</li></ul>
+          <ul class="tl-list">
+            <li>Built premium calculator engine across <strong>20+ life insurance product lines</strong>; standardized actuarial rules, improving sales workflow efficiency by ~30%.</li>
+            <li>Developed asset management application handling <strong>NPR 100B+ portfolio</strong> with audit controls and regulatory reporting.</li>
+            <li>Built secure onboarding system for 5,000+ agents and customers with KYC workflows, eligibility validation, and payment gateway integration.</li>
+            <li>Built API integrations connecting underwriting, policy issuance, and claims across core insurance systems.</li>
+            <li>Developed scheduled batch jobs for premium notices, policy renewals, and commission calculations, processing 100K+ records per cycle.</li>
+            <li>Migrated legacy ASP.NET WebForms modules to ASP.NET MVC / Web API, improving maintainability and front-end responsiveness.</li>
+          </ul>
           <div class="tl-highlights"><span class="highlight-chip">NPR 100B+ Portfolio</span><span class="highlight-chip">20+ Product Lines</span><span class="highlight-chip">30% Efficiency Gain</span></div>
         </div>
       </div>
       <div class="timeline-block reveal">
         <div class="tl-head"><div><h3 class="tl-title">Software Engineer</h3><p class="tl-company">Innovative Ghar Nepal <span class="tl-loc">· Kathmandu, Nepal</span></p></div><div class="tl-meta"><span class="tl-date">Oct 2017 – Nov 2018</span></div></div>
-        <div class="tl-body"><ul class="tl-list"><li>Owned end-to-end system design of a <strong>multi-tenant real-estate platform</strong> (ASP.NET MVC/C#); designed data model, repository-pattern architecture, RBAC, and shipped property listing, tenant management, and reporting modules.</li></ul></div>
+        <div class="tl-body"><ul class="tl-list">
+          <li>Built <strong>multi-tenant real estate platform</strong> (ASP.NET MVC, C#) with listings, tenant management, RBAC, and reporting modules.</li>
+          <li>Designed normalized SQL Server schema and stored procedures backing search, filtering, and tenant isolation.</li>
+        </ul></div>
       </div>
     </div>
   </div>
@@ -708,9 +1592,9 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
     <div class="section-header reveal"><div class="section-label">Academic Background</div><h2 class="section-heading">Education &amp;<br><em>certifications</em></h2></div>
     <div class="edu-grid">
       <div class="edu-card reveal"><div class="edu-top"><span class="edu-status active">In Progress</span><span class="edu-year">2025 – 2027</span></div><h3 class="edu-degree">MSc, Data Science &amp; Computational Intelligence</h3><p class="edu-inst">Coventry University, UK (Distance)</p><p class="edu-detail">Softwarica College · Expected Feb 2027</p></div>
-      <div class="edu-card reveal reveal-delay-1"><div class="edu-top"><span class="edu-status active">In Progress</span><span class="edu-year">2024 – 2026</span></div><h3 class="edu-degree">MBA, Finance</h3><p class="edu-inst">Indira Gandhi National Open University</p><p class="edu-detail">Distance · Expected Jul 2026</p></div>
-      <div class="edu-card reveal reveal-delay-2"><div class="edu-top"><span class="edu-status done">Completed</span><span class="edu-year">2013 – 2017</span></div><h3 class="edu-degree">BE, Computer Science &amp; Engineering</h3><p class="edu-inst">Advanced College of Engineering</p><p class="edu-detail">Tribhuvan University</p><p class="edu-note">IEEE Publication: "Attendance and Security Assurance using Image Processing" — ICCMC 2018 · <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" rel="noopener">View on IEEE Xplore →</a></p></div>
-      <div class="edu-card reveal reveal-delay-3"><div class="edu-top"><span class="edu-status cert">In Progress</span><span class="edu-year">2025</span></div><h3 class="edu-degree">Microsoft Certified: Azure Solutions Architect Expert</h3><p class="edu-inst">Microsoft — AZ-305</p><p class="edu-detail">Cloud Architecture Certification</p></div>
+      <div class="edu-card reveal reveal-delay-1"><div class="edu-top"><span class="edu-status active">In Progress</span><span class="edu-year">2024 – 2026</span></div><h3 class="edu-degree">MBA, Finance</h3><p class="edu-inst">Indira Gandhi National Open University</p><p class="edu-detail">Distance · Expected Sept 2026</p></div>
+      <div class="edu-card reveal reveal-delay-2"><div class="edu-top"><span class="edu-status done">Completed</span><span class="edu-year">2013 – 2017</span></div><h3 class="edu-degree">BE, Computer Science &amp; Engineering</h3><p class="edu-inst">Advanced College of Engineering</p><p class="edu-detail">Tribhuvan University</p><p class="edu-note">IEEE Publication: "Attendance and Security Assurance using Image Processing", ICCMC 2018 · <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" rel="noopener">View on IEEE Xplore →</a></p></div>
+      <div class="edu-card reveal reveal-delay-3"><div class="edu-top"><span class="edu-status cert">In Progress</span><span class="edu-year">2025</span></div><h3 class="edu-degree">Microsoft Certified: Azure Solutions Architect Expert</h3><p class="edu-inst">Microsoft: AZ-305</p><p class="edu-detail">Cloud Architecture Certification</p></div>
     </div>
   </div>
 </section>
@@ -720,7 +1604,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;position:relative;z-ind
   <div class="contact-glow"></div>
   <div class="container">
     <div class="contact-layout">
-      <div class="reveal"><div class="section-label">Contact</div><h2 class="section-heading">Let's build<br>something <em>remarkable</em></h2><p class="contact-desc">Available for US remote consulting in InsurTech, Financial Services, and AI-Driven Transformation.</p><div class="contact-availability"><span class="avail-dot"></span>4h+ US Eastern overlap · Independent Contractor</div></div>
+      <div class="reveal"><div class="section-label">Contact</div><h2 class="section-heading">Open to <em>senior remote</em><br>engineering roles</h2><p class="contact-desc">If you're hiring a senior .NET engineer with deep insurance domain experience for a remote role, the easiest first step is a short intro call. Also open to senior contract engagements (W-8BEN ready) where the scope is engineering work, not architecture-as-a-service.</p><div class="contact-availability"><span class="avail-dot"></span>4+ hrs US-Eastern overlap · W-8BEN ready</div></div>
       <div class="contact-cards">
         <a href="mailto:rahulkarn2118@gmail.com" class="contact-card reveal"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="cc-body"><span class="cc-label">Email</span><span class="cc-value">rahulkarn2118@gmail.com</span></div><svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         <a href="tel:+9779863036368" class="contact-card reveal reveal-delay-1"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="cc-body"><span class="cc-label">Phone</span><span class="cc-value">+977 9863036368</span></div><svg class="cc-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
