@@ -1,0 +1,15 @@
+# This directory is the published site root: anything committed here is served
+# publicly from https://rahulkarn.tech. Keep the repo equal to the deployed site.
+
+# Source material for the resume - kept locally, never deployed.
+WhatsApp Image *
+
+# Local build tooling for the committed artifacts (resume PDF, OG card).
+# Useful to keep on disk, but not part of the site.
+build_resume.py
+build_og_image.py
+
+# Internal positioning/rewrite spec. Kept locally; must not be publicly readable.
+rahulkarn-me-modification-spec.md
+
+*.tmp

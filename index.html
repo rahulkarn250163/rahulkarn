@@ -3,20 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rahul Karn - Senior .NET Engineer · InsurTech &amp; Financial Systems</title>
+<title>Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems</title>
 <meta name="description" content="Senior .NET engineer with 8+ years building production insurance and financial systems: policy admin, claims, payments, and agent portals at one of Nepal's largest life insurers. Open to senior remote engineering roles.">
-<meta property="og:title" content="Rahul Karn - Senior .NET Engineer · InsurTech &amp; Financial Systems">
+<link rel="canonical" href="https://rahulkarn.tech/">
+<meta name="author" content="Rahul Karn">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="Rahul Karn">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems">
 <meta property="og:description" content="Senior .NET engineer with 8+ years building production insurance and financial systems. Open to senior remote engineering roles.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rahulkarn.tech">
 <meta property="og:image" content="https://rahulkarn.tech/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Broadsheet-style card: Rahul Karn, Senior .NET Engineer, InsurTech and financial systems, Kathmandu, Nepal.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rahul Karn - Senior .NET Engineer · InsurTech &amp; Financial Systems">
+<meta name="twitter:title" content="Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems">
 <meta name="twitter:description" content="Senior .NET engineer with 8+ years building production insurance and financial systems.">
 <meta name="twitter:image" content="https://rahulkarn.tech/og-image.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>RK</text></svg>">
+<meta name="twitter:image:alt" content="Broadsheet-style card: Rahul Karn, Senior .NET Engineer, InsurTech and financial systems, Kathmandu, Nepal.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg aria-hidden="true" focusable="false" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111111'/%3E%3Ctext x='32' y='45' font-family='Times New Roman,serif' font-size='33' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
 <script>
 (function(){
   try{
@@ -33,7 +42,7 @@
   --ink:#111111;
   --text:#222222;
   --gray:#555555;
-  --mid:#777777;
+  --mid:#6b6b6b;
   --faint:#9a9a9a;
   --line:#d9d9d9;
   --wash:#f7f7f5;
@@ -48,17 +57,19 @@
   --gray:#aaa7a0;
   --mid:#87847d;
   --faint:#5c5952;
-  --line:#333330;
-  --wash:#1a1a18;
+  --line:#3a3a36;
+  --wash:#1c1c1a;
   --red:#d9564a;
 }
-html{scroll-behavior:smooth;scroll-padding-top:64px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 20px);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body{font-family:var(--serif);background:var(--bg);color:var(--text);font-size:17px;line-height:1.65;transition:background-color .25s ease,color .25s ease}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 ul{list-style:none}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 ::selection{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+main:focus{outline:none}
 .container{max-width:1020px;margin:0 auto;padding:0 28px}
 .smallcaps{text-transform:uppercase;letter-spacing:.14em}
 .skip-link{position:absolute;top:-100%;left:28px;padding:10px 18px;background:var(--ink);color:var(--bg);font-size:12px;text-transform:uppercase;letter-spacing:.1em;z-index:100;transition:top .2s}
@@ -79,11 +90,12 @@ img{max-width:100%;display:block}
 #navbar.scrolled{box-shadow:0 1px 0 var(--line)}
 .nav-inner{max-width:1020px;margin:0 auto;padding:0 28px;height:var(--nav-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;column-gap:16px}
 .nav-links{grid-column:2;justify-self:center;display:flex;align-items:center;gap:26px}
-.nav-links a{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);padding:4px 0}
+.nav-links a{position:relative;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);padding:4px 0}
+.nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red)}
 .nav-links a:hover,.nav-links a.active{color:var(--ink)}
 .nav-cta{color:var(--red)!important;font-weight:700}
 .nav-right{grid-column:3;justify-self:end;display:flex;align-items:center;gap:10px}
-.theme-toggle{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink);color:var(--ink);flex-shrink:0;transition:background-color .2s,color .2s,border-color .25s}
+.theme-toggle{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ink);color:var(--ink);flex-shrink:0;transition:background-color .2s,color .2s,border-color .25s}
 .theme-toggle:hover{background:var(--ink);color:var(--bg)}
 .theme-toggle svg{display:block}
 .theme-toggle .icon-sun{display:none}
@@ -123,8 +135,9 @@ img{max-width:100%;display:block}
 
 /* ===== Sections ===== */
 .sec{border-top:4px double var(--ink);padding:46px 0 84px}
-.kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--gray);margin-bottom:16px}
-.kicker b{color:var(--red);font-weight:700;margin-right:8px}
+.kicker{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--gray);margin-bottom:16px}
+.kicker::after{content:"";flex:1;height:1px;background:var(--line)}
+.kicker b{color:var(--red);font-weight:700;margin-right:-4px}
 .sec-heading{font-size:clamp(30px,4.2vw,42px);font-weight:700;line-height:1.12;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px}
 .sec-heading em{font-style:italic}
 .sec-desc{font-size:17px;color:var(--gray);max-width:600px}
@@ -135,7 +148,7 @@ img{max-width:100%;display:block}
 .about-photo-fig{float:right;width:230px;margin:6px 0 18px 36px}
 .about-photo-fig img{width:100%;border:1px solid var(--ink)}
 .about-photo-fig figcaption{font-size:12.5px;font-style:italic;color:var(--mid);line-height:1.5;margin-top:8px}
-.about-text p{margin-bottom:16px;text-align:justify;hyphens:auto}
+.about-text p{margin-bottom:16px;text-align:justify;-webkit-hyphens:auto;hyphens:auto}
 .about-text > p:first-child::first-letter{float:left;font-size:66px;line-height:.82;font-weight:700;color:var(--ink);padding:7px 10px 0 0}
 .about-text strong{font-weight:700;color:var(--ink)}
 .highlight-text{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
@@ -148,6 +161,7 @@ img{max-width:100%;display:block}
 
 /* ===== Case studies ===== */
 .case-card{border-top:1px solid var(--line)}
+.case-title-area{min-width:0}
 .case-card:first-of-type{border-top:none}
 .case-header{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:28px 0;cursor:pointer}
 .case-no{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--red);margin-bottom:10px}
@@ -160,12 +174,12 @@ img{max-width:100%;display:block}
 .case-header:hover .case-toggle{background:var(--ink);color:var(--bg)}
 .case-card.open .case-toggle{transform:rotate(45deg)}
 .case-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.case-card.open .case-body{max-height:4200px}
+.case-card.open .case-body{max-height:6000px}
 .case-content{padding:4px 0 44px;max-width:860px}
 .case-section{margin-bottom:24px}
 .case-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--ink);margin-bottom:8px}
 .case-section-label::after{content:'';display:block;width:34px;height:2px;background:var(--red);margin-top:5px}
-.case-section p{font-size:16px;line-height:1.7;text-align:justify;hyphens:auto}
+.case-section p{font-size:16px;line-height:1.7;text-align:justify;-webkit-hyphens:auto;hyphens:auto}
 .case-section ul{display:flex;flex-direction:column;gap:7px}
 .case-section li{font-size:16px;line-height:1.65;padding-left:20px;position:relative}
 .case-section li::before{content:'—';position:absolute;left:0;color:var(--faint);font-size:13px;top:3px}
@@ -207,6 +221,7 @@ img{max-width:100%;display:block}
 .deliverable-file svg{color:var(--red);flex-shrink:0}
 .skill-tags{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
 .skill-tags span{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid)}
+@media(min-width:901px){.skills-grid{gap:0}.skill-card{padding-top:30px;padding-bottom:6px}.skill-card:nth-child(n+4){border-top:1px solid var(--line)}.skill-card:nth-child(-n+3){padding-top:0}}
 
 /* ===== Experience ledger ===== */
 .timeline-block{display:grid;grid-template-columns:180px minmax(0,1fr);gap:18px 56px;border-top:1px solid var(--line);padding:34px 0}
@@ -237,6 +252,10 @@ img{max-width:100%;display:block}
 .edu-note{font-size:14.5px;color:var(--gray);line-height:1.6;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);max-width:620px}
 .edu-note a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .edu-note a:hover{color:var(--red)}
+.edu-list{display:flex;flex-direction:column;gap:8px;margin-top:14px;max-width:700px}
+.edu-list li{font-size:15.5px;line-height:1.6;padding-left:20px;position:relative;color:var(--gray)}
+.edu-list li::before{content:'•';position:absolute;left:0;color:var(--faint);font-size:16px;top:0}
+.edu-list strong{font-weight:700;color:var(--ink)}
 
 /* ===== Contact ===== */
 .contact-desc{font-size:17px;line-height:1.7;color:var(--gray);max-width:620px;margin:4px 0 22px}
@@ -285,6 +304,11 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   .metric-card{flex-direction:column;gap:4px}
   .metric-row{text-align:left}
 }
+@media(max-width:640px){
+  /* Justified text with no hyphenation support opens rivers in a narrow measure. */
+  .about-text p,.case-section p{text-align:left}
+  .case-diagram-frame{padding:16px 14px}
+}
 @media(max-width:480px){
   .hero-actions{flex-direction:column;align-items:stretch;gap:16px}
   .btn-primary{justify-content:center}
@@ -296,14 +320,54 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   .about-photo-fig{float:none;width:200px;margin:0 auto 20px}
   .about-text > p:first-child::first-letter{font-size:54px}
 }
+/* ===== Print: the broadsheet, on paper ===== */
+@media print{
+  :root,:root[data-theme="dark"]{--bg:#fff;--ink:#000;--text:#000;--gray:#2b2b2b;--mid:#555;--faint:#888;--line:#bbb;--wash:#fff;--red:#000}
+  @page{margin:14mm}
+  #navbar,.skip-link,.hamburger,.theme-toggle,.case-toggle,.cc-arrow,.index-box,.hero-actions{display:none!important}
+  body{font-size:10.5pt;line-height:1.45}
+  .container{max-width:none;padding:0}
+  .lead{padding-top:18pt}
+  .lead-grid{grid-template-columns:1fr}
+  .sec{padding:14pt 0 18pt;border-top:3px double #000}
+  .case-body{max-height:none!important;overflow:visible!important}
+  .case-diagram-frame{overflow:visible;padding:10pt}
+  .arch-diagram{min-width:0}
+  .case-header{cursor:default}
+  .case-card,.timeline-block,.edu-card,.skill-card,.deliverable-card,.case-section,header,footer{break-inside:avoid;page-break-inside:avoid}
+  .sec-heading,.case-title,.tl-title{break-after:avoid;page-break-after:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555;word-break:break-all}
+}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms!important}
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Rahul Karn",
+  "url":"https://rahulkarn.tech/",
+  "image":"https://rahulkarn.tech/og-image.png",
+  "jobTitle":"Senior .NET Engineer",
+  "description":"Senior .NET engineer with 8+ years building production insurance and financial systems: policy administration, claims, payments, and agent portals.",
+  "email":"mailto:rahulkarn2118@gmail.com",
+  "telephone":"+977-9863036368",
+  "address":{"@type":"PostalAddress","addressLocality":"Kathmandu","addressCountry":"NP"},
+  "worksFor":{"@type":"Organization","name":"Nepal Life Insurance Co."},
+  "alumniOf":[
+    {"@type":"CollegeOrUniversity","name":"Coventry University"},
+    {"@type":"CollegeOrUniversity","name":"Indira Gandhi National Open University"},
+    {"@type":"CollegeOrUniversity","name":"Tribhuvan University"}
+  ],
+  "knowsAbout":[".NET",".NET 10","C#","ASP.NET Core","Entity Framework Core","Microsoft Azure","Oracle Database","Microsoft SQL Server","Domain-Driven Design","OAuth 2.0","OpenID Connect","Payment Systems","Insurance Technology","Machine Learning"],
+  "sameAs":["https://linkedin.com/in/rahulkarn52","https://github.com/rahulkarn"]
+}
+</script>
 </head>
 <body>
-<a href="#overview" class="skip-link">Skip to content</a>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <header>
   <div class="container">
@@ -334,14 +398,15 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     </ul>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark view" aria-pressed="false">
-        <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"/></svg>
-        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+        <svg aria-hidden="true" focusable="false" class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"/></svg>
+        <svg aria-hidden="true" focusable="false" class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
       </button>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
+<main id="main" tabindex="-1">
 <section class="lead" id="overview">
   <div class="container">
     <div class="lead-grid">
@@ -349,7 +414,7 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
         <h1 class="hero-title">Senior .NET engineer for <em>insurance and financial systems.</em></h1>
         <p class="hero-sub">I build and modernize production platforms across policy administration, claims, payments, agent portals, and regulated financial workflows.</p>
         <div class="hero-actions">
-          <a href="rahul_karn_resume.pdf" download="Rahul_Karn_Resume.pdf" class="btn-primary">Download CV <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+          <a href="rahul_karn_resume.pdf" download="Rahul_Karn_Resume.pdf" class="btn-primary">Download CV <svg aria-hidden="true" focusable="false" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
           <a href="#contact" class="link-quiet">Get in Touch →</a>
         </div>
       </div>
@@ -370,7 +435,7 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
       <div class="stat"><div><span class="stat-number">50</span><span class="stat-suffix">%</span></div><span class="stat-label">Query Latency Reduction</span></div>
       <div class="stat"><div><span class="stat-number">100</span><span class="stat-suffix">B+</span></div><span class="stat-label">NPR Portfolio Assets</span></div>
     </div>
-    <p class="stack-line">.NET 8 LTS · C# / ASP.NET Core · EF Core · Azure · ML.NET · Oracle / SQL Server · OAuth2 / OIDC · RBAC · OWASP · Docker · Domain-Driven Design · Modular Monolith · Git Flow · CI/CD · OpenTelemetry</p>
+    <p class="stack-line">.NET 10 / 8 LTS · C# / ASP.NET Core · EF Core · Azure · ML.NET · Oracle / SQL Server · OAuth2 / OIDC · RBAC · OWASP · Docker · Domain-Driven Design · Modular Monolith · Git Flow · CI/CD · OpenTelemetry</p>
   </div>
 </section>
 
@@ -381,7 +446,7 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     <h2 class="sec-heading">A working engineer,<br><em>not a slide-deck consultant.</em></h2>
     <div class="about-body">
       <figure class="about-photo-fig">
-        <img src="rahul-headshot.png" alt="Rahul Karn - Senior .NET Engineer" loading="lazy">
+        <img src="rahul-headshot.png" alt="Rahul Karn, Senior .NET Engineer" width="928" height="1240" loading="lazy" decoding="async">
         <figcaption>Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems. Kathmandu, Nepal.</figcaption>
       </figure>
       <div class="about-text">
@@ -424,12 +489,12 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
           <div class="case-diagram-frame">
             <div class="arch-diagram">
               <div class="arch-row"><div class="arch-box">Agents / Customers<small>90K+ users</small></div><div class="arch-box">Admin Portal<small>Internal ops</small></div><div class="arch-box">Digital Channels<small>Web / Mobile</small></div></div>
-              <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>HTTPS / API Gateway</span></div>
+              <div class="arch-connector"><svg aria-hidden="true" focusable="false" width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>HTTPS / API Gateway</span></div>
               <div class="arch-row"><div class="arch-box primary">API Gateway<small>YARP Reverse Proxy</small></div></div>
-              <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Bounded Contexts</span></div>
+              <div class="arch-connector"><svg aria-hidden="true" focusable="false" width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Bounded Contexts</span></div>
               <div class="arch-divider"><span class="arch-divider-label">Service Layer</span></div>
               <div class="arch-row"><div class="arch-box">Policy Admin<small>Lifecycle mgmt</small></div><div class="arch-box">Underwriting<small>Risk assessment</small></div><div class="arch-box">Claims<small>Processing</small></div><div class="arch-box">Agent Mgmt<small>Onboarding / KYC</small></div></div>
-              <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>EF Core / Repository Pattern</span></div>
+              <div class="arch-connector"><svg aria-hidden="true" focusable="false" width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>EF Core / Repository Pattern</span></div>
               <div class="arch-divider"><span class="arch-divider-label">Data Layer</span></div>
               <div class="arch-row"><div class="arch-box">Oracle DB<small>Legacy data</small></div><div class="arch-box">SQL Server<small>New modules</small></div><div class="arch-box primary">Identity Server<small>OAuth2 / OIDC</small></div></div>
             </div>
@@ -498,11 +563,11 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
           <div class="case-diagram-frame">
             <div class="arch-diagram">
               <div class="arch-row"><div class="arch-box">Client Request<small>Premium / Payout</small></div></div>
-              <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Idempotency Key</span></div>
+              <div class="arch-connector"><svg aria-hidden="true" focusable="false" width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Idempotency Key</span></div>
               <div class="arch-row"><div class="arch-box primary">Initiated<small>Idempotency check</small></div></div>
-              <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Gateway API</span></div>
+              <div class="arch-connector"><svg aria-hidden="true" focusable="false" width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Gateway API</span></div>
               <div class="arch-row"><div class="arch-box">Authorized<small>Gateway confirmed</small></div></div>
-              <div class="arch-connector"><svg width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Capture / Settle</span></div>
+              <div class="arch-connector"><svg aria-hidden="true" focusable="false" width="16" height="20" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 0v20M4 16l4 4 4-4"/></svg><span>Capture / Settle</span></div>
               <div class="arch-row"><div class="arch-box">Settled<small>Reconciled</small></div><div class="arch-box">Failed<small>Retry queue</small></div><div class="arch-box">Refunded<small>Audit logged</small></div></div>
               <div class="arch-divider"><span class="arch-divider-label">Reconciliation Layer</span></div>
               <div class="arch-row"><div class="arch-box">Auto Reconciliation<small>Near-real-time</small></div><div class="arch-box">Audit Trail<small>Immutable logs</small></div><div class="arch-box">Alerting<small>Mismatch detection</small></div></div>
@@ -543,27 +608,27 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
         <h3>System Architecture</h3>
         <p>Domain models, service boundaries, data-ownership maps, and architecture decision records covering integration, reliability, and technology choices.</p>
         <div class="deliverable-files">
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Domain Models &amp; Bounded Contexts</span>
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Service &amp; Data Boundaries</span>
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Architecture Decision Records</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Domain Models &amp; Bounded Contexts</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Service &amp; Data Boundaries</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Architecture Decision Records</span>
         </div>
       </div>
       <div class="deliverable-card">
         <h3>Security &amp; API Design</h3>
         <p>OWASP-aligned controls, RBAC models, API versioning and error contracts, and security review practices established for regulated financial systems.</p>
         <div class="deliverable-files">
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>API Versioning &amp; Error Model</span>
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>OWASP Review Practices</span>
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>RBAC Design</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>API Versioning &amp; Error Model</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>OWASP Review Practices</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>RBAC Design</span>
         </div>
       </div>
       <div class="deliverable-card">
         <h3>Modernization &amp; Roadmaps</h3>
         <p>Phased modernization plans (monolith → modular), AI/ML use-case exploration for insurance, and roadmaps grounded in what the system can actually become.</p>
         <div class="deliverable-files">
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Phased Modernization Plans</span>
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>AI/ML Use-Case Exploration</span>
-          <span class="deliverable-file"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pragmatic Roadmaps</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Phased Modernization Plans</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>AI/ML Use-Case Exploration</span>
+          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pragmatic Roadmaps</span>
         </div>
       </div>
     </div>
@@ -578,11 +643,12 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
       <h2 class="sec-heading">Capabilities, grouped by<br><em>what they solve</em></h2>
     </div>
     <div class="skills-grid">
+      <div class="skill-card"><h3>Core .NET Platform</h3><p>Day-to-day build stack for production insurance systems: C# on modern .NET, ASP.NET Core services, and EF Core against large relational estates.</p><div class="skill-tags"><span>.NET 10</span><span>.NET 8 LTS</span><span>C#</span><span>ASP.NET Core</span><span>EF Core</span><span>Web API</span></div></div>
       <div class="skill-card"><h3>System Design</h3><p>Domain modeling, service boundaries, and architecture for new and legacy systems in insurance and finance.</p><div class="skill-tags"><span>DDD</span><span>C4 Model</span><span>ADRs</span><span>Modular Monolith</span><span>API Design</span></div></div>
       <div class="skill-card"><h3>Data &amp; AI/ML for Insurance</h3><p>Applied data and ML for insurance, exploring fraud detection, claims triage, and predictive underwriting on real policy and claims data.</p><div class="skill-tags"><span>ML.NET</span><span>Python</span><span>RAG</span><span>pandas</span><span>scikit-learn</span></div></div>
       <div class="skill-card"><h3>Security &amp; Identity</h3><p>OAuth2/OIDC and RBAC for regulated financial platforms, OWASP-aligned controls, encryption, secrets management, and audit logging.</p><div class="skill-tags"><span>OAuth2</span><span>OIDC</span><span>RBAC</span><span>OWASP</span><span>Audit Logging</span></div></div>
       <div class="skill-card"><h3>Platform &amp; Data</h3><p>API design, idempotency for payment flows, database architecture, query optimization, and ETL across Oracle and SQL Server estates.</p><div class="skill-tags"><span>API-First</span><span>Oracle</span><span>SQL Server</span><span>Azure SQL</span><span>ETL</span></div></div>
-      <div class="skill-card"><h3>InsurTech &amp; FinServ</h3><p>Core insurance systems: underwriting, policy admin, claims, payments, asset management, premium engines, KYC/AML, digital channels.</p><div class="skill-tags"><span>Insurance</span><span>Claims</span><span>Underwriting</span><span>Payments</span><span>KYC</span></div></div>
+      <div class="skill-card"><h3>InsurTech &amp; FinServ</h3><p>Core insurance systems: policy onboarding, product information, underwriting, claims, premium engines, accounting, payments, asset management, KYC/AML, digital channels.</p><div class="skill-tags"><span>Insurance</span><span>Underwriting</span><span>Claims</span><span>Accounting</span><span>Payments</span><span>KYC</span></div></div>
       <div class="skill-card"><h3>Cloud &amp; Delivery</h3><p>Azure (App Services, SQL, Key Vault), Docker, Git Flow, CI/CD pipelines, structured logging, and observability for production workloads.</p><div class="skill-tags"><span>Azure</span><span>Docker</span><span>CI/CD</span><span>Git Flow</span><span>OpenTelemetry</span></div></div>
     </div>
   </div>
@@ -651,12 +717,17 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   <div class="container">
     <div class="sec-header">
       <div class="kicker"><b>06</b>Academic Background</div>
-      <h2 class="sec-heading">Education &amp;<br><em>certifications</em></h2>
+      <h2 class="sec-heading">Education &amp;<br><em>professional training</em></h2>
     </div>
     <div class="edu-card"><div class="edu-top"><span class="edu-year">2025 – 2027</span><span class="edu-status active">In Progress</span></div><div><h3 class="edu-degree">MSc, Data Science &amp; Computational Intelligence</h3><p class="edu-inst">Coventry University, UK (Distance)</p><p class="edu-detail">Softwarica College · Expected Feb 2027</p></div></div>
     <div class="edu-card"><div class="edu-top"><span class="edu-year">2024 – 2026</span><span class="edu-status active">In Progress</span></div><div><h3 class="edu-degree">MBA, Finance</h3><p class="edu-inst">Indira Gandhi National Open University</p><p class="edu-detail">Distance · Expected Sept 2026</p></div></div>
     <div class="edu-card"><div class="edu-top"><span class="edu-year">2013 – 2017</span><span class="edu-status done">Completed</span></div><div><h3 class="edu-degree">BE, Computer Science &amp; Engineering</h3><p class="edu-inst">Advanced College of Engineering</p><p class="edu-detail">Tribhuvan University</p><p class="edu-note">IEEE Publication: "Attendance and Security Assurance using Image Processing", ICCMC 2018 · <a href="https://ieeexplore.ieee.org/document/8487788" target="_blank" rel="noopener">View on IEEE Xplore →</a></p></div></div>
-    <div class="edu-card"><div class="edu-top"><span class="edu-year">2025</span><span class="edu-status cert">In Progress</span></div><div><h3 class="edu-degree">Microsoft Certified: Azure Solutions Architect Expert</h3><p class="edu-inst">Microsoft: AZ-305</p><p class="edu-detail">Cloud Architecture Certification</p></div></div>
+    <div class="edu-card"><div class="edu-top"><span class="edu-year">Training</span><span class="edu-status done">Completed</span></div><div><h3 class="edu-degree">Professional Training</h3><p class="edu-inst">Technical, insurance-domain, and regulatory programs</p><ul class="edu-list">
+      <li><strong>Mastering in Software Architecture</strong> · Kathmandu University, 2026 &mdash; advanced patterns, enterprise systems, and cloud-native architecture</li>
+      <li><strong>Insurance Fundamentals</strong> · Insurance Institute of Nepal &mdash; life insurance principles, products, and practice</li>
+      <li><strong>Microsoft SQL Database Administrator</strong> · SQL Helps, 2021 &mdash; SQL Server administration, backup and recovery, performance tuning</li>
+      <li><strong>AML/CFT</strong> · FIU-Nepal / Nepal Rastra Bank &mdash; anti-money-laundering and counter-financing-of-terrorism compliance</li>
+    </ul></div></div>
   </div>
 </section>
 
@@ -668,12 +739,13 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     <p class="contact-desc">If you're hiring a senior .NET engineer with deep insurance domain experience for a remote role, the easiest first step is a short intro call. Also open to senior contract engagements (W-8BEN ready) where the scope is engineering work, not architecture-as-a-service.</p>
     <div class="contact-availability">4+ hrs US-Eastern overlap · W-8BEN ready</div>
     <div class="contact-cards">
-      <a href="mailto:rahulkarn2118@gmail.com" class="contact-card"><span class="cc-label">Email</span><span class="cc-value">rahulkarn2118@gmail.com</span><svg class="cc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="tel:+9779863036368" class="contact-card"><span class="cc-label">Phone</span><span class="cc-value">+977 9863036368</span><svg class="cc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener" class="contact-card"><span class="cc-label">LinkedIn</span><span class="cc-value">linkedin.com/in/rahulkarn52</span><svg class="cc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="mailto:rahulkarn2118@gmail.com" class="contact-card"><span class="cc-label">Email</span><span class="cc-value">rahulkarn2118@gmail.com</span><svg aria-hidden="true" focusable="false" class="cc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="tel:+9779863036368" class="contact-card"><span class="cc-label">Phone</span><span class="cc-value">+977 9863036368</span><svg aria-hidden="true" focusable="false" class="cc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener" class="contact-card"><span class="cc-label">LinkedIn</span><span class="cc-value">linkedin.com/in/rahulkarn52</span><svg aria-hidden="true" focusable="false" class="cc-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container"><div class="footer-inner">
@@ -700,7 +772,6 @@ themeToggle.addEventListener('click',()=>{
 });
 
 const navbar=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>10)},{passive:true});
 
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 const menuLabel=document.querySelector('.nav-menu-label');
@@ -711,18 +782,46 @@ hamburger.addEventListener('click',()=>{const o=navLinks.classList.toggle('open'
 navLinks.querySelectorAll('a').forEach(l=>l.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&navLinks.classList.contains('open')){closeMenu();hamburger.focus()}});
 
-const sections=[...document.querySelectorAll('section[id]')],navAs=document.querySelectorAll('.nav-links a:not(.nav-cta)');
-window.addEventListener('scroll',()=>{let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id});navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+c))},{passive:true});
+/* One rAF-throttled scroll pass drives both the nav shadow and the section marker. */
+const sections=[...document.querySelectorAll('main section[id]')],navAs=document.querySelectorAll('.nav-links a:not(.nav-cta)');
+let scrollQueued=false;
+function onScroll(){
+  scrollQueued=false;
+  navbar.classList.toggle('scrolled',window.scrollY>10);
+  let current='';
+  if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-2){
+    current=sections[sections.length-1].id; // the last section is too short to reach the trigger line
+  }else{
+    sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id});
+  }
+  navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+}
+window.addEventListener('scroll',()=>{if(!scrollQueued){scrollQueued=true;requestAnimationFrame(onScroll)}},{passive:true});
+onScroll();
 
-document.querySelectorAll('.case-header').forEach(h=>{
+/* Panels are measured rather than clamped to a magic max-height: case 1 is taller
+   than any fixed ceiling once the diagram stacks on a narrow screen. */
+const caseCards=[...document.querySelectorAll('.case-card')];
+function setPanel(card,open){
+  const body=card.querySelector('.case-body');
+  card.classList.toggle('open',open);
+  card.querySelector('.case-header').setAttribute('aria-expanded',String(open));
+  body.style.maxHeight=open?body.scrollHeight+'px':'';
+}
+caseCards.forEach(card=>{
+  const header=card.querySelector('.case-header');
   const toggle=()=>{
-    const card=h.closest('.case-card'),wasOpen=card.classList.contains('open');
-    document.querySelectorAll('.case-card').forEach(c=>{c.classList.remove('open');c.querySelector('.case-header').setAttribute('aria-expanded','false')});
-    if(!wasOpen){card.classList.add('open');h.setAttribute('aria-expanded','true')}
+    const wasOpen=card.classList.contains('open');
+    caseCards.forEach(c=>setPanel(c,false));
+    if(!wasOpen)setPanel(card,true);
   };
-  h.addEventListener('click',toggle);
-  h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
+  header.addEventListener('click',toggle);
+  header.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()}});
 });
+window.addEventListener('resize',()=>{
+  const open=document.querySelector('.case-card.open');
+  if(open){const b=open.querySelector('.case-body');b.style.maxHeight='none';b.style.maxHeight=b.scrollHeight+'px'}
+},{passive:true});
 </script>
 </body>
 </html>
