@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems</title>
-<meta name="description" content="Senior .NET engineer with 8+ years building production insurance and financial systems: policy admin, claims, payments, and agent portals at one of Nepal's largest life insurers. Open to senior remote engineering roles.">
+<meta name="description" content="Senior .NET engineer with 9 years building production insurance and financial systems: policy admin, claims, payments, and agent portals at one of Nepal's largest life insurers. Open to senior remote engineering roles.">
 <link rel="canonical" href="https://rahulkarn.tech/">
 <meta name="author" content="Rahul Karn">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Rahul Karn">
 <meta property="og:locale" content="en_US">
 <meta property="og:title" content="Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems">
-<meta property="og:description" content="Senior .NET engineer with 8+ years building production insurance and financial systems. Open to senior remote engineering roles.">
+<meta property="og:description" content="Senior .NET engineer with 9 years building production insurance and financial systems. Open to senior remote engineering roles.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rahulkarn.tech">
 <meta property="og:image" content="https://rahulkarn.tech/og-image.png">
@@ -22,10 +22,10 @@
 <meta property="og:image:alt" content="Broadsheet-style card: Rahul Karn, Senior .NET Engineer, InsurTech and financial systems, Kathmandu, Nepal.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems">
-<meta name="twitter:description" content="Senior .NET engineer with 8+ years building production insurance and financial systems.">
+<meta name="twitter:description" content="Senior .NET engineer with 9 years building production insurance and financial systems.">
 <meta name="twitter:image" content="https://rahulkarn.tech/og-image.png">
 <meta name="twitter:image:alt" content="Broadsheet-style card: Rahul Karn, Senior .NET Engineer, InsurTech and financial systems, Kathmandu, Nepal.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg aria-hidden="true" focusable="false" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111111'/%3E%3Ctext x='32' y='45' font-family='Times New Roman,serif' font-size='33' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111111'/%3E%3Ctext x='32' y='45' font-family='Times New Roman,serif' font-size='33' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ERK%3C/text%3E%3C/svg%3E">
 <script>
 (function(){
   try{
@@ -47,6 +47,7 @@
   --line:#d9d9d9;
   --wash:#f7f7f5;
   --red:#a02020;
+  --tick-accent:#ff7a6b;
   --serif:'Times New Roman',Times,'Liberation Serif',Georgia,serif;
   --nav-h:46px;
 }
@@ -60,6 +61,7 @@
   --line:#3a3a36;
   --wash:#1c1c1a;
   --red:#d9564a;
+  --tick-accent:#a02020;
 }
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 20px);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body{font-family:var(--serif);background:var(--bg);color:var(--text);font-size:17px;line-height:1.65;transition:background-color .25s ease,color .25s ease}
@@ -85,6 +87,21 @@ main:focus{outline:none}
 .masthead-sub::before,.masthead-sub::after{content:'';height:1px;background:var(--line);flex:1;max-width:180px}
 .doc-rule{border-top:4px double var(--ink)}
 
+/* ===== Ticker: the wire under the masthead ===== */
+.ticker{position:relative;display:flex;align-items:stretch;margin:10px 0 0;background:var(--ink);color:var(--bg);overflow:hidden;transition:background-color .25s ease,color .25s ease}
+.ticker-tag{flex-shrink:0;display:flex;align-items:center;padding:0 16px;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;white-space:nowrap}
+.ticker-window{flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+.ticker-track{display:flex;width:max-content}
+.ticker.is-live .ticker-track{animation:ticker 75s linear infinite}
+.ticker:hover .ticker-track,.ticker:focus-within .ticker-track{animation-play-state:paused}
+.ticker-list{display:flex;flex-shrink:0}
+.ticker-list li{display:flex;align-items:baseline;gap:8px;padding:10px 0 9px;font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;white-space:nowrap}
+.ticker-list li::after{content:'';align-self:center;width:4px;height:4px;background:var(--tick-accent);transform:rotate(45deg);margin:0 24px}
+.ticker-list b{font-weight:700}
+.ticker-list .tick{color:var(--tick-accent);font-size:10px}
+@keyframes ticker{to{transform:translateX(-50%)}}
+@keyframes pulse{50%{opacity:.25}}
+
 /* ===== Nav ===== */
 #navbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line);transition:background-color .25s ease,border-color .25s ease}
 #navbar.scrolled{box-shadow:0 1px 0 var(--line)}
@@ -109,7 +126,10 @@ main:focus{outline:none}
 
 /* ===== Lead ===== */
 .lead{padding:52px 0 0}
-.lead-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;align-items:start}
+.lead-grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;align-items:start}
+.now-line{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--red);margin-bottom:16px}
+.now-line::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.6s ease-in-out infinite}
+.now-line span{color:var(--gray);font-weight:400}
 .hero-title{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;padding-bottom:20px;border-bottom:1px solid var(--ink);margin-bottom:20px}
 .hero-title em{font-style:italic;font-weight:700}
 .hero-sub{font-size:19.5px;font-style:italic;line-height:1.6;color:var(--gray);max-width:620px;margin-bottom:34px}
@@ -118,20 +138,22 @@ main:focus{outline:none}
 .btn-primary:hover{background:var(--bg);color:var(--ink)}
 .link-quiet{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:3px}
 .link-quiet:hover{color:var(--red);border-bottom-color:var(--red)}
-.index-box{border:1px solid var(--ink);padding:20px 22px}
-.index-title{text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.index-title::before,.index-title::after{content:'';height:1px;background:var(--line);flex:1}
-.index-box a{display:flex;align-items:baseline;padding:7px 0;font-size:14.5px;color:var(--text)}
-.index-box a:hover{color:var(--red)}
-.index-leader{flex:1;border-bottom:1px dotted var(--faint);margin:0 10px;transform:translateY(-4px)}
-.index-no{font-size:12px;color:var(--mid);font-variant-numeric:tabular-nums lining-nums}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin-top:56px}
+.lead-photo{margin:4px 0 0}
+.lead-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;border:1px solid var(--ink);filter:grayscale(.15) contrast(1.03)}
+.lead-photo figcaption{font-size:12.5px;font-style:italic;color:var(--mid);line-height:1.5;margin-top:8px}
+.lead-photo figcaption b{font-style:normal;color:var(--ink)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin-top:48px}
 .stat{padding:20px 24px 16px;border-left:1px solid var(--line)}
 .stat:first-child{border-left:none;padding-left:0}
-.stat-number{font-size:42px;font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums lining-nums}
-.stat-suffix{font-size:22px;font-weight:700;color:var(--red)}
+.stat-number{font-size:48px;font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums lining-nums}
+.stat-suffix{font-size:24px;font-weight:700;color:var(--red)}
 .stat-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--mid);margin-top:8px}
-.stack-line{font-size:13px;line-height:2;color:var(--mid);font-style:italic;margin:16px 0 70px;max-width:880px}
+.stack-row{display:flex;align-items:baseline;gap:10px 18px;margin:22px 0 72px}
+.stack-label{flex-shrink:0;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--mid)}
+.stack-list{display:flex;flex-wrap:wrap;gap:8px}
+.stack-row li{border:1px solid var(--ink);padding:6px 12px 5px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);transition:background-color .2s,color .2s}
+.stack-row li.key{background:var(--ink);color:var(--bg)}
+.stack-row li:hover{background:var(--red);border-color:var(--red);color:#fff}
 
 /* ===== Sections ===== */
 .sec{border-top:4px double var(--ink);padding:46px 0 84px}
@@ -147,9 +169,10 @@ main:focus{outline:none}
 .about-body{display:grid;grid-template-columns:minmax(0,1fr) 232px;column-gap:44px;align-items:start}
 .about-text{grid-column:1;grid-row:1;min-width:0;columns:2;column-gap:38px;column-rule:1px solid var(--line);orphans:2;widows:2}
 .engagement-block{grid-column:1/-1;grid-row:2}
-.about-photo-fig{grid-column:2;grid-row:1;width:100%;margin:7px 0 0}
-.about-photo-fig img{width:100%;border:1px solid var(--ink)}
-.about-photo-fig figcaption{font-size:12.5px;font-style:italic;color:var(--mid);line-height:1.5;margin-top:8px}
+.pull-quote{grid-column:2;grid-row:1;margin:7px 0 0;padding:18px 0 16px;border-top:2px solid var(--ink);border-bottom:1px solid var(--line)}
+.pull-quote p{font-size:23px;font-style:italic;font-weight:700;line-height:1.28;color:var(--ink);text-wrap:balance}
+.pull-quote p::before{content:'\201C';display:block;font-size:56px;line-height:.6;color:var(--red);margin-bottom:6px}
+.pull-quote cite{display:block;margin-top:14px;font-style:normal;font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--mid)}
 .about-text p{margin-bottom:16px;text-align:justify;-webkit-hyphens:auto;hyphens:auto}
 .about-text > p:first-child::first-letter{float:left;font-size:59px;line-height:.82;font-weight:700;color:var(--ink);padding:6px 9px 0 0}
 .about-text > p:first-child::first-line{font-variant-caps:small-caps;letter-spacing:.03em}
@@ -218,18 +241,35 @@ main:focus{outline:none}
 .metric-arrow{color:var(--red);font-size:14px}
 .metric-after{font-size:17px;font-weight:700;color:var(--ink)}
 
-/* ===== Deliverables / Expertise columns ===== */
-.deliverables-grid,.skills-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:44px 0}
-.deliverable-card,.skill-card{padding:0 30px;border-left:1px solid var(--line)}
-.deliverable-card:first-child,.skill-card:nth-child(3n+1){border-left:none;padding-left:0}
-.deliverable-card h3,.skill-card h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:9px}
-.deliverable-card p,.skill-card p{font-size:15px;line-height:1.65;color:var(--gray)}
-.deliverable-files{margin-top:14px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:12px}
-.deliverable-file{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);display:flex;align-items:center;gap:8px}
-.deliverable-file svg{color:var(--red);flex-shrink:0}
-.skill-tags{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
-.skill-tags span{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid)}
-@media(min-width:901px){.skills-grid{gap:0}.skill-card{padding-top:30px;padding-bottom:6px}.skill-card:nth-child(n+4){border-top:1px solid var(--line)}.skill-card:nth-child(-n+3){padding-top:0}}
+/* ===== Expertise: a ledger of skills, each with its receipt ===== */
+.ledger{--ledger-cols:minmax(0,1.25fr) 168px minmax(0,1fr) 28px;border-top:2px solid var(--ink)}
+.ledger ol{list-style:none}
+.ledger-head{display:grid;grid-template-columns:var(--ledger-cols);column-gap:32px;padding:10px 0 9px;border-bottom:1px solid var(--ink);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--mid)}
+.ledger-row{display:grid;grid-template-columns:var(--ledger-cols);column-gap:32px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:background-color .2s}
+.ledger-row:hover{background:var(--wash)}
+.lr-area h3{font-size:21px;font-weight:700;line-height:1.2;color:var(--ink);margin-bottom:7px}
+.ledger-row:hover .lr-area h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.lr-stack{display:block;font-size:11.5px;line-height:1.7;text-transform:uppercase;letter-spacing:.08em;color:var(--mid)}
+.lr-figure{font-size:46px;font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums lining-nums;white-space:nowrap}
+.lr-figure small{font-size:23px;color:var(--red)}
+.lr-proof{font-size:15px;line-height:1.5;color:var(--gray)}
+.lr-proof b{display:block;margin-top:5px;font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--red)}
+.lr-go{justify-self:end;color:var(--faint);transition:transform .2s,color .2s}
+.ledger-row:hover .lr-go{color:var(--red);transform:translateX(4px)}
+
+/* ===== Open source feature ===== */
+.oss-figures{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:38px}
+.oss-fig{padding:18px 18px 14px;border-left:1px solid var(--line)}
+.oss-fig:first-child{border-left:none;padding-left:0}
+.oss-figures .stat-number{font-size:38px}
+.oss-figures .stat-suffix{font-size:20px}
+.oss-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.oss-col{padding:0 28px;border-left:1px solid var(--line)}
+.oss-col:first-child{border-left:none;padding-left:0}
+.oss-col h3{font-size:19px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.oss-col p{font-size:15.5px;line-height:1.65;color:var(--text)}
+.oss-links{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin-top:38px;padding-top:20px;border-top:1px solid var(--line)}
+.oss-credit{font-size:13px;font-style:italic;color:var(--mid);margin-left:auto}
 
 /* ===== Experience ledger ===== */
 .timeline-block{display:grid;grid-template-columns:180px minmax(0,1fr);gap:18px 56px;border-top:1px solid var(--line);padding:34px 0}
@@ -293,26 +333,38 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   .hamburger{display:flex}
   .nav-menu-label{grid-column:1;justify-self:start;display:block;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--gray)}
   .lead{padding-top:40px}
-  .lead-grid{grid-template-columns:1fr;gap:40px}
+  .lead-grid{grid-template-columns:minmax(0,1fr) 190px;gap:32px}
   .hero-stats{grid-template-columns:1fr 1fr;margin-top:44px}
   .stat{padding:18px 16px 14px}
   .stat:nth-child(odd){border-left:none;padding-left:0}
   .stat:nth-child(n+3){border-top:1px solid var(--line)}
-  .stat-number{font-size:32px}
-  .stack-line{margin-bottom:52px}
+  .stat-number{font-size:36px}
+  .stack-row{margin-bottom:52px}
   .sec{padding:38px 0 64px}
   .sec-header{margin-bottom:34px}
   .about-body{display:block}
   .about-text{columns:1;column-rule:none}
-  .about-photo-fig{float:right;width:186px;margin:5px 0 14px 26px}
+  .pull-quote{margin:0 0 26px}
+  .ledger-head{display:none}
+  .ledger-row{grid-template-columns:118px minmax(0,1fr);gap:12px 20px;padding:20px 0}
+  .lr-area{grid-column:1/-1}
+  .lr-figure{font-size:36px}
+  .lr-figure small{font-size:19px}
+  .lr-go{display:none}
+  .oss-figures{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .oss-fig{padding:16px 14px 12px}
+  .oss-fig:nth-child(3n+1){border-left:none;padding-left:0}
+  .oss-fig:nth-child(n+4){border-top:1px solid var(--line)}
+  .oss-figures .stat-number{font-size:30px}
+  .oss-cols{grid-template-columns:1fr}
+  .oss-col{border-left:none;padding:20px 0;border-top:1px solid var(--line)}
+  .oss-col:first-child{border-top:none;padding-top:0}
+  .oss-credit{margin-left:0;width:100%}
   .case-header{grid-template-columns:minmax(0,1fr) auto;gap:12px 20px;padding:26px 0}
   .case-meta{grid-column:1/-1;flex-direction:row;align-items:baseline;gap:12px}
   .case-figure{font-size:30px;line-height:1}
   .case-content{margin-left:0}
   .metric-card::before{display:none}
-  .deliverables-grid,.skills-grid{grid-template-columns:1fr;gap:0}
-  .deliverable-card,.skill-card{border-left:none;padding:24px 0;border-top:1px solid var(--line)}
-  .deliverable-card:first-child,.skill-card:first-child{border-top:none;padding-top:0}
   .timeline-block,.edu-card{grid-template-columns:1fr;gap:12px}
   .tl-meta,.edu-top{flex-direction:row;align-items:baseline;gap:16px}
   .case-title{font-size:21px}
@@ -323,6 +375,12 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   /* Justified text with no hyphenation support opens rivers in a narrow measure. */
   .about-text p,.case-section p{text-align:left}
   .case-diagram-frame{padding:16px 14px}
+  .lead-grid{grid-template-columns:1fr;gap:0}
+  .lead-photo{order:-1;display:flex;align-items:flex-end;gap:16px;margin:0 0 26px}
+  .lead-photo img{width:96px;flex-shrink:0}
+  .lead-photo figcaption{margin:0}
+  .ticker-tag{padding:0 11px}
+  .stack-row{flex-direction:column;gap:10px}
 }
 @media(max-width:480px){
   .hero-actions{flex-direction:column;align-items:stretch;gap:16px}
@@ -332,22 +390,29 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   .stat{border-left:none;padding:14px 0 12px;border-top:1px solid var(--line)}
   .stat:first-child{border-top:none}
   .dateline-inner{flex-direction:column;gap:4px;text-align:center;align-items:center}
-  .about-photo-fig{float:none;width:200px;margin:0 auto 20px}
   .hero-title{padding-bottom:16px;margin-bottom:16px}
   .about-text > p:first-child::first-letter{font-size:54px}
+  .ledger-row{grid-template-columns:96px minmax(0,1fr)}
+  .lr-figure{font-size:30px}
+  .oss-figures{grid-template-columns:1fr 1fr}
+  .oss-fig:nth-child(odd){border-left:none;padding-left:0}
+  .oss-fig:nth-child(even){border-left:1px solid var(--line);padding-left:14px}
+  .oss-fig:nth-child(n+3){border-top:1px solid var(--line)}
 }
 /* ===== Print: the broadsheet, on paper ===== */
 @media print{
   :root,:root[data-theme="dark"]{--bg:#fff;--ink:#000;--text:#000;--gray:#2b2b2b;--mid:#555;--faint:#888;--line:#bbb;--wash:#fff;--red:#000}
   @page{margin:14mm}
-  #navbar,.skip-link,.hamburger,.theme-toggle,.case-toggle,.cc-arrow,.index-box,.hero-actions{display:none!important}
+  #navbar,.skip-link,.hamburger,.theme-toggle,.case-toggle,.cc-arrow,.ticker,.lr-go,.hero-actions{display:none!important}
   body{font-size:10.5pt;line-height:1.45}
   .container{max-width:none;padding:0}
   .lead{padding-top:18pt}
-  .lead-grid{grid-template-columns:1fr}
+  .lead-grid{grid-template-columns:minmax(0,1fr) 120px;gap:24px}
+  .now-line::before{display:none}
   .about-body{display:block}
   .about-text{columns:2;column-gap:30px;column-rule:1px solid #bbb}
-  .about-photo-fig{float:right;width:150px;margin:0 0 12px 22px}
+  .pull-quote{display:none}
+  .ledger-row:hover{background:none}
   .case-content{margin-left:0}
   .case-header{padding:14pt 0}
   .sec{padding:14pt 0 18pt;border-top:3px double #000}
@@ -355,13 +420,18 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   .case-diagram-frame{overflow:visible;padding:10pt}
   .arch-diagram{min-width:0}
   .case-header{cursor:default}
-  .case-card,.timeline-block,.edu-card,.skill-card,.deliverable-card,.case-section,header,footer{break-inside:avoid;page-break-inside:avoid}
+  .case-card,.timeline-block,.edu-card,.ledger-row,.oss-col,.case-section,header,footer{break-inside:avoid;page-break-inside:avoid}
   .sec-heading,.case-title,.tl-title{break-after:avoid;page-break-after:avoid}
   a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#555;word-break:break-all}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{transition-duration:.01ms!important}
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+  /* A still wire: the duplicate is dropped and the items wrap in place. */
+  .ticker-window{-webkit-mask-image:none;mask-image:none}
+  .ticker-track{width:auto}
+  .ticker-list{flex-shrink:1;flex-wrap:wrap}
+  .ticker-list[aria-hidden]{display:none}
 }
 </style>
 <script type="application/ld+json">
@@ -372,7 +442,7 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   "url":"https://rahulkarn.tech/",
   "image":"https://rahulkarn.tech/og-image.png",
   "jobTitle":"Senior .NET Engineer",
-  "description":"Senior .NET engineer with 8+ years building production insurance and financial systems: policy administration, claims, payments, and agent portals.",
+  "description":"Senior .NET engineer with 9 years building production insurance and financial systems: policy administration, claims, payments, and agent portals.",
   "email":"mailto:rahulkarn2118@gmail.com",
   "telephone":"+977-9863036368",
   "address":{"@type":"PostalAddress","addressLocality":"Kathmandu","addressCountry":"NP"},
@@ -383,7 +453,7 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     {"@type":"CollegeOrUniversity","name":"Tribhuvan University"}
   ],
   "knowsAbout":[".NET",".NET 10","C#","ASP.NET Core","Entity Framework Core","Microsoft Azure","Oracle Database","Microsoft SQL Server","Domain-Driven Design","OAuth 2.0","OpenID Connect","Payment Systems","Insurance Technology","Machine Learning"],
-  "sameAs":["https://linkedin.com/in/rahulkarn52","https://github.com/rahulkarn"]
+  "sameAs":["https://linkedin.com/in/rahulkarn52","https://github.com/svarbhanu","https://github.com/rahulkarn250163"]
 }
 </script>
 </head>
@@ -401,6 +471,25 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
       <div class="masthead-sub">Senior .NET Engineer · InsurTech &amp; Financial Systems</div>
     </div>
     <div class="doc-rule"></div>
+    <div class="ticker" role="region" aria-label="Record at a glance">
+      <span class="ticker-tag">On the Record</span>
+      <div class="ticker-window">
+        <div class="ticker-track">
+          <ul class="ticker-list">
+            <li><span class="tick" aria-hidden="true">▲</span><b>90K+</b> users on the platform</li>
+            <li><span class="tick" aria-hidden="true">▼</span><b>~50%</b> query latency, Oracle + SQL Server</li>
+            <li><b>NPR 100B+</b> in payments · <b>0</b> duplicates</li>
+            <li>Reconciliation <b>2 days → real-time</b></li>
+            <li>Releases <b>monthly → bi-weekly</b></li>
+            <li><b>20+</b> product lines on one premium engine</li>
+            <li><span class="tick" aria-hidden="true">▲</span><b>grahan v1.0</b> shipped on npm</li>
+            <li>Sun position within <b>4.6″</b> of Swiss Ephemeris</li>
+            <li><b>.NET 10</b> · C# · ASP.NET Core · EF Core</li>
+            <li>Open to <b>senior remote</b> .NET roles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -409,9 +498,9 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     <span class="nav-menu-label" style="display:none">Sections</span>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
-      <li><a href="#case-studies">Case Studies</a></li>
-      <li><a href="#deliverables">Deliverables</a></li>
       <li><a href="#skills">Expertise</a></li>
+      <li><a href="#case-studies">Case Studies</a></li>
+      <li><a href="#open-source">Open Source</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -432,31 +521,32 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   <div class="container">
     <div class="lead-grid">
       <div>
-        <h1 class="hero-title">Senior .NET engineer for <em>insurance and financial systems.</em></h1>
-        <p class="hero-sub">I build and modernize production platforms across policy administration, claims, payments, agent portals, and regulated financial workflows.</p>
+        <p class="now-line">Now · <span>Senior .NET Developer / Tech Lead, Nepal Life Insurance</span></p>
+        <h1 class="hero-title">I build .NET systems <em>that move real money.</em></h1>
+        <p class="hero-sub">Nine years in insurance and finance: a 90,000-user insurance platform, NPR 100B+ in payments with zero duplicates, and a database program that cut query latency in half.</p>
         <div class="hero-actions">
           <a href="rahul_karn_resume.pdf" download="Rahul_Karn_Resume.pdf" class="btn-primary">Download CV <svg aria-hidden="true" focusable="false" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+          <a href="#skills" class="link-quiet">See the Skills →</a>
           <a href="#contact" class="link-quiet">Get in Touch →</a>
         </div>
       </div>
-      <aside class="index-box" aria-label="Index">
-        <div class="index-title">Index</div>
-        <a href="#about"><span>About</span><span class="index-leader"></span><span class="index-no">01</span></a>
-        <a href="#case-studies"><span>Case Studies</span><span class="index-leader"></span><span class="index-no">02</span></a>
-        <a href="#deliverables"><span>Deliverables</span><span class="index-leader"></span><span class="index-no">03</span></a>
-        <a href="#skills"><span>Expertise</span><span class="index-leader"></span><span class="index-no">04</span></a>
-        <a href="#experience"><span>Experience</span><span class="index-leader"></span><span class="index-no">05</span></a>
-        <a href="#education"><span>Education</span><span class="index-leader"></span><span class="index-no">06</span></a>
-        <a href="#contact"><span>Contact</span><span class="index-leader"></span><span class="index-no">07</span></a>
-      </aside>
+      <figure class="lead-photo">
+        <img src="rahul-headshot.png" alt="Portrait of Rahul Karn" width="928" height="1240" fetchpriority="high" decoding="async">
+        <figcaption><b>Rahul Karn</b>, Kathmandu. Working US-Eastern hours for remote teams.</figcaption>
+      </figure>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div><span class="stat-number">8</span><span class="stat-suffix">+</span></div><span class="stat-label">Years Experience</span></div>
+      <div class="stat"><div><span class="stat-number">9</span><span class="stat-suffix">+</span></div><span class="stat-label">Years Experience</span></div>
       <div class="stat"><div><span class="stat-number">90</span><span class="stat-suffix">K+</span></div><span class="stat-label">Active Users</span></div>
       <div class="stat"><div><span class="stat-number">50</span><span class="stat-suffix">%</span></div><span class="stat-label">Query Latency Reduction</span></div>
       <div class="stat"><div><span class="stat-number">100</span><span class="stat-suffix">B+</span></div><span class="stat-label">NPR Portfolio Assets</span></div>
     </div>
-    <p class="stack-line">.NET 10 / 8 LTS · C# / ASP.NET Core · EF Core · Azure · ML.NET · Oracle / SQL Server · OAuth2 / OIDC · RBAC · OWASP · Docker · Domain-Driven Design · Modular Monolith · Git Flow · CI/CD · OpenTelemetry</p>
+    <div class="stack-row">
+      <span class="stack-label" id="stack-label">Core Stack</span>
+      <ul class="stack-list" aria-labelledby="stack-label">
+        <li class="key">.NET 10</li><li class="key">C#</li><li class="key">ASP.NET Core</li><li class="key">EF Core</li><li class="key">SQL Server</li><li>Oracle</li><li>Azure</li><li>OAuth2 / OIDC</li><li>Docker</li><li>CI/CD</li><li>DDD</li><li>TypeScript</li><li>Python</li><li>ML.NET</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -466,16 +556,17 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     <div class="kicker"><b>01</b>About</div>
     <h2 class="sec-heading">A working engineer,<br><em>not a slide-deck consultant.</em></h2>
     <div class="about-body">
-      <figure class="about-photo-fig">
-        <img src="rahul-headshot.png" alt="Rahul Karn, Senior .NET Engineer" width="928" height="1240" loading="lazy" decoding="async">
-        <figcaption>Rahul Karn — Senior .NET Engineer · InsurTech &amp; Financial Systems. Kathmandu, Nepal.</figcaption>
-      </figure>
+      <blockquote class="pull-quote">
+        <p>Systems that handle real money, real users, and real regulatory scrutiny.</p>
+        <cite>Rahul Karn, on the work</cite>
+      </blockquote>
       <div class="about-text">
         <p>I build production systems alongside the engineers shipping them, which keeps the architecture honest and the migration plans buildable.</p>
-        <p><strong>Senior .NET engineer</strong> with 8+ years building, modernizing, and operating mission-critical platforms in insurance and financial services. I build new systems from the ground up, modernize legacy platforms onto <span class="highlight-text">modern .NET stacks</span>, and bring data and AI thinking into core business workflows: underwriting, claims, payments, fraud, and predictive analytics.</p>
+        <p><strong>Senior .NET engineer</strong> with 9 years building, modernizing, and operating mission-critical platforms in insurance and financial services. I build new systems from the ground up, modernize legacy platforms onto <span class="highlight-text">modern .NET stacks</span>, and bring data and AI thinking into core business workflows: underwriting, claims, payments, fraud, and predictive analytics.</p>
         <p>Proven at scale across a <span class="highlight-text">90,000-user platform</span>, a <span class="highlight-text">~50% database performance program</span>, <span class="highlight-text">NPR 100B+ asset portfolio systems</span>, and a 6+ engineer team coordinated through phased modernization.</p>
         <p>Combining hands-on engineering with formal training in <strong>data science (MSc, Coventry)</strong> and <strong>finance (MBA, IGNOU)</strong>, bringing analytical and business depth uncommon in core engineering roles.</p>
-        <p class="about-human">Based in Kathmandu, deep in Nepal's insurance infrastructure since 2017, working US-Eastern hours and shipping systems that handle real money, real users, and real regulatory scrutiny.</p>
+        <p>Off the clock I taught myself TypeScript and npm to ship <a class="highlight-text" href="#open-source">grahan</a>, an open-source sky engine verified against professional ephemeris software.</p>
+        <p class="about-human">Based in Kathmandu, deep in Nepal's insurance infrastructure since 2018, working US-Eastern hours and shipping systems that handle real money, real users, and real regulatory scrutiny.</p>
       </div>
       <div class="engagement-block">
         <div class="engagement-meta"><span>Availability</span><span class="sep">·</span><span>Open to senior remote roles · 4+ hrs US-Eastern overlap · W-8BEN ready</span></div>
@@ -485,11 +576,81 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   </div>
 </section>
 
+<!-- EXPERTISE -->
+<section id="skills" class="sec">
+  <div class="container">
+    <div class="sec-header">
+      <div class="kicker"><b>02</b>Expertise</div>
+      <h2 class="sec-heading">Every skill here,<br><em>backed by shipped work</em></h2>
+      <p class="sec-desc">Read each row left to right: the discipline and its stack, the production result it delivered, and where the evidence lives.</p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-head" aria-hidden="true"><span>Discipline &amp; Stack</span><span>Result</span><span>Evidence</span><span></span></div>
+      <ol>
+        <li><a class="ledger-row" href="#case1">
+          <div class="lr-area"><h3>.NET Platform Engineering</h3><span class="lr-stack">.NET 10 · .NET 8 LTS · C# · ASP.NET Core · EF Core · Web API · MediatR</span></div>
+          <div class="lr-figure">90<small>K+</small></div>
+          <p class="lr-proof">active users on the core insurance platform I lead<b>Case Study 1</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#case2">
+          <div class="lr-area"><h3>Database Performance</h3><span class="lr-stack">SQL Server · Oracle · T-SQL · Execution plans · Indexing · DBA</span></div>
+          <div class="lr-figure">−50<small>%</small></div>
+          <p class="lr-proof">query latency across Oracle and SQL Server; timeouts from 12+ a week to under 1<b>Case Study 2</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#case3">
+          <div class="lr-area"><h3>Payments &amp; Transaction Integrity</h3><span class="lr-stack">Idempotency · State machines · Reconciliation · Retries · Circuit breakers · Audit trails</span></div>
+          <div class="lr-figure">0<small> dupes</small></div>
+          <p class="lr-proof">duplicate transactions on NPR 100B+ in volume, with real-time reconciliation<b>Case Study 3</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#case1">
+          <div class="lr-area"><h3>Security &amp; Identity</h3><span class="lr-stack">OAuth 2.0 · OIDC · Duende IdentityServer · BFF · RBAC · OWASP Top 10</span></div>
+          <div class="lr-figure">5<small>K+</small></div>
+          <p class="lr-proof">agents on one RBAC model, alongside 85,000+ customers and internal ops<b>Case Study 1</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#case1">
+          <div class="lr-area"><h3>System Design &amp; Architecture</h3><span class="lr-stack">DDD · Modular monolith · YARP · C4 · ADRs · RFCs · API versioning</span></div>
+          <div class="lr-figure">6<small>+</small></div>
+          <p class="lr-proof">engineers shipping in parallel after a phased monolith-to-modular migration<b>Case Study 1</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#experience">
+          <div class="lr-area"><h3>Cloud &amp; Delivery</h3><span class="lr-stack">Azure · Docker · CI/CD · Git Flow · OpenTelemetry · Structured logging</span></div>
+          <div class="lr-figure">2<small>×</small></div>
+          <p class="lr-proof">release cadence, monthly to bi-weekly, with sub-hour incident detection<b>Experience</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#experience">
+          <div class="lr-area"><h3>Insurance &amp; Finance Domain</h3><span class="lr-stack">Underwriting · Claims · Premium engines · Accounting · KYC · AML/CFT</span></div>
+          <div class="lr-figure">20<small>+</small></div>
+          <p class="lr-proof">life insurance product lines on one premium calculation engine<b>Experience</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#open-source">
+          <div class="lr-area"><h3>TypeScript &amp; Open Source</h3><span class="lr-stack">TypeScript · Node · npm · GitHub Actions · Signed provenance</span></div>
+          <div class="lr-figure">4.6<small>″</small></div>
+          <p class="lr-proof">worst-case Sun-position error against Swiss Ephemeris in grahan v1.0<b>Open Source</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+        <li><a class="ledger-row" href="#education">
+          <div class="lr-area"><h3>Data &amp; AI/ML</h3><span class="lr-stack">Python · pandas · scikit-learn · ML.NET · Semantic Kernel · RAG</span></div>
+          <div class="lr-figure">MSc</div>
+          <p class="lr-proof">Data Science &amp; Computational Intelligence, Coventry; applied to fraud, claims triage, and underwriting<b>Education</b></p>
+          <svg class="lr-go" aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
 <!-- CASE STUDIES -->
 <section id="case-studies" class="sec">
   <div class="container">
     <div class="sec-header">
-      <div class="kicker"><b>02</b>Case Studies</div>
+      <div class="kicker"><b>03</b>Case Studies</div>
       <h2 class="sec-heading">Selected work,<br><em>in practice</em></h2>
       <p class="sec-desc">Real problems, real constraints, real outcomes. Production systems handling regulated financial transactions, built and shipped, not slide-deck designed.</p>
     </div>
@@ -616,61 +777,41 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
   </div>
 </section>
 
-<!-- DELIVERABLES -->
-<section id="deliverables" class="sec">
+<!-- OPEN SOURCE -->
+<section id="open-source" class="sec">
   <div class="container">
     <div class="sec-header">
-      <div class="kicker"><b>03</b>Deliverables</div>
-      <h2 class="sec-heading">Artifacts produced<br><em>while shipping production systems</em></h2>
-      <p class="sec-desc">Documentation, decision records, and reference materials produced over 8 years of building and operating insurance platforms, not slide decks or consulting deck residue.</p>
+      <div class="kicker"><b>04</b>Open Source</div>
+      <h2 class="sec-heading">After hours: <em>grahan</em>,<br>a sky engine on npm</h2>
+      <p class="sec-desc">grahan (ग्रहण, “eclipse”) is a zero-dependency TypeScript engine for astronomy, panchang, and the Bikram Sambat calendar. I learned TypeScript and npm from scratch to ship it, and wrote the reference answers before the formulas.</p>
     </div>
-    <div class="deliverables-grid">
-      <div class="deliverable-card">
-        <h3>System Architecture</h3>
-        <p>Domain models, service boundaries, data-ownership maps, and architecture decision records covering integration, reliability, and technology choices.</p>
-        <div class="deliverable-files">
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Domain Models &amp; Bounded Contexts</span>
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Service &amp; Data Boundaries</span>
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Architecture Decision Records</span>
-        </div>
+    <div class="oss-figures">
+      <div class="oss-fig"><div><span class="stat-number">v1</span><span class="stat-suffix">.0</span></div><span class="stat-label">Stable, frozen API</span></div>
+      <div class="oss-fig"><div><span class="stat-number">3</span></div><span class="stat-label">npm packages</span></div>
+      <div class="oss-fig"><div><span class="stat-number">0</span></div><span class="stat-label">Runtime dependencies</span></div>
+      <div class="oss-fig"><div><span class="stat-number">279</span></div><span class="stat-label">Tests, Singapore to the Arctic</span></div>
+      <div class="oss-fig"><div><span class="stat-number">909</span></div><span class="stat-label">Eclipses classified exactly</span></div>
+      <div class="oss-fig"><div><span class="stat-number">4.6</span><span class="stat-suffix">″</span></div><span class="stat-label">Max Sun error vs Swiss Ephemeris</span></div>
+    </div>
+    <div class="oss-cols">
+      <div class="oss-col">
+        <h3>What it computes</h3>
+        <p>Sun and Moon positions, sunrise and sunset, moon phases, and solar and lunar eclipses from 1900 to 2100. On top: a full panchang (tithi, nakshatra, yoga, karana, Rahu Kaal), birth charts, dashas and muhurta, and Bikram Sambat conversion for BS 1975–2200.</p>
       </div>
-      <div class="deliverable-card">
-        <h3>Security &amp; API Design</h3>
-        <p>OWASP-aligned controls, RBAC models, API versioning and error contracts, and security review practices established for regulated financial systems.</p>
-        <div class="deliverable-files">
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>API Versioning &amp; Error Model</span>
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>OWASP Review Practices</span>
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>RBAC Design</span>
-        </div>
+      <div class="oss-col">
+        <h3>How it is verified</h3>
+        <p>Fixtures come from Swiss Ephemeris 2.10 first, and the formulas are written to match them. Sun longitude lands within 4.6″, sunrise within 4.6 seconds, and every one of 909 eclipses is detected and typed exactly. The first test case was my own birth chart, cast by a jyotishi decades ago. It matches.</p>
       </div>
-      <div class="deliverable-card">
-        <h3>Modernization &amp; Roadmaps</h3>
-        <p>Phased modernization plans (monolith → modular), AI/ML use-case exploration for insurance, and roadmaps grounded in what the system can actually become.</p>
-        <div class="deliverable-files">
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Phased Modernization Plans</span>
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>AI/ML Use-Case Exploration</span>
-          <span class="deliverable-file"><svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Pragmatic Roadmaps</span>
-        </div>
+      <div class="oss-col">
+        <h3>How it ships</h3>
+        <p>Strict TypeScript and pure functions that run in Node 18+, browsers, and edge runtimes; the panchang engine is under 10 KB in a browser. Releases publish from CI through npm trusted publishing with signed provenance, so no long-lived token exists to leak.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- EXPERTISE -->
-<section id="skills" class="sec">
-  <div class="container">
-    <div class="sec-header">
-      <div class="kicker"><b>04</b>Expertise</div>
-      <h2 class="sec-heading">Capabilities, grouped by<br><em>what they solve</em></h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-card"><h3>Core .NET Platform</h3><p>Day-to-day build stack for production insurance systems: C# on modern .NET, ASP.NET Core services, and EF Core against large relational estates.</p><div class="skill-tags"><span>.NET 10</span><span>.NET 8 LTS</span><span>C#</span><span>ASP.NET Core</span><span>EF Core</span><span>Web API</span></div></div>
-      <div class="skill-card"><h3>System Design</h3><p>Domain modeling, service boundaries, and architecture for new and legacy systems in insurance and finance.</p><div class="skill-tags"><span>DDD</span><span>C4 Model</span><span>ADRs</span><span>Modular Monolith</span><span>API Design</span></div></div>
-      <div class="skill-card"><h3>Data &amp; AI/ML for Insurance</h3><p>Applied data and ML for insurance, exploring fraud detection, claims triage, and predictive underwriting on real policy and claims data.</p><div class="skill-tags"><span>ML.NET</span><span>Python</span><span>RAG</span><span>pandas</span><span>scikit-learn</span></div></div>
-      <div class="skill-card"><h3>Security &amp; Identity</h3><p>OAuth2/OIDC and RBAC for regulated financial platforms, OWASP-aligned controls, encryption, secrets management, and audit logging.</p><div class="skill-tags"><span>OAuth2</span><span>OIDC</span><span>RBAC</span><span>OWASP</span><span>Audit Logging</span></div></div>
-      <div class="skill-card"><h3>Platform &amp; Data</h3><p>API design, idempotency for payment flows, database architecture, query optimization, and ETL across Oracle and SQL Server estates.</p><div class="skill-tags"><span>API-First</span><span>Oracle</span><span>SQL Server</span><span>Azure SQL</span><span>ETL</span></div></div>
-      <div class="skill-card"><h3>InsurTech &amp; FinServ</h3><p>Core insurance systems: policy onboarding, product information, underwriting, claims, premium engines, accounting, payments, asset management, KYC/AML, digital channels.</p><div class="skill-tags"><span>Insurance</span><span>Underwriting</span><span>Claims</span><span>Accounting</span><span>Payments</span><span>KYC</span></div></div>
-      <div class="skill-card"><h3>Cloud &amp; Delivery</h3><p>Azure (App Services, SQL, Key Vault), Docker, Git Flow, CI/CD pipelines, structured logging, and observability for production workloads.</p><div class="skill-tags"><span>Azure</span><span>Docker</span><span>CI/CD</span><span>Git Flow</span><span>OpenTelemetry</span></div></div>
+    <div class="oss-links">
+      <a href="https://github.com/svarbhanu/grahan" target="_blank" rel="noopener" class="btn-primary">Source on GitHub <svg aria-hidden="true" focusable="false" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+      <a href="https://svarbhanu.github.io/grahan/" target="_blank" rel="noopener" class="link-quiet">Documentation →</a>
+      <a href="https://www.npmjs.com/org/grahan" target="_blank" rel="noopener" class="link-quiet">npm →</a>
+      <span class="oss-credit">Published as <i>svarbhanu</i> on GitHub and npm · MIT licensed</span>
     </div>
   </div>
 </section>
@@ -773,7 +914,7 @@ footer{border-top:4px double var(--ink);padding:28px 0 46px;text-align:center}
     <p class="footer-copy">&copy; <span id="footerYear"></span> Rahul Karn · Kalanki, Kathmandu, Nepal</p>
     <div class="footer-social">
       <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/rahulkarn" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/svarbhanu" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:rahulkarn2118@gmail.com">Email</a>
     </div>
   </div></div>
@@ -793,6 +934,36 @@ themeToggle.addEventListener('click',()=>{
 });
 
 const navbar=document.getElementById('navbar');
+const calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* The ticker loops by sliding two identical lists half their joint width;
+   the copy is cloned here so the markup carries each item once. */
+const ticker=document.querySelector('.ticker');
+if(ticker){
+  const list=ticker.querySelector('.ticker-list'),copy=list.cloneNode(true);
+  copy.setAttribute('aria-hidden','true');
+  list.parentNode.appendChild(copy);
+  ticker.classList.add('is-live');
+}
+
+/* Lead figures count up once, the first time they scroll into view. */
+const counters=[...document.querySelectorAll('.hero-stats .stat-number')];
+if(!calm&&'IntersectionObserver' in window){
+  const finish=el=>{el.textContent=el.dataset.to};
+  counters.forEach(el=>{el.dataset.to=el.textContent;el.textContent='0'});
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    io.unobserve(e.target);
+    const el=e.target,to=+el.dataset.to,t0=performance.now(),dur=1300;
+    (function step(t){
+      const k=Math.min((t-t0)/dur,1);
+      el.textContent=Math.round(to*(1-Math.pow(1-k,3)));
+      if(k<1)requestAnimationFrame(step);
+    })(t0);
+  }),{threshold:.4});
+  counters.forEach(el=>io.observe(el));
+  window.addEventListener('beforeprint',()=>counters.forEach(finish));
+}
 
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 const menuLabel=document.querySelector('.nav-menu-label');
