@@ -1449,6 +1449,88 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .metric-label .fn{top:-.5em}
 .motion .sec .kicker.in .kc{animation-delay:calc(var(--d,0s) + .3s + var(--k)*16ms)}
 .motion .sec .kicker.in .kc:last-of-type::after{animation-delay:calc(var(--d,0s) + .3s + var(--k)*16ms)}
+/* ===== The processor =====
+   A plate between the ledger and the case files: the work drawn as a processor
+   and fabricated module by module as the reader scrolls. The substrate goes down,
+   each unit drops onto the die and is wired to the bus, a dashed unit stays in
+   fabrication, and the lid goes on last. Still page and print: the finished die
+   beside the full list of modules. */
+.cpu{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:var(--s-5,64px) 0;margin-top:var(--s-4,40px)}
+.cpu-stage{max-width:1160px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:center}
+.cpu-kicker{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;color:var(--red);font-weight:600}
+.cpu-kicker b{color:var(--ink);margin-right:8px}
+.cpu-h{font-size:var(--fs-5);font-weight:560;line-height:1.08;letter-spacing:-.02em;margin:10px 0 12px;text-wrap:balance;color:var(--ink)}
+.cpu-h em{font-style:italic;font-weight:440}
+.cpu-desc{font-size:var(--fs-3);font-style:italic;color:var(--gray);line-height:1.45;margin-bottom:22px;max-width:32em;text-wrap:pretty}
+.cpu-steps{list-style:none;border-top:1px solid var(--ink)}
+.cpu-step{padding:14px 0;border-bottom:1px solid var(--line)}
+.cs-k{font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.1em;color:var(--red);font-weight:600}
+.cs-k b{color:var(--ink);font-variant-numeric:lining-nums tabular-nums;margin-right:6px}
+.cs-t{font-size:var(--fs-4);font-weight:560;margin:4px 0;color:var(--ink)}
+.cs-d{font-size:15px;line-height:1.5;color:var(--text);text-wrap:pretty}
+.cs-f{margin-top:8px;font-size:14px;font-style:italic;color:var(--ink)}
+.cs-f::before{content:'';display:inline-block;width:16px;height:1px;background:var(--red);vertical-align:.35em;margin-right:8px}
+.cs-go{display:inline-block;margin-top:8px;font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.08em;color:var(--ink);border-bottom:1px solid var(--ink)}
+.cpu-log,.cpu-hud{display:none}
+/* The view: substrate, package, die and lid stacked in an isometric frame. */
+.cpu-view{position:relative;aspect-ratio:1;perspective:1800px;perspective-origin:50% 35%;container-type:inline-size}
+.cpu-iso{position:absolute;inset:13%;transform-style:preserve-3d;transform:rotateX(56deg) rotateZ(calc(-40deg + var(--cr,1)*10deg))}
+.cpu-sub{position:absolute;inset:-9%;background-color:var(--wash);border:1px solid var(--ink);background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 50%,transparent) 1.2px,transparent 1.7px);background-size:5% 5%;transform:translateZ(calc(var(--s0,0)*1px));opacity:var(--o0,1)}
+.cpu-pkg{position:absolute;inset:-2%;background:#2b2926;border:1px solid var(--ink);background-image:repeating-linear-gradient(90deg,transparent 0 6%,rgba(201,196,184,.55) 6% 7%),repeating-linear-gradient(0deg,transparent 0 6%,rgba(201,196,184,.55) 6% 7%);background-size:100% 4%,4% 100%;background-repeat:no-repeat;background-position:0 0,0 0;transform:translateZ(8px);opacity:var(--o1,1)}
+.cpu-die{position:absolute;inset:6%;background-color:#151413;border:1px solid #57534c;transform:translateZ(16px);transform-style:preserve-3d;background-image:linear-gradient(rgba(242,239,231,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(242,239,231,.05) 1px,transparent 1px);background-size:4% 4%;opacity:var(--o2,1)}
+.cpu-bus{position:absolute;inset:0;width:100%;height:100%;transform:translateZ(1px);overflow:visible}
+.cpu-bus path{fill:none;stroke:#e0644f;stroke-width:1.6;stroke-linecap:square;vector-effect:non-scaling-stroke;stroke-dasharray:1 1;stroke-dashoffset:calc(1 - var(--bp,1))}
+.mod{position:absolute;left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:calc(var(--w)*1%);height:calc(var(--h)*1%);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;text-align:center;background-color:#221f1c;border:1px solid rgba(242,239,231,.45);color:#f2efe7;background-image:repeating-linear-gradient(90deg,rgba(242,239,231,.07) 0 1px,transparent 1px 7px);transform:translateZ(calc(var(--mz,0)*1px + 3px));opacity:var(--mo,1);transition:border-color .3s,box-shadow .3s}
+.mod{overflow:hidden}
+@container (max-width:420px){.mod b{letter-spacing:.03em}.mod span{display:none}}
+.mod b{font-size:clamp(6px,2.3cqi,11px);letter-spacing:.12em;font-weight:700;line-height:1;white-space:nowrap}
+.mod span{font-size:clamp(5px,2cqi,10px);font-style:italic;opacity:.75;line-height:1.1;padding:0 4px;white-space:nowrap}
+.mod.fab{border-style:dashed;background-color:transparent;background-image:none}
+.mod.cur{border-color:#e0644f;box-shadow:0 0 0 1px #e0644f,0 0 26px rgba(224,100,79,.55)}
+.cpu-lid{display:none}
+@media(max-width:820px){
+  .cpu-stage{grid-template-columns:1fr;gap:12px;padding:0 20px}
+  .cpu-view{width:min(78vw,360px);margin:0 auto}
+}
+/* With motion the plate pins and fabricates. */
+.motion .cpu{height:560vh;padding:0;border:0;margin-top:0}
+.motion .cpu-stage{position:sticky;top:0;height:100vh;height:100svh;max-width:none;padding:calc(var(--nav-h,46px) + 20px) max(32px,calc(50% - 548px)) 28px;border-top:3px solid var(--ink);align-items:center}
+.motion .cpu-steps{position:relative;border:0;min-height:15.5em}
+.motion .cpu-step{position:absolute;left:0;right:0;top:0;border:0;padding:12px 0 0;border-top:1px solid var(--ink);opacity:var(--so,0);transform:translateY(calc((1 - var(--so,0))*16px));pointer-events:var(--pe,none)}
+.motion .cpu-step:first-child{opacity:var(--so,1)}
+.motion .cpu-step:focus-within{opacity:1;pointer-events:auto;background:var(--bg);z-index:2;transform:none}
+.motion .cpu-view{width:min(100%,calc(100svh - var(--nav-h,46px) - 90px));justify-self:center}
+.motion .cpu-log{display:flex;flex-wrap:wrap;gap:4px 12px;list-style:none;margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;letter-spacing:.08em;font-variant-caps:all-small-caps;color:var(--faint)}
+.motion .cpu-log li.done{color:var(--ink)}
+.motion .cpu-log li.done::before{content:'\2713 ';color:var(--red)}
+.motion .cpu-log li.cur{color:var(--red);font-weight:700}
+.motion .cpu-hud{display:flex;align-items:center;gap:14px;position:absolute;left:0;right:0;bottom:-6px;font-size:12px;letter-spacing:.12em;font-variant-caps:all-small-caps;font-variant-numeric:tabular-nums lining-nums;color:var(--mid)}
+.motion .cpu-step-name{color:var(--ink);font-weight:600}
+.motion .cpu-bar{flex:1;height:2px;background:var(--line);position:relative}
+.motion .cpu-bar i{position:absolute;inset:0;background:var(--red);transform-origin:left;transform:scaleX(var(--cp,0))}
+.motion .cpu-lid{display:flex;position:absolute;inset:4%;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;background:linear-gradient(135deg,#dcd8ce,#aaa598 42%,#ece9e2 58%,#9e998c);border:1px solid #6a675f;color:#2a2826;transform:translateZ(calc(var(--lz,280)*1px));opacity:var(--lo,0);pointer-events:none}
+.motion .cpu-lid b{font-size:clamp(18px,2.2vw,28px);letter-spacing:.24em}
+.motion .cpu-lid span{font-size:11px;letter-spacing:.14em;font-variant-caps:all-small-caps}
+@media(max-width:820px){
+  .motion .cpu-stage{grid-template-rows:auto 1fr;align-content:start;align-items:start;padding:calc(var(--nav-h,46px) + 10px) 20px 16px;gap:22px}
+  .motion .cpu-view{order:-1;width:min(64vw,38svh,300px)}
+  .motion .cpu-desc,.motion .cpu-h{display:none}
+  .motion .cpu-steps{min-height:13em}
+  .motion .cs-d{font-size:14px}
+  .motion .cpu-hud{bottom:-18px}
+  .motion .cpu-log{display:none}
+}
+@media(max-height:620px) and (min-width:821px){.motion .cpu-desc{display:none}.motion .cpu-log{display:none}}
+@media print{.cpu{height:auto!important;padding:14pt 0 18pt!important}.cpu-h,.cpu-desc{display:block!important}.cpu-stage{position:static!important;height:auto!important;display:block!important}.cpu-view,.cpu-hud,.cpu-log{display:none!important}.cpu-step{position:static!important;opacity:1!important;transform:none!important}}
+/* ===== Edges, second pass =====
+   Rolling figures: the window and every row in the strip share one explicit
+   height, so the next digit can never show under the current one whatever the
+   font's metrics or the browser's rounding. Section numerals sit below the rule. */
+.odo-d{height:1.15em;line-height:1.15em;vertical-align:baseline}
+.stat-number .odo-d{margin-block:-.115em}
+.odo-s>span{height:1.15em;line-height:1.15em}
+.motion .sec-num{top:20px}
+@media(max-width:900px){.motion .sec-num{top:14px}}
 /* ===== The lead, set as a specimen =====
    The copy keeps a quiet measure on the left; the work is drawn on the right as a
    double helix, each rung pairing two facts the page backs further down. Without
@@ -1874,6 +1956,58 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       </ol>
     </div>
     <p class="jump"><a href="#case-studies">Continued on page <b>03</b>, Case Studies <span aria-hidden="true">→</span></a></p>
+  </div>
+</section>
+
+<!-- THE PROCESSOR -->
+<section class="cpu" id="processor" aria-labelledby="cpu-h">
+  <div class="cpu-stage">
+    <div class="cpu-copy">
+      <p class="cpu-kicker"><b>Plate</b> Nine years of work, piece by piece</p>
+      <h2 class="cpu-h" id="cpu-h">What I build,<br><em>and where it runs</em></h2>
+      <p class="cpu-desc">Solution architect at Nepal Life Insurance in Kathmandu. Each piece below is part of that work, with the number behind it and where to read more.</p>
+      <ol class="cpu-steps" role="list">
+        <li class="cpu-step"><p class="cs-k"><b>00</b> Foundation</p><h3 class="cs-t">.NET, nine years of it</h3><p class="cs-d">Production C# and .NET since October 2017: a multi-tenant real estate platform first, then Web Forms migrations at Nepal Life, and ASP.NET Core services on .NET 10 today.</p><p class="cs-f">C#, ASP.NET Core, EF Core, Web API, Oracle, SQL Server</p><a class="cs-go" href="#experience">See the record</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>01</b> Architecture</p><h3 class="cs-t">A monolith, made modular</h3><p class="cs-d">I own the solution architecture of the insurer's core platform: bounded contexts, C4 views, decision records and API-first contracts, with the migration phased rather than rewritten.</p><p class="cs-f">90,000 clients moved to the modular platform</p><a class="cs-go" href="#case1">See case 1</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>02</b> Databases</p><h3 class="cs-t">Query latency, halved</h3><p class="cs-d">I ran the database performance program across Oracle and SQL Server: execution plans first, then covering indexes and stored-procedure refactoring.</p><p class="cs-f">~50% off query latency; timeouts from 12+ a week to under 1</p><a class="cs-go" href="#case2">See case 2</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>03</b> Security</p><h3 class="cs-t">One identity model</h3><p class="cs-d">I own application-layer security: one RBAC model on Duende IdentityServer with OAuth2, OIDC and a BFF for browser clients, and OWASP Top 10 controls at every layer.</p><p class="cs-f">5,000+ agents and 85,000+ customers on one model</p><a class="cs-go" href="#adr-3">See notice 3</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>04</b> Integration</p><h3 class="cs-t">A gateway and its contracts</h3><p class="cs-d">I put YARP in front of the bounded contexts and set versioned API contracts with a backward-compatibility policy behind it.</p><p class="cs-f">0 breaking API changes through the migration</p><a class="cs-go" href="#adr-2">See notice 2</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>05</b> Payments</p><h3 class="cs-t">Money that moves once</h3><p class="cs-d">I designed and built the payment flow end to end: an idempotency key on every request, a six-state machine and reconciliation against the gateway's records.</p><p class="cs-f">0 duplicate charges; reconciliation from 2 days to near real time</p><a class="cs-go" href="#case3">See case 3</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>06</b> Delivery</p><h3 class="cs-t">A team that ships</h3><p class="cs-d">I set code review standards, Git Flow and CI/CD pipelines, and coordinated six engineers through a phased modernization, mentoring along the way.</p><p class="cs-f">Releases from monthly to bi-weekly</p><a class="cs-go" href="#experience">See the record</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>07</b> Open source</p><h3 class="cs-t">grahan, after hours</h3><p class="cs-d">I taught myself TypeScript and npm to ship a zero-dependency sky engine, and wrote the reference answers from Swiss Ephemeris before the formulas.</p><p class="cs-f">279 tests, 909 eclipses, 4.6″ worst-case Sun error</p><a class="cs-go" href="#open-source">See the work</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>08</b> Studying now</p><h3 class="cs-t">Data and AI</h3><p class="cs-d">An MSc in Data Science at Coventry, studied alongside an MBA in Accounting and Finance that I finished in 2026. At Nepal Life, applied research into fraud detection, claims triage and underwriting.</p><p class="cs-f">MSc expected 2027</p><a class="cs-go" href="#education">See education</a></li>
+        <li class="cpu-step"><p class="cs-k"><b>09</b> Today</p><h3 class="cs-t">Solution Architect, Nepal Life</h3><p class="cs-d">Solution Architect and Digital Transformation Officer at Nepal Life Insurance, Kathmandu, working US-Eastern hours for remote teams.</p><p class="cs-f">Open to solution architect roles</p><a class="cs-go" href="#contact">Get in touch</a></li>
+      </ol>
+      <ol class="cpu-log" aria-hidden="true"></ol>
+    </div>
+    <div class="cpu-view" aria-hidden="true">
+      <div class="cpu-iso">
+        <div class="cpu-sub"></div>
+        <div class="cpu-pkg"></div>
+        <div class="cpu-die">
+          <svg class="cpu-bus" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path data-step="1" pathLength="1" d="M26 32 V34.5 H50"/>
+            <path data-step="2" pathLength="1" d="M74 32 V34.5 H50"/>
+            <path data-step="3" pathLength="1" d="M18.5 37 V34.5 H50"/>
+            <path data-step="4" pathLength="1" d="M50 34.5 V37 M50 62 V64.5"/>
+            <path data-step="5" pathLength="1" d="M81.5 37 V34.5 H50"/>
+            <path data-step="6" pathLength="1" d="M26 67 V64.5 H50"/>
+            <path data-step="7" pathLength="1" d="M74 67 V64.5 H50"/>
+            <path data-step="8" pathLength="1" d="M50 84 V64.5"/>
+          </svg>
+          <div class="mod" data-step="1" style="--x:5;--y:5;--w:42;--h:27"><b>ARCH</b><span>90,000 clients</span></div>
+          <div class="mod" data-step="2" style="--x:53;--y:5;--w:42;--h:27"><b>DATA</b><span>~50% latency</span></div>
+          <div class="mod" data-step="3" style="--x:5;--y:37;--w:27;--h:25"><b>SECURITY</b><span>OIDC · RBAC</span></div>
+          <div class="mod" data-step="4" style="--x:37;--y:37;--w:26;--h:25"><b>GATEWAY</b><span>YARP</span></div>
+          <div class="mod" data-step="5" style="--x:68;--y:37;--w:27;--h:25"><b>PAYMENTS</b><span>0 duplicates</span></div>
+          <div class="mod" data-step="6" style="--x:5;--y:67;--w:42;--h:13"><b>DELIVERY</b><span>bi-weekly</span></div>
+          <div class="mod" data-step="7" style="--x:53;--y:67;--w:42;--h:13"><b>GRAHAN</b><span>v1.0 on npm</span></div>
+          <div class="mod fab" data-step="8" style="--x:5;--y:84;--w:90;--h:11"><b>DATA AND AI</b><span>MSc, 2027</span></div>
+        </div>
+        <div class="cpu-lid"><b>RK-9</b><span>Solution Architect · Kathmandu</span><span>Nepal Life Insurance · 2018 to date</span></div>
+      </div>
+      <div class="cpu-hud"><span class="cpu-step-n">00 / 09</span><span class="cpu-step-name">Foundation</span><i class="cpu-bar"><i></i></i></div>
+    </div>
   </div>
 </section>
 
@@ -2338,7 +2472,7 @@ ORDER  BY DueDate</pre>
         </div>
         <div class="bp-col">
           <h3>Colophon</h3>
-          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,674</b> lines and <b>285</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
+          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,881</b> lines and <b>304</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
           <p class="bp-eds">Earlier editions: <a href="https://github.com/rahulkarn250163/rahulkarn/tree/86769d9" target="_blank" rel="noopener">Vol. I, Dec 2025</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/41ee530" target="_blank" rel="noopener">Vol. II, Feb 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3b7a64c" target="_blank" rel="noopener">Vol. III, Jul 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/93b1918" target="_blank" rel="noopener">Vol. IV, Aug 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3296345" target="_blank" rel="noopener">Vol. V, Oct 2026</a></p>
         </div>
         </div>
@@ -3666,6 +3800,79 @@ if(motion)run(()=>{
     el.style.setProperty('--ey',Math.round((rr(i+.5)-.5)*2*ay)+'px');
     el.style.setProperty('--er',Math.round((rr(i+.25)-.5)*(big?70:24))+'deg');
   });
+});
+/* ===== The processor, the script half =====
+   The scroll through the pinned plate is the fab line. Step 0 lays the
+   substrate and package; steps 1 to 8 each drop one unit onto the die and draw
+   its bus; step 9 lowers the lid. The copy, the build log and the step counter
+   follow the same playhead. Still and reduced motion get the finished die. */
+if(motion)run(()=>{
+  const sec=document.getElementById('processor');if(!sec)return;
+  const steps=[...sec.querySelectorAll('.cpu-step')],N=steps.length;
+  const iso=sec.querySelector('.cpu-iso'),mods=[...sec.querySelectorAll('.mod')],paths=[...sec.querySelectorAll('.cpu-bus path')];
+  const lid=sec.querySelector('.cpu-lid'),nEl=sec.querySelector('.cpu-step-n'),nameEl=sec.querySelector('.cpu-step-name'),bar=sec.querySelector('.cpu-bar'),log=sec.querySelector('.cpu-log');
+  const kinds=steps.map(s=>s.querySelector('.cs-k').lastChild.textContent.trim());
+  if(log)kinds.forEach((k,i)=>{const li=document.createElement('li');li.textContent=k;log.appendChild(li)});
+  const logLis=log?[...log.children]:[];
+  const ease=k=>1-Math.pow(1-clamp(k,0,1),3);
+  const pad=n=>String(n).padStart(2,'0');
+  let raf=0,onScreen=false,lastP=-1;
+  function reset(){
+    lastP=-1;
+    [iso,lid,bar].forEach(el=>el&&['--cr','--s0','--o0','--o1','--o2','--lz','--lo','--cp'].forEach(q=>el.style.removeProperty(q)));
+    mods.forEach(m=>{m.style.removeProperty('--mz');m.style.removeProperty('--mo');m.classList.remove('cur')});
+    paths.forEach(p=>p.style.removeProperty('--bp'));
+    steps.forEach(s=>{s.style.removeProperty('--so');s.style.removeProperty('--pe')});
+  }
+  function frame(){
+    raf=0;
+    if(!live){reset();return}
+    const r=sec.getBoundingClientRect(),span=r.height-innerHeight;
+    const p=clamp(-r.top/(span||1),0,1);
+    if(p===lastP)return;lastP=p;
+    const s=p*N,cur=Math.min(N-1,Math.floor(s));
+    iso.style.setProperty('--cr',p.toFixed(4));
+    const f0=ease(s/.6);
+    iso.style.setProperty('--s0',((1-f0)*-90).toFixed(1));
+    iso.style.setProperty('--o0',clamp(s/.35,0,1).toFixed(3));
+    iso.style.setProperty('--o1',clamp((s-.25)/.35,0,1).toFixed(3));
+    iso.style.setProperty('--o2',clamp((s-.45)/.4,0,1).toFixed(3));
+    mods.forEach(m=>{
+      const k=+m.dataset.step,f=ease((s-k)/.6);
+      m.style.setProperty('--mz',((1-f)*220).toFixed(1));
+      m.style.setProperty('--mo',clamp((s-k)*4,0,1).toFixed(3));
+      m.classList.toggle('cur',k===cur);
+    });
+    paths.forEach(pt=>{const k=+pt.dataset.step;pt.style.setProperty('--bp',clamp((s-k-.35)/.45,0,1).toFixed(3))});
+    const fl=ease((s-(N-1))/.7);
+    lid.style.setProperty('--lz',(280-256*fl).toFixed(1));
+    lid.style.setProperty('--lo',fl.toFixed(3));
+    steps.forEach((st,i)=>{
+      const l=clamp(s-i,0,1);
+      const o=i===cur?clamp(Math.min(i===0?1:l*7,i===N-1?1:(1-l)*7),0,1):0;
+      st.style.setProperty('--so',o.toFixed(3));
+      st.style.setProperty('--pe',o>.5?'auto':'none');
+    });
+    logLis.forEach((li,i)=>{li.classList.toggle('done',i<cur||(i===cur&&s-cur>.6));li.classList.toggle('cur',i===cur)});
+    const nt=pad(cur)+' / '+pad(N-1);
+    if(nEl.textContent!==nt)nEl.textContent=nt;
+    if(nameEl.textContent!==kinds[cur])nameEl.textContent=kinds[cur];
+    bar.style.setProperty('--cp',p.toFixed(4));
+  }
+  const go=()=>{if(!raf&&live&&onScreen)raf=requestAnimationFrame(frame)};
+  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;if(onScreen)go();else if(live&&!raf)raf=requestAnimationFrame(frame)}).observe(sec);
+  addEventListener('scroll',go,{passive:true});
+  addEventListener('resize',()=>{lastP=-1;go()},{passive:true});
+  new MutationObserver(()=>{if(!live){reset()}}).observe(rootEl,{attributes:true,attributeFilter:['class']});
+  /* Keyboard focus on a later step moves the fab line to it. */
+  sec.addEventListener('focusin',e=>{
+    if(!live)return;const i=steps.findIndex(s=>s.contains(e.target));if(i<0)return;
+    const r=sec.getBoundingClientRect(),span=r.height-innerHeight,want=span*Math.min(.999,(i+.7)/N);
+    const now=Math.min(N-1,Math.floor(clamp(-r.top/(span||1),0,1)*N));
+    if(now!==i)scrollTo({top:scrollY+r.top+want,behavior:'instant'});
+    lastP=-1;frame();
+  });
+  frame();
 });
 window.__pageOk=true;
 </script>
