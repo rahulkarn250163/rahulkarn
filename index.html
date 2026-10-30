@@ -1480,7 +1480,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .cpu-die{position:absolute;inset:6%;background-color:#151413;border:1px solid #57534c;transform:translateZ(16px);transform-style:preserve-3d;background-image:linear-gradient(rgba(242,239,231,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(242,239,231,.05) 1px,transparent 1px);background-size:4% 4%;opacity:var(--o2,1)}
 .cpu-bus{position:absolute;inset:0;width:100%;height:100%;transform:translateZ(1px);overflow:visible}
 .cpu-bus path{fill:none;stroke:#e0644f;stroke-width:1.6;stroke-linecap:square;vector-effect:non-scaling-stroke;stroke-dasharray:1 1;stroke-dashoffset:calc(1 - var(--bp,1))}
-.mod{position:absolute;left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:calc(var(--w)*1%);height:calc(var(--h)*1%);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;text-align:center;background-color:#221f1c;border:1px solid rgba(242,239,231,.45);color:#f2efe7;background-image:repeating-linear-gradient(90deg,rgba(242,239,231,.07) 0 1px,transparent 1px 7px);transform:translateZ(calc(var(--mz,0)*1px + 3px));opacity:var(--mo,1);transition:border-color .3s,box-shadow .3s}
+.mod{position:absolute;isolation:isolate;left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:calc(var(--w)*1%);height:calc(var(--h)*1%);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;text-align:center;background-color:#221f1c;border:1px solid rgba(242,239,231,.45);color:#f2efe7;background-image:repeating-linear-gradient(90deg,rgba(242,239,231,.07) 0 1px,transparent 1px 7px);transform:translateZ(calc(var(--mz,0)*1px + 3px));opacity:var(--mo,1);transition:border-color .3s,box-shadow .3s}
 .mod{overflow:hidden}
 @container (max-width:420px){.mod b{letter-spacing:.03em}.mod span{display:none}}
 .mod b{font-size:clamp(6px,2.3cqi,11px);letter-spacing:.12em;font-weight:700;line-height:1;white-space:nowrap}
@@ -1493,7 +1493,14 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   .cpu-view{width:min(78vw,360px);margin:0 auto}
 }
 /* With motion the plate pins and fabricates. */
-.motion .cpu{height:560vh;padding:0;border:0;margin-top:0}
+.motion .cpu{height:320vh;padding:0;border:0;margin-top:0}
+@keyframes cpu-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@keyframes bus-run{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes cpu-shine{from{background-position:160% 0}to{background-position:-60% 0}}
+.motion .cpu-iso{animation:cpu-float 7s ease-in-out infinite}
+.motion .cpu-bus path.pulse{stroke:#fff3e6;stroke-width:2.6;stroke-dasharray:.07 .93;animation:bus-run 1.8s linear infinite;opacity:calc(var(--bp,0)*.95)}
+.motion .mod::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 40%,rgba(255,243,230,.16) 50%,transparent 60%) no-repeat;background-size:250% 100%;animation:cpu-shine 3.6s linear infinite}
+.motion .cpu-lid::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%) no-repeat;background-size:250% 100%;animation:cpu-shine 4.4s ease-in-out infinite}
 .motion .cpu-stage{position:sticky;top:0;height:100vh;height:100svh;max-width:none;padding:calc(var(--nav-h,46px) + 20px) max(32px,calc(50% - 548px)) 28px;border-top:3px solid var(--ink);align-items:center}
 .motion .cpu-steps{position:relative;border:0;min-height:15.5em}
 .motion .cpu-step{position:absolute;left:0;right:0;top:0;border:0;padding:12px 0 0;border-top:1px solid var(--ink);opacity:var(--so,0);transform:translateY(calc((1 - var(--so,0))*16px));pointer-events:var(--pe,none)}
@@ -1510,6 +1517,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .motion .cpu-bar i{position:absolute;inset:0;background:var(--red);transform-origin:left;transform:scaleX(var(--cp,0))}
 .motion .cpu-lid{display:flex;position:absolute;inset:4%;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;background:linear-gradient(135deg,#dcd8ce,#aaa598 42%,#ece9e2 58%,#9e998c);border:1px solid #6a675f;color:#2a2826;transform:translateZ(calc(var(--lz,280)*1px));opacity:var(--lo,0);pointer-events:none}
 .motion .cpu-lid b{font-size:clamp(18px,2.2vw,28px);letter-spacing:.24em}
+.motion .cpu-lid :is(b,span){position:relative;z-index:1}
 .motion .cpu-lid span{font-size:11px;letter-spacing:.14em;font-variant-caps:all-small-caps}
 @media(max-width:820px){
   .motion .cpu-stage{grid-template-rows:auto 1fr;align-content:start;align-items:start;padding:calc(var(--nav-h,46px) + 10px) 20px 16px;gap:22px}
@@ -1526,9 +1534,10 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
    Rolling figures: the window and every row in the strip share one explicit
    height, so the next digit can never show under the current one whatever the
    font's metrics or the browser's rounding. Section numerals sit below the rule. */
-.odo-d{height:1.15em;line-height:1.15em;vertical-align:baseline}
-.stat-number .odo-d{margin-block:-.115em}
-.odo-s>span{height:1.15em;line-height:1.15em}
+.odo-d{height:1.3em;line-height:1.3em;vertical-align:baseline}
+.odo-s>span{height:1.3em;line-height:1.3em}
+.stat-number .odo-d{margin-block:-.19em}
+.motion .hero-stats,.motion .oss-figures{overflow-x:clip}
 .motion .sec-num{top:20px}
 @media(max-width:900px){.motion .sec-num{top:14px}}
 /* ===== The lead, set as a specimen =====
@@ -2472,7 +2481,7 @@ ORDER  BY DueDate</pre>
         </div>
         <div class="bp-col">
           <h3>Colophon</h3>
-          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,881</b> lines and <b>304</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
+          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,924</b> lines and <b>307</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
           <p class="bp-eds">Earlier editions: <a href="https://github.com/rahulkarn250163/rahulkarn/tree/86769d9" target="_blank" rel="noopener">Vol. I, Dec 2025</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/41ee530" target="_blank" rel="noopener">Vol. II, Feb 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3b7a64c" target="_blank" rel="noopener">Vol. III, Jul 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/93b1918" target="_blank" rel="noopener">Vol. IV, Aug 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3296345" target="_blank" rel="noopener">Vol. V, Oct 2026</a></p>
         </div>
         </div>
@@ -3590,58 +3599,63 @@ run(()=>{
   go();
 });
 /* ===== The reel, the script half =====
-   The scroll is the playhead. Progress through the pinned stage picks the shot,
-   runs its push-in, its rows and the timecode, and drives the microchip beside
-   it: parts fly in from an exploded view, traces route from the die to labelled
-   pads, a signal runs while the shot holds, and the chip blows apart on the cut.
-   The canvas runs only while the reel is on screen and the page is live. */
+   The scroll is the playhead, damped so a wheel step glides rather than jumps.
+   Progress picks the shot, runs its push-in, its rows and the timecode, and
+   builds one microchip across the whole reel: the die lands on the first shot,
+   and each shot routes its own side of the board, portal on the left, data on
+   top, payments on the right, grahan along the foot. Nothing is taken apart
+   between shots; by the last one the board is complete and every trace carries
+   a signal. The canvas runs only while the reel is on screen and the page is live. */
 if(motion)run(()=>{
   const reel=document.getElementById('reel');if(!reel)return;
   const shots=[...reel.querySelectorAll('.shot')],tc=reel.querySelector('.reel-tc'),sh=reel.querySelector('.reel-shot'),N=shots.length,LEN=16;
   const cv=reel.querySelector('.reel-chip'),ctx=cv&&cv.getContext('2d');
-  const CHIPS=[
-    {die:'MODULAR CORE',sub:'.NET 10',pads:['Policy','Claims','Underwriting','Agents','YARP gateway','IdentityServer','Oracle','SQL Server']},
-    {die:'QUERY PATH',sub:'0.5× latency',pads:['Execution plan','Covering index','Stored procs','Oracle','SQL Server','Timeouts <1/wk']},
-    {die:'PAYMENT FSM',sub:'6 states',pads:['Idempotency key','Initiated','Authorized','Captured','Settled','Failed','Refunded','Reconciliation']},
-    {die:'grahan',sub:'v1.0 · npm',pads:['Sun','Moon','Eclipses','Bikram Sambat','Panchang','279 tests']}
+  /* side: 0 left, 1 top, 2 right, 3 bottom; one side per shot */
+  const GROUPS=[
+    {side:0,name:'PORTAL',pads:['Policy','Claims','Agents','IdentityServer']},
+    {side:1,name:'DATA',pads:['Oracle','SQL Server','Execution plan','Covering index']},
+    {side:2,name:'PAYMENTS',pads:['Idempotency key','Six states','Reconciliation','Audit log']},
+    {side:3,name:'GRAHAN',pads:['Sun','Moon','Eclipses','Bikram Sambat']}
   ];
-  /* A seeded scatter, so each part always explodes along the same line. */
+  const SIDES=[[-1,0],[0,-1],[1,0],[0,1]];
   const rnd=s=>{const x=Math.sin(s*127.1+311.7)*43758.5453;return x-Math.floor(x)};
-  const ease=k=>1-Math.pow(1-clamp(k,0,1),3),easeIn=k=>Math.pow(clamp(k,0,1),2);
+  const ease=k=>1-Math.pow(1-clamp(k,0,1),3);
   const pad=n=>String(n).padStart(2,'0');
-  let W=0,H=0,dpr=1,p=0,cur=0,local=0,onScreen=false,raf=0,font='Newsreader, Times New Roman, serif';
+  const font='Newsreader, Times New Roman, serif';
+  let W=0,H=0,dpr=1,P=0,target=0,cur=0,onScreen=false,raf=0,lastT=0,L=null,lastApplied=-1;
   function size(){
     if(!cv)return;
     dpr=Math.min(window.devicePixelRatio||1,2);
     W=cv.clientWidth;H=cv.clientHeight;
     cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
   }
-  /* Layout for one chip: the die, its pins, and pads spread round four sides
-     with an orthogonal-then-45-degree trace from a pin to each pad. */
-  function layout(c,ci){
-    const cx=W*.5,cy=H*.5,S=Math.min(W,H)*.42,D=S*.52,half=D/2;
-    const sides=[[-1,0],[1,0],[0,-1],[0,1]],per=[0,0,0,0];
-    const assign=c.pads.map((_,i)=>{const s=i%4;return {s,k:per[s]++}});
-    const pads=c.pads.map((label,i)=>{
-      const {s,k}=assign[i],n=per[s],[ox,oy]=sides[s];
-      const lat=(k-(n-1)/2)*Math.min(D*.9/(Math.max(n,1)),D*.42)*1.9;
-      const out=S*.98;
-      const px=cx+ox*out+(oy?lat:0),py=cy+oy*out+(ox?lat:0);
-      const pinLat=(k-(n-1)/2)*(D*.8/Math.max(n,2));
-      const x0=cx+ox*half+(oy?pinLat:0),y0=cy+oy*half+(ox?pinLat:0);
-      const x1=x0+ox*14,y1=y0+oy*14;
-      const dl=(oy?px-x1:py-y1),adv=Math.abs(dl);
-      const x2=x1+ox*adv+(oy?dl:0),y2=y1+oy*adv+(ox?dl:0);
-      const pts=[[x0,y0],[x1,y1],[x2,y2],[px,py]];
-      let len=0;for(let j=1;j<pts.length;j++)len+=Math.hypot(pts[j][0]-pts[j-1][0],pts[j][1]-pts[j-1][1]);
-      const seed=ci*31+i*7;
-      return {label,s,k,ox,oy,px,py,pts,len,ex:(rnd(seed)-.5)*W*.9,ey:(rnd(seed+1)-.5)*H*.9,er:(rnd(seed+2)-.5)*3};
+  /* One board: the die in the middle, seven pins a side, and each group's four
+     pads out on its own side with an orthogonal-then-45-degree trace. */
+  function layout(){
+    /* sized so the ring and the second label row stay clear of the scrub bar */
+    const cx=W*.5,cy=H*.5,S=Math.max(40,Math.min(W*.42,(H/2-36)/1.12)),D=S*.5,half=D/2;
+    const groups=GROUPS.map((g,gi)=>{
+      const [ox,oy]=SIDES[g.side],n=g.pads.length;
+      const pads=g.pads.map((label,k)=>{
+        const lat=(k-(n-1)/2)*(S*1.5/n);
+        const out=S*.98;
+        const px=cx+ox*out+(oy?lat:0),py=cy+oy*out+(ox?lat:0);
+        const pinLat=([-2,-1,1,2][k]||0)*(D*.8/6); /* leave from a real pin */
+        const x0=cx+ox*half+(oy?pinLat:0),y0=cy+oy*half+(ox?pinLat:0);
+        const x1=x0+ox*14,y1=y0+oy*14;
+        const dl=(oy?px-x1:py-y1),adv=Math.min(Math.abs(dl),out-half-28);
+        const x2=x1+ox*adv+(oy?dl:0),y2=y1+oy*adv+(ox?dl:0);
+        const pts=[[x0,y0],[x1,y1],[x2,y2],[px,py]];
+        let len=0;for(let j=1;j<pts.length;j++)len+=Math.hypot(pts[j][0]-pts[j-1][0],pts[j][1]-pts[j-1][1]);
+        const seed=gi*31+k*7;
+        return {label,k,ox,oy,px,py,pts,len,ex:(rnd(seed)-.5)*W*.8,ey:(rnd(seed+1)-.5)*H*.8,er:(rnd(seed+2)-.5)*3};
+      });
+      const pins=[];for(let k=0;k<7;k++){const lat=(k-3)*(D*.8/6);pins.push({x:cx+ox*half+(oy?lat:0),y:cy+oy*half+(ox?lat:0),ox,oy,seed:gi*97+k})}
+      return {ox,oy,pads,pins,name:g.name};
     });
-    const pins=[];for(let s=0;s<4;s++){const [ox,oy]=sides[s];for(let k=0;k<7;k++){const lat=(k-3)*(D*.8/6);pins.push({x:cx+ox*half+(oy?lat:0),y:cy+oy*half+(ox?lat:0),ox,oy,seed:ci*97+s*13+k})}}
-    const parts=[0,1,2,3,4,5].map(i=>{const a=i*1.05+ci,r=S*(.62+rnd(ci*5+i)*.18);return {x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*.72,w:10+rnd(i+ci)*10,h:5+rnd(i*3+ci)*4,seed:ci*53+i}});
-    return {cx,cy,S,D,half,pads,pins,parts};
+    const parts=[0,1,2,3,4,5,6,7].map(i=>{const a=i*.785+.39,r=S*(.6+rnd(i)*.16);return {x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*.7,w:10+rnd(i+3)*10,h:5+rnd(i*3)*4,seed:i*53}});
+    return {cx,cy,S,D,half,groups,parts};
   }
-  let L=[];const relayout=()=>{L=CHIPS.map((c,i)=>layout(c,i))};
   function trace(pts,frac){
     let left=frac;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
     for(let j=1;j<pts.length&&left>0;j++){
@@ -3654,92 +3668,101 @@ if(motion)run(()=>{
     for(let j=1;j<pts.length;j++){const [ax,ay]=pts[j-1],[bx,by]=pts[j],d=Math.hypot(bx-ax,by-ay);if(dist<=d){const f=d?dist/d:0;return [ax+(bx-ax)*f,ay+(by-ay)*f]}dist-=d}
     return pts[pts.length-1];
   }
-  function drawChip(ci,l,t){
-    const c=CHIPS[ci],g=L[ci];if(!g)return;
-    const last=ci===N-1;
-    const a=ease(l/.36),tr=ease((l-.2)/.3),boom=last?0:easeIn((l-.84)/.16);
-    const fly=(e,k)=>((1-a)+boom*1.6)*k*e;
-    const alpha=a*(1-boom);
-    if(alpha<=.01)return;
-    /* PCB ground: a dot grid that brightens as the board is populated */
-    ctx.globalAlpha=.10*alpha;ctx.fillStyle='#f2efe7';
-    const step=22;for(let x=(g.cx-g.S*1.3)%step;x<W;x+=step)for(let y=(g.cy-g.S*1.3)%step;y<H;y+=step){if(Math.hypot(x-g.cx,y-g.cy)<g.S*1.25)ctx.fillRect(x,y,1.2,1.2)}
-    /* traces */
+  function drawBoard(t){
+    const g=L;if(!g)return;
+    const die=ease(P/.32),done=ease((P-(N-.25))/.25);
+    if(die<=.01)return;
+    /* the board: a dot grid that fills out as the sides are populated */
+    ctx.globalAlpha=(.06+.06*clamp(P/N,0,1))*die;ctx.fillStyle='#f2efe7';
+    const step=22;for(let x=(g.cx-g.S*1.3)%step;x<W;x+=step)for(let y=(g.cy-g.S*1.3)%step;y<H;y+=step){if(Math.abs(x-g.cx)<g.S*1.2&&Math.abs(y-g.cy)<g.S*1.2)ctx.fillRect(x,y,1.2,1.2)}
     ctx.lineCap='round';ctx.lineJoin='round';
-    g.pads.forEach((pd,i)=>{
-      const f=clamp(tr*1.15-i*.03,0,1)*(1-boom);
-      if(f<=0)return;
-      ctx.save();ctx.translate(fly(pd.ex,.6),fly(pd.ey,.6));
-      ctx.globalAlpha=.85*alpha;ctx.strokeStyle='#e0644f';ctx.lineWidth=1.4;trace(pd.pts,pd.len*f);
-      ctx.globalAlpha=.25*alpha;ctx.lineWidth=5;trace(pd.pts,pd.len*f);
-      /* the signal: a bright packet that runs pin to pad once the trace is down */
-      if(f>=1&&boom===0){
-        const k=((t*.00045+i*.17)%1),q=along(pd.pts,pd.len*k);
-        ctx.globalAlpha=alpha*.28;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(q[0],q[1],6.5,0,Math.PI*2);ctx.fill();
-        ctx.globalAlpha=alpha;ctx.fillStyle='#fff3e6';ctx.beginPath();ctx.arc(q[0],q[1],2.2,0,Math.PI*2);ctx.fill();
-      }
-      ctx.restore();
+    g.groups.forEach((gr,gi)=>{
+      const l=clamp(P-gi,0,1),a=ease(l/.4),tr=ease((l-.18)/.4),live=gi===cur,fade=live?1:.62;
+      if(a<=.01)return;
+      /* traces, drawn as they route; settled sides stay lit at a lower level */
+      gr.pads.forEach((pd,i)=>{
+        const f=clamp(tr*1.15-i*.05,0,1);if(f<=0)return;
+        ctx.globalAlpha=.9*fade;ctx.strokeStyle='#e0644f';ctx.lineWidth=1.4;trace(pd.pts,pd.len*f);
+        ctx.globalAlpha=.22*fade;ctx.lineWidth=5;trace(pd.pts,pd.len*f);
+        if(f>=1){
+          /* signals: one packet per trace, two once the board is complete */
+          const reps=done>.5?2:1;
+          for(let r=0;r<reps;r++){
+            const k=((t*.00038+i*.21+gi*.13+r*.5)%1),q=along(pd.pts,pd.len*k);
+            ctx.globalAlpha=.3*fade;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(q[0],q[1],6.5,0,Math.PI*2);ctx.fill();
+            ctx.globalAlpha=fade;ctx.fillStyle='#fff3e6';ctx.beginPath();ctx.arc(q[0],q[1],2.1,0,Math.PI*2);ctx.fill();
+          }
+        }
+      });
+      /* pads fly in from an exploded view and settle */
+      gr.pads.forEach((pd,i)=>{
+        const fl=1-a,ox=pd.ex*fl,oy=pd.ey*fl,rot=fl*pd.er;
+        const breathe=1+.06*Math.sin(t*.003+i+gi*2)*clamp(tr,0,1);
+        ctx.save();ctx.translate(pd.px+ox,pd.py+oy);ctx.rotate(rot);ctx.scale(breathe,breathe);
+        ctx.globalAlpha=a;ctx.fillStyle='#0d0d0c';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1;
+        ctx.beginPath();ctx.rect(-5,-5,10,10);ctx.fill();ctx.stroke();
+        ctx.fillStyle='#e0644f';ctx.globalAlpha=a*clamp(tr*1.15-i*.05,0,1);ctx.fillRect(-2.5,-2.5,5,5);
+        ctx.restore();
+        const lab=clamp((l-.3-i*.04)*6,0,1);
+        if(lab>0&&W>=520){
+          ctx.save();ctx.translate(pd.px,pd.py);
+          ctx.globalAlpha=lab*(live?.95:.6);ctx.fillStyle='#f2efe7';ctx.font='500 12px '+font;
+          ctx.textAlign=pd.ox>0?'right':pd.ox<0?'left':'center';ctx.textBaseline='middle';
+          const dx=pd.ox>0?6:pd.ox<0?-6:0,dy=pd.oy>0?16+(pd.k%2)*14:pd.oy<0?-16-(pd.k%2)*14:-14;
+          const maxW=pd.ox?Math.max(40,Math.abs(pd.px-g.cx)-g.half-22):150;
+          ctx.fillText(pd.label.toUpperCase(),dx,dy,maxW);
+          ctx.restore();
+        }
+      });
+      /* this side's pins slide in toward the die */
+      gr.pins.forEach(pn=>{
+        const fl=1-a;
+        ctx.save();ctx.translate(pn.x+pn.ox*30*fl,pn.y+pn.oy*30*fl);
+        ctx.globalAlpha=a;ctx.fillStyle=live&&tr<1?'#e0644f':'#c9c4b8';
+        if(pn.ox)ctx.fillRect(pn.ox>0?0:-10,-1.6,10,3.2);else ctx.fillRect(-1.6,pn.oy>0?0:-10,3.2,10);
+        ctx.restore();
+      });
     });
-    /* pads and their labels */
-    g.pads.forEach((pd,i)=>{
-      const ox=fly(pd.ex,1),oy=fly(pd.ey,1),rot=((1-a)+boom)*pd.er;
-      ctx.save();ctx.translate(pd.px+ox,pd.py+oy);ctx.rotate(rot);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#0d0d0c';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1;
-      ctx.beginPath();ctx.rect(-5,-5,10,10);ctx.fill();ctx.stroke();
-      ctx.fillStyle='#e0644f';ctx.globalAlpha=alpha*clamp(tr*1.15-i*.03,0,1);ctx.fillRect(-2.5,-2.5,5,5);
-      const lab=clamp((l-.3-i*.025)*6,0,1)*(1-boom);
-      if(lab>0&&W>=520){
-        ctx.globalAlpha=lab*.92;ctx.fillStyle='#f2efe7';ctx.font='500 12px '+font;
-        /* side labels sit above their pad and read inward, so they never leave the frame */
-        ctx.textAlign=pd.ox>0?'right':pd.ox<0?'left':'center';ctx.textBaseline='middle';
-        const dx=pd.ox>0?6:pd.ox<0?-6:0,dy=pd.oy>0?16+(pd.k%2)*14:pd.oy<0?-16-(pd.k%2)*14:-14;
-        const maxW=pd.ox?Math.max(40,Math.abs(pd.px-g.cx)-g.half-22):160;
-        ctx.fillText(pd.label.toUpperCase(),dx,dy,maxW);
-      }
-      ctx.restore();
-    });
-    /* loose SMD parts round the die */
+    /* loose SMD parts round the die arrive with it */
     g.parts.forEach(pt=>{
-      const ex=(rnd(pt.seed)-.5)*W,ey=(rnd(pt.seed+1)-.5)*H;
-      ctx.save();ctx.translate(pt.x+fly(ex,1),pt.y+fly(ey,1));ctx.rotate(((1-a)+boom)*(rnd(pt.seed+2)-.5)*4);
-      ctx.globalAlpha=alpha*.8;ctx.fillStyle='#2a2826';ctx.strokeStyle='rgba(242,239,231,.6)';ctx.lineWidth=1;
+      const fl=1-die,ex=(rnd(pt.seed)-.5)*W*fl,ey=(rnd(pt.seed+1)-.5)*H*fl;
+      ctx.save();ctx.translate(pt.x+ex,pt.y+ey);ctx.rotate(fl*(rnd(pt.seed+2)-.5)*4);
+      ctx.globalAlpha=die*.8;ctx.fillStyle='#2a2826';ctx.strokeStyle='rgba(242,239,231,.6)';ctx.lineWidth=1;
       ctx.fillRect(-pt.w/2,-pt.h/2,pt.w,pt.h);ctx.strokeRect(-pt.w/2,-pt.h/2,pt.w,pt.h);
       ctx.fillStyle='rgba(242,239,231,.7)';ctx.fillRect(-pt.w/2,-pt.h/2,2,pt.h);ctx.fillRect(pt.w/2-2,-pt.h/2,2,pt.h);
       ctx.restore();
     });
-    /* pins */
-    g.pins.forEach(pn=>{
-      const ex=(rnd(pn.seed)-.5)*W*.7,ey=(rnd(pn.seed+1)-.5)*H*.7;
-      ctx.save();ctx.translate(pn.x+fly(ex,1),pn.y+fly(ey,1));
-      ctx.globalAlpha=alpha;ctx.fillStyle='#c9c4b8';
-      if(pn.ox)ctx.fillRect(pn.ox>0?0:-10,-1.6,10,3.2);else ctx.fillRect(-1.6,pn.oy>0?0:-10,3.2,10);
-      ctx.restore();
-    });
-    /* the die drops in last, a little large and turned, and settles */
-    const ds=1+(1-a)*.9+boom*.5,dr=((1-a)*.5-boom*.4)*(ci%2?-1:1);
-    ctx.save();ctx.translate(g.cx,g.cy-(1-a)*H*.18);ctx.rotate(dr);ctx.scale(ds,ds);
-    ctx.globalAlpha=alpha;
-    const hold=tr>=1&&boom===0;
-    if(hold){ctx.shadowColor='#e0644f';ctx.shadowBlur=18+8*Math.sin(t*.004)}
+    /* the die drops in on the first shot and glows harder as the board fills */
+    const ds=1+(1-die)*.9,dr=(1-die)*.5;
+    ctx.save();ctx.translate(g.cx,g.cy-(1-die)*H*.18);ctx.rotate(dr);ctx.scale(ds,ds);
+    ctx.globalAlpha=die;
+    const heat=clamp(P/N,0,1);
+    ctx.shadowColor='#e0644f';ctx.shadowBlur=(10+22*heat)*(.85+.15*Math.sin(t*.004));
     ctx.fillStyle='#161514';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1.4;
     ctx.beginPath();ctx.rect(-g.half,-g.half,g.D,g.D);ctx.fill();ctx.shadowBlur=0;ctx.stroke();
-    ctx.globalAlpha=alpha*.18;ctx.lineWidth=1;
+    /* the die's own grid fills in quarter by quarter, one per shot */
+    ctx.globalAlpha=die*.2;ctx.lineWidth=1;
     for(let k=1;k<6;k++){const v=-g.half+k*g.D/6;ctx.beginPath();ctx.moveTo(v,-g.half+6);ctx.lineTo(v,g.half-6);ctx.moveTo(-g.half+6,v);ctx.lineTo(g.half-6,v);ctx.stroke()}
-    ctx.globalAlpha=alpha;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(-g.half+9,-g.half+9,3,0,Math.PI*2);ctx.fill();
-    const typed=clamp((l-.28)*5,0,1),name=c.die.slice(0,Math.ceil(c.die.length*typed));
+    const q=g.D/2-6;
+    [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy],i)=>{const f=ease(clamp(P-i,0,1)/.5);if(f<=0)return;ctx.globalAlpha=die*.16*f;ctx.fillStyle='#e0644f';ctx.fillRect(sx<0?-q:0,sy<0?-q:0,q*f,q*f)});
+    ctx.globalAlpha=die;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(-g.half+9,-g.half+9,3,0,Math.PI*2);ctx.fill();
+    const name='RAHUL KARN',typed=clamp((P-.18)*4,0,1),shown=name.slice(0,Math.ceil(name.length*typed));
     ctx.fillStyle='#f2efe7';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.font='600 '+Math.round(g.D*.11)+'px '+font;ctx.fillText(name,0,-4);
-    ctx.globalAlpha=alpha*.6*typed;ctx.font='italic '+Math.round(g.D*.085)+'px '+font;ctx.fillText(c.sub,0,g.D*.14);
+    ctx.font='600 '+Math.round(g.D*.1)+'px '+font;ctx.fillText(shown,0,-6);
+    ctx.globalAlpha=die*.65*typed;ctx.font='italic '+Math.round(g.D*.08)+'px '+font;
+    ctx.fillText(done>.5?'Solution Architect':GROUPS[cur].name.toLowerCase()+' · '+(cur+1)+' of '+N,0,g.D*.13,g.D-14);
     ctx.restore();
+    /* completion: a ring of light runs round the board once all four sides are in */
+    if(done>0){
+      ctx.globalAlpha=done*(.35+.25*Math.sin(t*.003));ctx.strokeStyle='#e0644f';ctx.lineWidth=1.2;
+      const R=g.S*1.12;ctx.strokeRect(g.cx-R,g.cy-R,R*2,R*2);
+    }
     ctx.globalAlpha=1;
   }
-  let lastP=-1;
   function apply(){
-    const r=reel.getBoundingClientRect(),span=r.height-innerHeight;
-    p=clamp(-r.top/(span||1),0,1);
-    const f=p*N;cur=Math.min(N-1,Math.floor(f));local=clamp(f-cur,0,1);
-    if(p===lastP)return;lastP=p;
-    reel.style.setProperty('--rp',p.toFixed(4));
+    const f=P;cur=Math.min(N-1,Math.floor(f));
+    if(Math.abs(P-lastApplied)<.0004)return;lastApplied=P;
+    reel.style.setProperty('--rp',(P/N).toFixed(4));
     shots.forEach((s,i)=>{
       const l=clamp(f-i,0,1);
       const o=i===cur?clamp(Math.min(i===0?1:l*7,i===N-1?1:(1-l)*7),0,1):0;
@@ -3752,31 +3775,42 @@ if(motion)run(()=>{
       s.style.setProperty('--sy',((1-Math.min(1,l*5))*16).toFixed(1)+'px');
       s.style.setProperty('--sw',Math.round(300+Math.min(1,l*3)*260));
     });
-    const sec=p*LEN,fr=Math.floor((sec%1)*24);
+    const sec=(P/N)*LEN,fr=Math.floor((sec%1)*24);
     const tcs='00:00:'+pad(Math.floor(sec))+':'+pad(fr),shs='Sc '+pad(cur+1)+' / '+pad(N);
     if(tc.textContent!==tcs)tc.textContent=tcs;
     if(sh.textContent!==shs)sh.textContent=shs;
   }
+  function readTarget(){
+    const r=reel.getBoundingClientRect(),span=r.height-innerHeight;
+    target=clamp(-r.top/(span||1),0,1)*N;
+  }
   function frame(t){
     raf=0;
-    if(!live){lastP=-1;reel.style.removeProperty('--rp');shots.forEach(s=>['--so','--pe','--l','--a1','--ss','--sx','--sy','--sw'].forEach(q=>s.style.removeProperty(q)));if(ctx)ctx.clearRect(0,0,cv.width,cv.height);return}
+    if(!live){lastApplied=-1;reel.style.removeProperty('--rp');shots.forEach(s=>['--so','--pe','--l','--a1','--ss','--sx','--sy','--sw'].forEach(q=>s.style.removeProperty(q)));if(ctx)ctx.clearRect(0,0,cv.width,cv.height);return}
+    readTarget();
+    const dt=lastT?Math.min(64,t-lastT):16;lastT=t;
+    /* the damped playhead: about a sixth of the way each frame, frame-rate independent */
+    P+=(target-P)*(1-Math.pow(1-.16,dt/16.7));
+    if(Math.abs(target-P)<.0005||!onScreen)P=target;
     apply();
-    if(ctx&&W){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawChip(cur,local,t)}
+    if(ctx&&W){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawBoard(t)}
     if(onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
+    else lastT=0;
   }
   const go=()=>{if(!raf&&live&&onScreen)raf=requestAnimationFrame(frame)};
-  size();relayout();apply();
-  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;if(onScreen)go();else if(live&&!raf)raf=requestAnimationFrame(frame)}).observe(reel);
+  size();L=layout();readTarget();P=target;apply();
+  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;if(onScreen){readTarget();go()}else if(live&&!raf){readTarget();P=target;raf=requestAnimationFrame(frame)}}).observe(reel);
+  addEventListener('scroll',go,{passive:true});
+  document.addEventListener('visibilitychange',go);
   /* Keyboard focus on a later shot moves the playhead to that shot's hold. */
   reel.addEventListener('focusin',e=>{
     if(!live)return;const i=shots.findIndex(s=>s.contains(e.target));if(i<0||i===cur)return;
     const r=reel.getBoundingClientRect(),span=r.height-innerHeight;
     scrollTo({top:scrollY+r.top+span*Math.min(.999,(i+.55)/N),behavior:'instant'});
+    readTarget();P=target;lastApplied=-1;apply();
   });
-  addEventListener('scroll',go,{passive:true});
-  document.addEventListener('visibilitychange',go);
-  let rt=0;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{size();relayout();go()},120)},{passive:true});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{size();relayout()});
+  let rt=0;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{size();L=layout();lastApplied=-1;go()},120)},{passive:true});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{size();L=layout()});
 });
 /* ===== Assembly, the script half =====
    Each part gets its own seeded exploded position, so a figure always comes
@@ -3816,19 +3850,26 @@ if(motion)run(()=>{
   const logLis=log?[...log.children]:[];
   const ease=k=>1-Math.pow(1-clamp(k,0,1),3);
   const pad=n=>String(n).padStart(2,'0');
-  let raf=0,onScreen=false,lastP=-1;
+  let raf=0,onScreen=false,lastP=-1,P=-1,lastT=0;
   function reset(){
-    lastP=-1;
+    lastP=-1;P=-1;lastT=0;
     [iso,lid,bar].forEach(el=>el&&['--cr','--s0','--o0','--o1','--o2','--lz','--lo','--cp'].forEach(q=>el.style.removeProperty(q)));
     mods.forEach(m=>{m.style.removeProperty('--mz');m.style.removeProperty('--mo');m.classList.remove('cur')});
     paths.forEach(p=>p.style.removeProperty('--bp'));
     steps.forEach(s=>{s.style.removeProperty('--so');s.style.removeProperty('--pe')});
   }
-  function frame(){
+  function frame(t){
     raf=0;
     if(!live){reset();return}
     const r=sec.getBoundingClientRect(),span=r.height-innerHeight;
-    const p=clamp(-r.top/(span||1),0,1);
+    /* the damped playhead: a wheel step glides into place instead of jumping */
+    const tgt=clamp(-r.top/(span||1),0,1);
+    if(P<0)P=tgt;
+    const dt=lastT&&t?Math.min(64,t-lastT):16;lastT=t||0;
+    P+=(tgt-P)*(1-Math.pow(1-.14,dt/16.7));
+    if(Math.abs(tgt-P)<.0004)P=tgt;
+    if(P!==tgt&&onScreen)raf=requestAnimationFrame(frame);else lastT=0;
+    const p=P;
     if(p===lastP)return;lastP=p;
     const s=p*N,cur=Math.min(N-1,Math.floor(s));
     iso.style.setProperty('--cr',p.toFixed(4));
@@ -3843,7 +3884,7 @@ if(motion)run(()=>{
       m.style.setProperty('--mo',clamp((s-k)*4,0,1).toFixed(3));
       m.classList.toggle('cur',k===cur);
     });
-    paths.forEach(pt=>{const k=+pt.dataset.step;pt.style.setProperty('--bp',clamp((s-k-.35)/.45,0,1).toFixed(3))});
+    paths.forEach(pt=>{const k=+pt.dataset.step,v=clamp((s-k-.35)/.45,0,1).toFixed(3);pt.style.setProperty('--bp',v);if(pt._pulse)pt._pulse.style.setProperty('--bp',+v>=1?1:0)});
     const fl=ease((s-(N-1))/.7);
     lid.style.setProperty('--lz',(280-256*fl).toFixed(1));
     lid.style.setProperty('--lo',fl.toFixed(3));
@@ -3870,8 +3911,10 @@ if(motion)run(()=>{
     const r=sec.getBoundingClientRect(),span=r.height-innerHeight,want=span*Math.min(.999,(i+.7)/N);
     const now=Math.min(N-1,Math.floor(clamp(-r.top/(span||1),0,1)*N));
     if(now!==i)scrollTo({top:scrollY+r.top+want,behavior:'instant'});
-    lastP=-1;frame();
+    lastP=-1;P=-1;frame();
   });
+  /* each drawn bus carries a running signal */
+  paths.forEach(pt=>{const c=pt.cloneNode(false);c.removeAttribute('data-step');c.setAttribute('class','pulse');pt.after(c);pt._pulse=c});
   frame();
 });
 window.__pageOk=true;
