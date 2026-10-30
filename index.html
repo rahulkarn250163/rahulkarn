@@ -1005,7 +1005,7 @@ html.curtain{overflow:hidden;scrollbar-gutter:stable;background:var(--ink)}
    each), then the teletype starts. The four bars are background layers because
    ::after already carries the kicker's running rule. */
 .motion .sec .kicker{border-color:transparent;background-image:linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink));background-repeat:no-repeat;background-origin:border-box;background-position:0 0,100% 0,100% 100%,0 100%;background-size:0 1px,1px 0,0 1px,1px 0}
-.motion .sec .kicker.in{animation:kframe .48s linear var(--d,0s) both}
+.motion .sec .kicker.in{animation:kframe .3s linear var(--d,0s) both}
 .motion .sec .kicker.in .kc{animation-delay:calc(var(--d,0s) + .48s + var(--k)*32ms)}
 .motion .sec .kicker.in .kc:last-of-type::after{animation-delay:calc(var(--d,0s) + .48s + var(--k)*32ms)}
 
@@ -1110,8 +1110,6 @@ html:not(.intro) .letterbox{display:none}
   .stat:nth-child(odd){border-left:none;padding-left:0}
   .stat:nth-child(n+3){border-top:1px solid var(--line)}
   .stat-number{font-size:clamp(40px,6vw,52px)}
-  .hero-stats .fn,.lr-figure .fn{top:-1.8em}
-  .oss-figures .fn{top:-1.4em}
   .stack-row{margin-bottom:28px}
   .sec{padding:var(--s-5) 0 var(--s-4)}
   .sec-header{margin-bottom:var(--s-4)}
@@ -1349,40 +1347,108 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   .ticker-list[aria-hidden]{display:none}
 }
 /* ===== The reel =====
-   Four shots, scrubbed by the scroll like footage: the stage pins, each result
-   pushes in and cuts to the next, a timecode runs and the scrub bar fills. On the
-   still page the shots stand as a plain row of four. */
+   Four shots scrubbed by the scroll like footage. Each shot carries its result,
+   the before and after, and the stack; beside it a microchip for that case flies
+   in as loose parts, routes its traces, runs a signal and blows apart as the shot
+   cuts. On the still page and in print the shots stand as a row of four cards. */
 .reel{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);margin:var(--s-4,40px) 0 0}
-.reel-hud,.reel-scrub{display:none}
+.reel-hud,.reel-scrub,.reel-chip{display:none}
 .reel-shots{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));max-width:1160px;margin:0 auto;padding:0 32px}
 .shot{padding:28px 20px 28px 0;border-right:1px solid var(--line)}
 .shot+.shot{padding-left:20px}
 .shot:last-child{border-right:0}
 .shot-k{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.08em;color:var(--red);font-weight:560}
+.shot-k b{font-variant-numeric:lining-nums tabular-nums;margin-right:6px;color:var(--ink)}
 .shot-n{font-size:clamp(30px,2vw + 16px,40px);font-weight:500;letter-spacing:-.03em;line-height:1;margin:10px 0 8px;font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+.shot-n small{display:block;margin-top:6px;font-size:13px;letter-spacing:.06em;font-weight:520;font-variant-caps:all-small-caps;color:var(--mid)}
 .shot-l{font-size:14px;font-style:italic;line-height:1.45;color:var(--gray)}
-.shot-go{display:inline-block;margin-top:10px;font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.08em;color:var(--ink);border-bottom:1px solid var(--ink)}
-@media(max-width:820px){.reel-shots{grid-template-columns:1fr 1fr}.shot:nth-child(2){border-right:0}.shot:nth-child(3){padding-left:0}}
-@media(max-width:480px){.reel-shots{grid-template-columns:1fr;padding:0 16px}.shot,.shot+.shot{padding:22px 0;border-right:0;border-bottom:1px solid var(--line)}}
+.shot-ba{margin:14px 0 0;border-top:1px solid var(--line)}
+.shot-ba div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.35}
+.shot-ba dt{font-variant-caps:all-small-caps;letter-spacing:.06em;color:var(--mid)}
+.shot-ba dd{color:var(--ink)}
+.shot-ba .was{color:var(--mid);text-decoration:line-through;text-decoration-color:var(--red)}
+.shot-stack{margin-top:10px;font-size:12px;letter-spacing:.04em;color:var(--mid);font-variant-caps:all-small-caps}
+.shot-go{display:inline-block;margin-top:12px;font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.08em;color:var(--ink);border-bottom:1px solid var(--ink)}
+@media(max-width:900px){.reel-shots{grid-template-columns:1fr 1fr}.shot:nth-child(2){border-right:0}.shot:nth-child(3){padding-left:0}.shot:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:520px){.reel-shots{grid-template-columns:1fr;padding:0 16px}.shot,.shot+.shot{padding:22px 0;border-right:0;border-bottom:1px solid var(--line)}}
 /* With motion the reel becomes footage. */
-.motion .reel{height:420vh;border:0;margin-top:var(--s-4,40px)}
-.motion .reel-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#0d0d0c;color:#f2efe7}
-.motion .reel-stage::before,.motion .reel-stage::after{content:'';position:absolute;left:0;right:0;height:9vh;background:#000;z-index:3}
+.motion .reel{height:520vh;border:0}
+.motion .reel-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#0d0d0c;color:#f2efe7}
+/* Letterbox bars carry the film's sprocket holes. */
+.motion .reel-stage::before,.motion .reel-stage::after{content:'';position:absolute;left:0;right:0;height:9vh;height:9svh;z-index:3;background-color:#000;background-image:repeating-linear-gradient(90deg,transparent 0 16px,#1f1d1b 16px 30px);background-size:100% 9px;background-repeat:no-repeat;background-position:0 50%}
 .motion .reel-stage::before{top:0}
 .motion .reel-stage::after{bottom:0}
-.motion .reel-hud{display:flex;position:absolute;z-index:4;top:calc(9vh + 18px);left:32px;right:32px;gap:22px;font-size:12px;letter-spacing:.14em;font-variant-numeric:tabular-nums lining-nums;color:rgba(242,239,231,.7);font-variant-caps:all-small-caps}
+.motion .reel-hud{display:flex;position:absolute;z-index:4;top:calc(9svh + 18px);left:32px;right:32px;gap:22px;font-size:12px;letter-spacing:.14em;font-variant-numeric:tabular-nums lining-nums;color:rgba(242,239,231,.62);font-variant-caps:all-small-caps}
+.motion .reel-rec{color:#f2efe7}
 .motion .reel-rec::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#e0644f;margin-right:8px;vertical-align:1px;animation:pulse 1.2s steps(2) infinite}
-.motion .reel-shot{margin-left:auto}
-.motion .reel-scrub{display:block;position:absolute;z-index:4;left:32px;right:32px;bottom:calc(9vh + 18px);height:2px;background:rgba(242,239,231,.18)}
+.motion .reel-shot{margin-left:auto;color:#f2efe7}
+.motion .reel-chip{display:block;position:absolute;z-index:1;top:9vh;top:9svh;right:0;width:56%;height:82vh;height:82svh;pointer-events:none}
+.motion .reel-scrub{display:block;position:absolute;z-index:4;left:32px;right:32px;bottom:calc(9svh + 18px);height:2px;background:rgba(242,239,231,.18)}
 .motion .reel-scrub i{display:block;height:100%;background:#e0644f;transform-origin:left;transform:scaleX(var(--rp,0))}
-.motion .reel-shots{display:block;position:absolute;inset:0;max-width:none;padding:0}
-.motion .shot{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 max(32px,calc(50% - 520px));border:0;opacity:var(--so,0);pointer-events:var(--pe,none)}
-.motion .shot:focus-within{opacity:1;z-index:5;pointer-events:auto}
-.motion .shot-k{color:#e0644f;font-size:14px}
-.motion .shot-n{font-size:clamp(84px,17vw,240px);font-weight:300;font-variation-settings:"opsz" 72,"wght" var(--sw,300);letter-spacing:-.05em;line-height:.9;margin:18px 0 22px;color:#f2efe7;transform:scale(var(--ss,1)) translateX(var(--sx,0px));transform-origin:0 70%}
-.motion .shot-l{font-size:clamp(17px,1vw + 12px,22px);max-width:30em;color:rgba(242,239,231,.75);transform:translateY(var(--sy,0px))}
-.motion .shot-go{color:#f2efe7;border-color:#e0644f}
-@media print{.reel-hud,.reel-scrub{display:none!important}.motion .reel{height:auto}.motion .reel-stage{position:static;height:auto;overflow:visible;background:none;color:#000}.motion .reel-stage::before,.motion .reel-stage::after{display:none}.motion .reel-shots{position:static;display:grid}.motion .shot{position:static;padding:12px 0}.motion .shot-n{font-size:28pt;color:#000;transform:none}.motion .shot-l,.motion .shot-go{color:#000;transform:none}}
+.motion .reel-scrub b{position:absolute;top:-4px;left:calc(var(--m)*25%);width:1px;height:10px;background:rgba(242,239,231,.5)}
+.motion .reel-shots{display:block;position:absolute;inset:0;z-index:2;max-width:none;padding:0}
+.motion .shot{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:9svh max(32px,calc(50% - 540px));border:0;opacity:var(--so,0);pointer-events:var(--pe,none)}
+.motion .shot>*{max-width:min(44%,520px)}
+.motion .shot:focus-within{opacity:1;z-index:5;pointer-events:auto;background:#0d0d0c}
+.motion .shot:focus-within *{opacity:1!important}
+.motion .shot-k{color:#e0644f;font-size:14px;transform:translateY(calc((1 - var(--a1,1))*18px));opacity:var(--a1,1)}
+.motion .shot-k b{color:#f2efe7}
+.motion .shot-n{font-size:clamp(64px,10vw,150px);font-weight:300;font-variation-settings:"opsz" 72,"wght" var(--sw,300);letter-spacing:-.05em;line-height:.9;margin:14px 0 12px;color:#f2efe7;transform:scale(var(--ss,1)) translateX(var(--sx,0px));transform-origin:0 70%;max-width:none}
+.motion .shot-n small{color:rgba(242,239,231,.6);font-size:14px;letter-spacing:.12em;margin-top:10px}
+.motion .shot-l{font-size:clamp(16px,.8vw + 12px,19px);color:rgba(242,239,231,.78);transform:translateY(var(--sy,0px))}
+.motion .shot-ba{border-color:rgba(242,239,231,.18);width:100%}
+.motion .shot-ba div{border-color:rgba(242,239,231,.12);font-size:14px;opacity:clamp(0,calc((var(--l,1) - .14 - var(--j)*.06)*9),1);transform:translateX(calc((1 - clamp(0,calc((var(--l,1) - .14 - var(--j)*.06)*9),1))*-28px))}
+.motion .shot-ba dt{color:rgba(242,239,231,.5)}
+.motion .shot-ba dd{color:#f2efe7}
+.motion .shot-ba .was{color:rgba(242,239,231,.62);text-decoration-color:#e0644f}
+.motion .shot-stack{color:rgba(242,239,231,.55);opacity:clamp(0,calc((var(--l,1) - .3)*8),1)}
+.motion .shot-go{color:#f2efe7;border-color:#e0644f;opacity:clamp(0,calc((var(--l,1) - .34)*8),1)}
+@media(max-width:820px){
+  .motion .reel-chip{width:100%;opacity:.2}
+  .motion .shot>*{max-width:100%}
+  .motion .shot{padding:calc(9svh + 40px) 20px calc(9svh + 40px)}
+  .motion .shot-n{font-size:clamp(44px,min(17vw,11svh),96px)}
+  .motion .reel-hud{left:20px;right:20px;gap:14px}
+  .motion .reel-fps{display:none}
+  .motion .reel-scrub{left:20px;right:20px}
+}
+@media(max-height:560px){.motion .shot-stack{display:none}.motion .shot-l{font-size:15px}.motion .shot-n small{margin-top:4px}}
+@media(max-height:420px){.motion .shot-ba{display:none}.motion .shot-n{font-size:clamp(40px,14svh,72px);margin:6px 0}}
+@media print{.case-diagram-frame::before,.arch-connector::after{display:none!important}.motion .shot *{color:#000!important}.motion .shot-n{font-size:28pt}.reel-hud,.reel-scrub,.reel-chip{display:none!important}.motion .reel{height:auto}.motion .reel-stage{position:static;height:auto;overflow:visible;background:none;color:#000}.motion .reel-stage::before,.motion .reel-stage::after{display:none}.motion .reel-shots{position:static;display:grid}.motion .shot{position:static;padding:12px 0;opacity:1}.motion .shot>*{max-width:none;opacity:1!important;transform:none!important;color:#000!important}}
+/* ===== Assembly: the figures go together like a board =====
+   An opened figure starts as an exploded view: each box is out of place, turned
+   and drawn as a dashed outline; it flies home, takes its rule and flashes red at
+   the solder point as it lands. The frame turns into a dotted board while it
+   fills. Figure cells and stat cells do the same, smaller, as they reveal. */
+@keyframes chip-in{
+  0%{opacity:0;transform:translate(var(--ex,0),var(--ey,0)) rotate(var(--er,0)) scale(.62);border-style:dashed;box-shadow:none}
+  70%{opacity:1;transform:translate(0,0) rotate(0) scale(1.04);border-style:dashed}
+  82%{transform:none;border-style:solid;box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 55%,transparent)}
+  100%{transform:none;border-style:solid;box-shadow:0 0 0 0 transparent}
+}
+@keyframes board{from{background-size:14px 14px;opacity:.0}to{background-size:14px 14px;opacity:1}}
+.motion .case-card.open .arch-box{animation:chip-in .9s var(--snap) both;animation-delay:calc(.2s + var(--ri,0)*.09s + var(--bi,0)*.05s)}
+.motion .case-card.open .case-diagram-frame{position:relative;isolation:isolate}
+.motion .case-card.assembling .case-diagram-frame{overflow:hidden}
+.motion .case-card.open .case-diagram-frame::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(color-mix(in srgb,var(--ink) 16%,transparent) .8px,transparent 1.2px);z-index:-1;background-size:14px 14px;animation:board 1.2s ease both;mask-image:radial-gradient(ellipse at center,#000 40%,transparent 85%)}
+.motion .case-card.open .arch-connector::after{content:'';position:absolute;bottom:-2px;left:50%;width:6px;height:6px;margin-left:-3px;background:var(--red);transform:rotate(45deg) scale(0);animation:solder .4s var(--spring) both;animation-delay:calc(.75s + var(--ri,0)*.09s)}
+@keyframes solder{to{transform:rotate(45deg) scale(1)}}
+@keyframes chip-in-m{0%{opacity:0;transform:translate(var(--ex,0),var(--ey,0)) rotate(var(--er,0)) scale(.62)}70%{opacity:1;transform:translate(0,0) scale(1.04)}82%{transform:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 55%,transparent)}100%{transform:none;box-shadow:0 0 0 0 transparent}}
+.motion .case-card.open .metric-card{animation:chip-in-m .8s var(--snap) both;animation-delay:calc(.35s + var(--mi,0)*.08s)}
+.motion .case-card.open.quiet :is(.arch-box,.metric-card){animation:none;opacity:1;transform:none}
+.motion .case-card.open.quiet .case-diagram-frame::before,.motion .case-card.open.quiet .arch-connector::after{animation:none;opacity:1;transform:rotate(45deg) scale(1)}
+.motion .case-card.open.quiet .case-diagram-frame::before{transform:none}
+/* Stat cells and the open source figures arrive from an exploded view too. */
+.motion :is(.hero-stats .stat,.oss-fig):not(.in){transform:translate(var(--ex,0),var(--ey,0)) rotate(var(--er,0)) scale(.8)}
+.motion :is(.hero-stats .stat,.oss-fig){transition:opacity .5s ease,transform .9s var(--snap),background-color .2s,color .2s,border-color .2s;transition-delay:var(--d,0s),var(--d,0s),0s,0s,0s}
+/* ===== Edges ===== */
+.oss-head>.kicker{justify-self:start}
+.hero-stats .fn{top:-1.5em}
+.lr-figure .fn{top:-1.35em}
+.oss-figures .fn{top:-1.2em}
+.metric-label .fn{top:-.5em}
+.motion .sec .kicker.in .kc{animation-delay:calc(var(--d,0s) + .3s + var(--k)*16ms)}
+.motion .sec .kicker.in .kc:last-of-type::after{animation-delay:calc(var(--d,0s) + .3s + var(--k)*16ms)}
 /* ===== The lead, set as a specimen =====
    The copy keeps a quiet measure on the left; the work is drawn on the right as a
    double helix, each rung pairing two facts the page backs further down. Without
@@ -1665,16 +1731,61 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   </div>
 </section>
 
-<section class="reel" id="reel" aria-label="The reel: four results in four shots">
+<section class="reel" id="reel" aria-label="The reel: four results, each with its before and after">
   <div class="reel-stage">
-    <div class="reel-hud" aria-hidden="true"><span class="reel-rec">Rec</span><span class="reel-tc">00:00:00:00</span><span class="reel-shot">Shot 1 / 4</span></div>
+    <div class="reel-hud" aria-hidden="true"><span class="reel-rec">Rec</span><span class="reel-tc">00:00:00:00</span><span class="reel-fps">24 fps</span><span class="reel-shot">Sc 01 / 04</span></div>
+    <canvas class="reel-chip" aria-hidden="true"></canvas>
     <ol class="reel-shots" role="list">
-      <li class="shot"><p class="shot-k">Case 1 · Enterprise portal</p><p class="shot-n">90,000</p><p class="shot-l">clients moved to a modular platform with no breaking API change</p><a class="shot-go" href="#case1">See the case</a></li>
-      <li class="shot"><p class="shot-k">Case 2 · Oracle and SQL Server</p><p class="shot-n">~50%</p><p class="shot-l">off query latency, and timeouts from twelve a week to under one</p><a class="shot-go" href="#case2">See the case</a></li>
-      <li class="shot"><p class="shot-k">Case 3 · Payments</p><p class="shot-n">0</p><p class="shot-l">duplicate charges: one idempotency key buys exactly one charge</p><a class="shot-go" href="#case3">See the case</a></li>
-      <li class="shot"><p class="shot-k">After hours · grahan</p><p class="shot-n">v1.0</p><p class="shot-l">a sky engine on npm, checked against Swiss Ephemeris across 909 eclipses</p><a class="shot-go" href="#open-source">See the work</a></li>
+      <li class="shot">
+        <p class="shot-k"><b>01</b> Case 1 · Enterprise portal</p>
+        <p class="shot-n">90,000<small>clients</small></p>
+        <p class="shot-l">moved from a monolith to a modular platform, with no breaking API change on the way</p>
+        <dl class="shot-ba">
+          <div style="--j:0"><dt>API layer</dt><dd><span class="was">None</span> → Versioned</dd></div>
+          <div style="--j:1"><dt>Security</dt><dd><span class="was">Bolt-on</span> → OIDC, RBAC, OWASP</dd></div>
+          <div style="--j:2"><dt>Team</dt><dd>Six engineers shipping in parallel</dd></div>
+        </dl>
+        <p class="shot-stack">DDD · YARP · Duende IdentityServer · EF Core · Oracle · SQL Server</p>
+        <a class="shot-go" href="#case1">See the case</a>
+      </li>
+      <li class="shot">
+        <p class="shot-k"><b>02</b> Case 2 · Oracle and SQL Server</p>
+        <p class="shot-n">~50%<small>query latency</small></p>
+        <p class="shot-l">off query latency across the insurance data layer, found by reading the execution plans</p>
+        <dl class="shot-ba">
+          <div style="--j:0"><dt>Latency</dt><dd><span class="was">1×</span> → 0.5×</dd></div>
+          <div style="--j:1"><dt>Timeouts a week</dt><dd><span class="was">12+</span> → under 1</dd></div>
+          <div style="--j:2"><dt>Method</dt><dd>Execution plans, covering indexes</dd></div>
+        </dl>
+        <p class="shot-stack">SQL Server · Oracle · T-SQL · Execution plans · Indexing</p>
+        <a class="shot-go" href="#case2">See the case</a>
+      </li>
+      <li class="shot">
+        <p class="shot-k"><b>03</b> Case 3 · Payments</p>
+        <p class="shot-n">0<small>duplicate charges</small></p>
+        <p class="shot-l">one idempotency key buys exactly one charge, and reconciliation checks the gateway against the ledger</p>
+        <dl class="shot-ba">
+          <div style="--j:0"><dt>Reconciliation</dt><dd><span class="was">2 days</span> → near real time</dd></div>
+          <div style="--j:1"><dt>Failed payments</dt><dd><span class="was">Days</span> → minutes</dd></div>
+          <div style="--j:2"><dt>Audit prep</dt><dd><span class="was">2 weeks</span> → 1 day</dd></div>
+        </dl>
+        <p class="shot-stack">Idempotency keys · Six-state machine · Immutable audit log</p>
+        <a class="shot-go" href="#case3">See the case</a>
+      </li>
+      <li class="shot">
+        <p class="shot-k"><b>04</b> After hours · grahan</p>
+        <p class="shot-n">v1.0<small>on npm</small></p>
+        <p class="shot-l">a zero-dependency TypeScript sky engine, checked against Swiss Ephemeris before it shipped</p>
+        <dl class="shot-ba">
+          <div style="--j:0"><dt>Tests</dt><dd>279 cases, Singapore to the Arctic</dd></div>
+          <div style="--j:1"><dt>Eclipses</dt><dd>909 detected and typed</dd></div>
+          <div style="--j:2"><dt>Sun error</dt><dd>4.6″ worst case</dd></div>
+        </dl>
+        <p class="shot-stack">TypeScript · npm · Swiss Ephemeris 2.10 · 0 dependencies</p>
+        <a class="shot-go" href="#open-source">See the work</a>
+      </li>
     </ol>
-    <div class="reel-scrub" aria-hidden="true"><i></i></div>
+    <div class="reel-scrub" aria-hidden="true"><i></i><b style="--m:0"></b><b style="--m:1"></b><b style="--m:2"></b><b style="--m:3"></b></div>
   </div>
 </section>
 
@@ -2227,7 +2338,7 @@ ORDER  BY DueDate</pre>
         </div>
         <div class="bp-col">
           <h3>Colophon</h3>
-          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,375</b> lines and <b>265</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
+          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,674</b> lines and <b>285</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
           <p class="bp-eds">Earlier editions: <a href="https://github.com/rahulkarn250163/rahulkarn/tree/86769d9" target="_blank" rel="noopener">Vol. I, Dec 2025</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/41ee530" target="_blank" rel="noopener">Vol. II, Feb 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3b7a64c" target="_blank" rel="noopener">Vol. III, Jul 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/93b1918" target="_blank" rel="noopener">Vol. IV, Aug 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3296345" target="_blank" rel="noopener">Vol. V, Oct 2026</a></p>
         </div>
         </div>
@@ -3255,7 +3366,7 @@ if(motion&&finePointer)run(()=>{
       const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
       el.classList.add('tilting');el.style.setProperty('--tx',(x*max*2).toFixed(2));el.style.setProperty('--ty',(-y*max*2).toFixed(2));
     });
-    el.addEventListener('pointerleave',()=>{el.classList.remove('tilting');el.style.removeProperty('--tx');el.style.removeProperty('--ty')});
+    el.addEventListener('pointerleave',()=>{if(el.classList.contains('in'))el.style.setProperty('--d','0s');el.classList.remove('tilting');el.style.removeProperty('--tx');el.style.removeProperty('--ty')});
   });
 });
 /* ===== Fig. 0, the helix =====
@@ -3277,34 +3388,45 @@ run(()=>{
     cv.style.height=H+'px';cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
     R=clamp(W*.11,28,46);fig.style.setProperty('--gap',(2*R+44)+'px');
     top=18;step=(H-36)/N;
+    if(typeof measureLead==='function')measureLead();
   }
   const yAt=s=>top+(s+.5)*step;
   const shown=s=>(N-1-s)<zip*N+.5;
+  /* Scrolling out of the lead takes the helix apart: each rung leaves on its own
+     seeded line, ahead of the reel where the chips assemble. */
+  const rr=s=>{const x=Math.sin(s*91.7+17.3)*24634.6345;return x-Math.floor(x)};
+  const leadEl=fig.closest('.lead');
+  let kx=0,leadTop=0,leadH=1;
+  const measureLead=()=>{if(leadEl){leadTop=leadEl.getBoundingClientRect().top+scrollY;leadH=leadEl.offsetHeight||1}};
+  const off=i=>[(rr(i)-.5)*W*1.2*kx,((rr(i+40)-.5)*H*.6-60)*kx];
   function draw(){
     const cx=W/2;
+    if(live&&leadEl){const q=clamp(((scrollY-leadTop)/leadH-.12)/.5,0,1);kx=q*q}else kx=0;
+    const fade=1-kx*.9;
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
     /* back strand first, then rungs, then the front strand, so depth reads */
     const segs=[];
     for(let k=0;k<2;k++)for(let s=-.5;s<N-.5;s+=.08){
       if(!shown(Math.round(s)))continue;
       const a=s*TW+rot+k*Math.PI,a2=(s+.08)*TW+rot+k*Math.PI;
-      segs.push({k,z:(Math.cos(a)+Math.cos(a2))/2,x1:cx+R*Math.sin(a),y1:yAt(s),x2:cx+R*Math.sin(a2),y2:yAt(s+.08)});
+      const [dx,dy]=off(Math.round(s));
+      segs.push({k,z:(Math.cos(a)+Math.cos(a2))/2,x1:cx+R*Math.sin(a)+dx,y1:yAt(s)+dy,x2:cx+R*Math.sin(a2)+dx,y2:yAt(s+.08)+dy});
     }
-    const seg=front=>{segs.forEach(g=>{if((g.z>=0)!==front)return;ctx.strokeStyle=g.k?red:ink;ctx.globalAlpha=.22+.78*(g.z+1)/2;ctx.lineWidth=1+1.6*(g.z+1)/2;ctx.beginPath();ctx.moveTo(g.x1,g.y1);ctx.lineTo(g.x2,g.y2);ctx.stroke()})};
+    const seg=front=>{segs.forEach(g=>{if((g.z>=0)!==front)return;ctx.strokeStyle=g.k?red:ink;ctx.globalAlpha=(.22+.78*(g.z+1)/2)*fade;ctx.lineWidth=1+1.6*(g.z+1)/2;ctx.beginPath();ctx.moveTo(g.x1,g.y1);ctx.lineTo(g.x2,g.y2);ctx.stroke()})};
     ctx.lineCap='round';seg(false);
     items.forEach((li,i)=>{
-      const a=i*TW+rot,s=Math.sin(a),x1=cx+R*s,x2=cx-R*s,y=yAt(i),vis=shown(i),broad=Math.abs(s);
-      const o=vis?(live?(.72+.28*broad):1):0;
-      li.style.setProperty('--y',y.toFixed(1)+'px');li.style.setProperty('--o',(i===hot?1:o).toFixed(2));li.classList.toggle('off',!vis&&i!==hot);
+      const [ox,oy]=off(i),a=i*TW+rot+kx*(rr(i+7)-.5)*6,s=Math.sin(a),x1=cx+R*s+ox,x2=cx-R*s+ox,y=yAt(i)+oy,vis=shown(i),broad=Math.abs(s);
+      const o=vis?(live?(.72+.28*broad)*(1-kx):1):0;
+      li.style.setProperty('--y',y.toFixed(1)+'px');li.style.setProperty('--o',(i===hot?1:o).toFixed(2));li.classList.toggle('off',(!vis||kx>.5)&&i!==hot);
       if(!vis)return;
-      ctx.globalAlpha=.35+.55*broad;ctx.lineWidth=i===hot?2.6:1.2;
+      ctx.globalAlpha=(.35+.55*broad)*fade;ctx.lineWidth=i===hot?2.6:1.2;
       ctx.strokeStyle=ink;ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(cx,y);ctx.stroke();
       ctx.strokeStyle=red;ctx.beginPath();ctx.moveTo(cx,y);ctx.lineTo(x2,y);ctx.stroke();
       /* leaders from the label edges to the nearer node */
-      ctx.globalAlpha=Math.min(1,(.12+.3*broad)*(i===hot?2.5:1));ctx.lineWidth=1;ctx.strokeStyle=i===hot?red:line;ctx.setLineDash([2,3]);
+      ctx.globalAlpha=Math.min(1,(.12+.3*broad)*(i===hot?2.5:1))*(1-kx);ctx.lineWidth=1;ctx.strokeStyle=i===hot?red:line;ctx.setLineDash([2,3]);
       const gl=cx-(R+22),gr=cx+(R+22);
       ctx.beginPath();ctx.moveTo(gl,y);ctx.lineTo(Math.min(x1,x2)-3,y);ctx.moveTo(gr,y);ctx.lineTo(Math.max(x1,x2)+3,y);ctx.stroke();ctx.setLineDash([]);
-      [[x1,Math.cos(a),ink],[x2,-Math.cos(a),red]].forEach(([x,z,c])=>{ctx.globalAlpha=.35+.65*(z+1)/2;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,(i===hot?3.4:2)+1.4*(z+1)/2,0,TAU);ctx.fill()});
+      [[x1,Math.cos(a),ink],[x2,-Math.cos(a),red]].forEach(([x,z,c])=>{ctx.globalAlpha=(.35+.65*(z+1)/2)*fade;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,(i===hot?3.4:2)+1.4*(z+1)/2,0,TAU);ctx.fill()});
     });
     seg(true);
     ctx.globalAlpha=1;
@@ -3327,46 +3449,223 @@ run(()=>{
   let rt=0;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{size();if(!raf)draw()},120)},{passive:true});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{size();if(!raf)draw()});
   items.forEach((li,i)=>{
-    const on=()=>{hot=i;zip=1;if(!raf)draw()},off=()=>{hot=-1;if(!raf)draw()};
+    const on=()=>{if(kx>.5&&!li.contains(document.activeElement))return;hot=i;zip=1;if(!raf)draw()},off=()=>{hot=-1;if(!raf)draw()};
     li.addEventListener('pointerenter',on);li.addEventListener('pointerleave',off);
     li.addEventListener('focusin',on);li.addEventListener('focusout',off);
   });
   go();
 });
 /* ===== The reel, the script half =====
-   The scroll is the playhead: progress through the pinned stage sets which shot
-   is on screen, how far its slow push-in has run, the timecode at 24 frames a
-   second over a twelve-second cut, and the scrub bar. */
+   The scroll is the playhead. Progress through the pinned stage picks the shot,
+   runs its push-in, its rows and the timecode, and drives the microchip beside
+   it: parts fly in from an exploded view, traces route from the die to labelled
+   pads, a signal runs while the shot holds, and the chip blows apart on the cut.
+   The canvas runs only while the reel is on screen and the page is live. */
 if(motion)run(()=>{
   const reel=document.getElementById('reel');if(!reel)return;
-  const shots=[...reel.querySelectorAll('.shot')],tc=reel.querySelector('.reel-tc'),sh=reel.querySelector('.reel-shot'),N=shots.length,LEN=12;
-  let raf=0;
+  const shots=[...reel.querySelectorAll('.shot')],tc=reel.querySelector('.reel-tc'),sh=reel.querySelector('.reel-shot'),N=shots.length,LEN=16;
+  const cv=reel.querySelector('.reel-chip'),ctx=cv&&cv.getContext('2d');
+  const CHIPS=[
+    {die:'MODULAR CORE',sub:'.NET 10',pads:['Policy','Claims','Underwriting','Agents','YARP gateway','IdentityServer','Oracle','SQL Server']},
+    {die:'QUERY PATH',sub:'0.5× latency',pads:['Execution plan','Covering index','Stored procs','Oracle','SQL Server','Timeouts <1/wk']},
+    {die:'PAYMENT FSM',sub:'6 states',pads:['Idempotency key','Initiated','Authorized','Captured','Settled','Failed','Refunded','Reconciliation']},
+    {die:'grahan',sub:'v1.0 · npm',pads:['Sun','Moon','Eclipses','Bikram Sambat','Panchang','279 tests']}
+  ];
+  /* A seeded scatter, so each part always explodes along the same line. */
+  const rnd=s=>{const x=Math.sin(s*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+  const ease=k=>1-Math.pow(1-clamp(k,0,1),3),easeIn=k=>Math.pow(clamp(k,0,1),2);
   const pad=n=>String(n).padStart(2,'0');
-  function frame(){
-    raf=0;
-    if(!live){reel.style.removeProperty('--rp');shots.forEach(s=>['--so','--pe','--ss','--sx','--sy','--sw'].forEach(p=>s.style.removeProperty(p)));return}
+  let W=0,H=0,dpr=1,p=0,cur=0,local=0,onScreen=false,raf=0,font='Newsreader, Times New Roman, serif';
+  function size(){
+    if(!cv)return;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+  }
+  /* Layout for one chip: the die, its pins, and pads spread round four sides
+     with an orthogonal-then-45-degree trace from a pin to each pad. */
+  function layout(c,ci){
+    const cx=W*.5,cy=H*.5,S=Math.min(W,H)*.42,D=S*.52,half=D/2;
+    const sides=[[-1,0],[1,0],[0,-1],[0,1]],per=[0,0,0,0];
+    const assign=c.pads.map((_,i)=>{const s=i%4;return {s,k:per[s]++}});
+    const pads=c.pads.map((label,i)=>{
+      const {s,k}=assign[i],n=per[s],[ox,oy]=sides[s];
+      const lat=(k-(n-1)/2)*Math.min(D*.9/(Math.max(n,1)),D*.42)*1.9;
+      const out=S*.98;
+      const px=cx+ox*out+(oy?lat:0),py=cy+oy*out+(ox?lat:0);
+      const pinLat=(k-(n-1)/2)*(D*.8/Math.max(n,2));
+      const x0=cx+ox*half+(oy?pinLat:0),y0=cy+oy*half+(ox?pinLat:0);
+      const x1=x0+ox*14,y1=y0+oy*14;
+      const dl=(oy?px-x1:py-y1),adv=Math.abs(dl);
+      const x2=x1+ox*adv+(oy?dl:0),y2=y1+oy*adv+(ox?dl:0);
+      const pts=[[x0,y0],[x1,y1],[x2,y2],[px,py]];
+      let len=0;for(let j=1;j<pts.length;j++)len+=Math.hypot(pts[j][0]-pts[j-1][0],pts[j][1]-pts[j-1][1]);
+      const seed=ci*31+i*7;
+      return {label,s,k,ox,oy,px,py,pts,len,ex:(rnd(seed)-.5)*W*.9,ey:(rnd(seed+1)-.5)*H*.9,er:(rnd(seed+2)-.5)*3};
+    });
+    const pins=[];for(let s=0;s<4;s++){const [ox,oy]=sides[s];for(let k=0;k<7;k++){const lat=(k-3)*(D*.8/6);pins.push({x:cx+ox*half+(oy?lat:0),y:cy+oy*half+(ox?lat:0),ox,oy,seed:ci*97+s*13+k})}}
+    const parts=[0,1,2,3,4,5].map(i=>{const a=i*1.05+ci,r=S*(.62+rnd(ci*5+i)*.18);return {x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*.72,w:10+rnd(i+ci)*10,h:5+rnd(i*3+ci)*4,seed:ci*53+i}});
+    return {cx,cy,S,D,half,pads,pins,parts};
+  }
+  let L=[];const relayout=()=>{L=CHIPS.map((c,i)=>layout(c,i))};
+  function trace(pts,frac){
+    let left=frac;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
+    for(let j=1;j<pts.length&&left>0;j++){
+      const [ax,ay]=pts[j-1],[bx,by]=pts[j],d=Math.hypot(bx-ax,by-ay);
+      if(left>=d){ctx.lineTo(bx,by);left-=d}else{const f=left/d;ctx.lineTo(ax+(bx-ax)*f,ay+(by-ay)*f);left=0}
+    }
+    ctx.stroke();
+  }
+  function along(pts,dist){
+    for(let j=1;j<pts.length;j++){const [ax,ay]=pts[j-1],[bx,by]=pts[j],d=Math.hypot(bx-ax,by-ay);if(dist<=d){const f=d?dist/d:0;return [ax+(bx-ax)*f,ay+(by-ay)*f]}dist-=d}
+    return pts[pts.length-1];
+  }
+  function drawChip(ci,l,t){
+    const c=CHIPS[ci],g=L[ci];if(!g)return;
+    const last=ci===N-1;
+    const a=ease(l/.36),tr=ease((l-.2)/.3),boom=last?0:easeIn((l-.84)/.16);
+    const fly=(e,k)=>((1-a)+boom*1.6)*k*e;
+    const alpha=a*(1-boom);
+    if(alpha<=.01)return;
+    /* PCB ground: a dot grid that brightens as the board is populated */
+    ctx.globalAlpha=.10*alpha;ctx.fillStyle='#f2efe7';
+    const step=22;for(let x=(g.cx-g.S*1.3)%step;x<W;x+=step)for(let y=(g.cy-g.S*1.3)%step;y<H;y+=step){if(Math.hypot(x-g.cx,y-g.cy)<g.S*1.25)ctx.fillRect(x,y,1.2,1.2)}
+    /* traces */
+    ctx.lineCap='round';ctx.lineJoin='round';
+    g.pads.forEach((pd,i)=>{
+      const f=clamp(tr*1.15-i*.03,0,1)*(1-boom);
+      if(f<=0)return;
+      ctx.save();ctx.translate(fly(pd.ex,.6),fly(pd.ey,.6));
+      ctx.globalAlpha=.85*alpha;ctx.strokeStyle='#e0644f';ctx.lineWidth=1.4;trace(pd.pts,pd.len*f);
+      ctx.globalAlpha=.25*alpha;ctx.lineWidth=5;trace(pd.pts,pd.len*f);
+      /* the signal: a bright packet that runs pin to pad once the trace is down */
+      if(f>=1&&boom===0){
+        const k=((t*.00045+i*.17)%1),q=along(pd.pts,pd.len*k);
+        ctx.globalAlpha=alpha*.28;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(q[0],q[1],6.5,0,Math.PI*2);ctx.fill();
+        ctx.globalAlpha=alpha;ctx.fillStyle='#fff3e6';ctx.beginPath();ctx.arc(q[0],q[1],2.2,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
+    });
+    /* pads and their labels */
+    g.pads.forEach((pd,i)=>{
+      const ox=fly(pd.ex,1),oy=fly(pd.ey,1),rot=((1-a)+boom)*pd.er;
+      ctx.save();ctx.translate(pd.px+ox,pd.py+oy);ctx.rotate(rot);
+      ctx.globalAlpha=alpha;ctx.fillStyle='#0d0d0c';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1;
+      ctx.beginPath();ctx.rect(-5,-5,10,10);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#e0644f';ctx.globalAlpha=alpha*clamp(tr*1.15-i*.03,0,1);ctx.fillRect(-2.5,-2.5,5,5);
+      const lab=clamp((l-.3-i*.025)*6,0,1)*(1-boom);
+      if(lab>0&&W>=520){
+        ctx.globalAlpha=lab*.92;ctx.fillStyle='#f2efe7';ctx.font='500 12px '+font;
+        /* side labels sit above their pad and read inward, so they never leave the frame */
+        ctx.textAlign=pd.ox>0?'right':pd.ox<0?'left':'center';ctx.textBaseline='middle';
+        const dx=pd.ox>0?6:pd.ox<0?-6:0,dy=pd.oy>0?16+(pd.k%2)*14:pd.oy<0?-16-(pd.k%2)*14:-14;
+        const maxW=pd.ox?Math.max(40,Math.abs(pd.px-g.cx)-g.half-22):160;
+        ctx.fillText(pd.label.toUpperCase(),dx,dy,maxW);
+      }
+      ctx.restore();
+    });
+    /* loose SMD parts round the die */
+    g.parts.forEach(pt=>{
+      const ex=(rnd(pt.seed)-.5)*W,ey=(rnd(pt.seed+1)-.5)*H;
+      ctx.save();ctx.translate(pt.x+fly(ex,1),pt.y+fly(ey,1));ctx.rotate(((1-a)+boom)*(rnd(pt.seed+2)-.5)*4);
+      ctx.globalAlpha=alpha*.8;ctx.fillStyle='#2a2826';ctx.strokeStyle='rgba(242,239,231,.6)';ctx.lineWidth=1;
+      ctx.fillRect(-pt.w/2,-pt.h/2,pt.w,pt.h);ctx.strokeRect(-pt.w/2,-pt.h/2,pt.w,pt.h);
+      ctx.fillStyle='rgba(242,239,231,.7)';ctx.fillRect(-pt.w/2,-pt.h/2,2,pt.h);ctx.fillRect(pt.w/2-2,-pt.h/2,2,pt.h);
+      ctx.restore();
+    });
+    /* pins */
+    g.pins.forEach(pn=>{
+      const ex=(rnd(pn.seed)-.5)*W*.7,ey=(rnd(pn.seed+1)-.5)*H*.7;
+      ctx.save();ctx.translate(pn.x+fly(ex,1),pn.y+fly(ey,1));
+      ctx.globalAlpha=alpha;ctx.fillStyle='#c9c4b8';
+      if(pn.ox)ctx.fillRect(pn.ox>0?0:-10,-1.6,10,3.2);else ctx.fillRect(-1.6,pn.oy>0?0:-10,3.2,10);
+      ctx.restore();
+    });
+    /* the die drops in last, a little large and turned, and settles */
+    const ds=1+(1-a)*.9+boom*.5,dr=((1-a)*.5-boom*.4)*(ci%2?-1:1);
+    ctx.save();ctx.translate(g.cx,g.cy-(1-a)*H*.18);ctx.rotate(dr);ctx.scale(ds,ds);
+    ctx.globalAlpha=alpha;
+    const hold=tr>=1&&boom===0;
+    if(hold){ctx.shadowColor='#e0644f';ctx.shadowBlur=18+8*Math.sin(t*.004)}
+    ctx.fillStyle='#161514';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.rect(-g.half,-g.half,g.D,g.D);ctx.fill();ctx.shadowBlur=0;ctx.stroke();
+    ctx.globalAlpha=alpha*.18;ctx.lineWidth=1;
+    for(let k=1;k<6;k++){const v=-g.half+k*g.D/6;ctx.beginPath();ctx.moveTo(v,-g.half+6);ctx.lineTo(v,g.half-6);ctx.moveTo(-g.half+6,v);ctx.lineTo(g.half-6,v);ctx.stroke()}
+    ctx.globalAlpha=alpha;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(-g.half+9,-g.half+9,3,0,Math.PI*2);ctx.fill();
+    const typed=clamp((l-.28)*5,0,1),name=c.die.slice(0,Math.ceil(c.die.length*typed));
+    ctx.fillStyle='#f2efe7';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font='600 '+Math.round(g.D*.11)+'px '+font;ctx.fillText(name,0,-4);
+    ctx.globalAlpha=alpha*.6*typed;ctx.font='italic '+Math.round(g.D*.085)+'px '+font;ctx.fillText(c.sub,0,g.D*.14);
+    ctx.restore();
+    ctx.globalAlpha=1;
+  }
+  let lastP=-1;
+  function apply(){
     const r=reel.getBoundingClientRect(),span=r.height-innerHeight;
-    if(r.bottom<0||r.top>innerHeight)return;
-    const p=clamp(-r.top/(span||1),0,1),f=p*N,cur=Math.min(N-1,Math.floor(f));
+    p=clamp(-r.top/(span||1),0,1);
+    const f=p*N;cur=Math.min(N-1,Math.floor(f));local=clamp(f-cur,0,1);
+    if(p===lastP)return;lastP=p;
     reel.style.setProperty('--rp',p.toFixed(4));
     shots.forEach((s,i)=>{
-      const local=clamp(f-i,0,1);
-      /* each shot fades up, holds, and cuts out across its quarter of the reel */
-      const o=i===cur?clamp(Math.min(i===0?1:local*6,i===N-1?1:(1-local)*6),0,1):0;
+      const l=clamp(f-i,0,1);
+      const o=i===cur?clamp(Math.min(i===0?1:l*7,i===N-1?1:(1-l)*7),0,1):0;
       s.style.setProperty('--so',o.toFixed(3));
-      s.style.setProperty('--pe',o>0.5?'auto':'none');
-      s.style.setProperty('--ss',(1+local*.08).toFixed(4));
-      s.style.setProperty('--sx',(-local*24).toFixed(1)+'px');
-      s.style.setProperty('--sy',((1-Math.min(1,local*4))*16).toFixed(1)+'px');
-      s.style.setProperty('--sw',Math.round(300+Math.min(1,local*3)*260));
+      s.style.setProperty('--pe',o>.5?'auto':'none');
+      s.style.setProperty('--l',(i===cur?l:i<cur?1:0).toFixed(3));
+      s.style.setProperty('--a1',clamp(l*8,0,1).toFixed(3));
+      s.style.setProperty('--ss',(1+l*.07).toFixed(4));
+      s.style.setProperty('--sx',(l*14).toFixed(1)+'px');
+      s.style.setProperty('--sy',((1-Math.min(1,l*5))*16).toFixed(1)+'px');
+      s.style.setProperty('--sw',Math.round(300+Math.min(1,l*3)*260));
     });
     const sec=p*LEN,fr=Math.floor((sec%1)*24);
-    tc.textContent='00:00:'+pad(Math.floor(sec))+':'+pad(fr);
-    sh.textContent='Shot '+(cur+1)+' / '+N;
+    const tcs='00:00:'+pad(Math.floor(sec))+':'+pad(fr),shs='Sc '+pad(cur+1)+' / '+pad(N);
+    if(tc.textContent!==tcs)tc.textContent=tcs;
+    if(sh.textContent!==shs)sh.textContent=shs;
   }
-  addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
-  addEventListener('resize',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
-  frame();
+  function frame(t){
+    raf=0;
+    if(!live){lastP=-1;reel.style.removeProperty('--rp');shots.forEach(s=>['--so','--pe','--l','--a1','--ss','--sx','--sy','--sw'].forEach(q=>s.style.removeProperty(q)));if(ctx)ctx.clearRect(0,0,cv.width,cv.height);return}
+    apply();
+    if(ctx&&W){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawChip(cur,local,t)}
+    if(onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
+  }
+  const go=()=>{if(!raf&&live&&onScreen)raf=requestAnimationFrame(frame)};
+  size();relayout();apply();
+  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;if(onScreen)go();else if(live&&!raf)raf=requestAnimationFrame(frame)}).observe(reel);
+  /* Keyboard focus on a later shot moves the playhead to that shot's hold. */
+  reel.addEventListener('focusin',e=>{
+    if(!live)return;const i=shots.findIndex(s=>s.contains(e.target));if(i<0||i===cur)return;
+    const r=reel.getBoundingClientRect(),span=r.height-innerHeight;
+    scrollTo({top:scrollY+r.top+span*Math.min(.999,(i+.55)/N),behavior:'instant'});
+  });
+  addEventListener('scroll',go,{passive:true});
+  document.addEventListener('visibilitychange',go);
+  let rt=0;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{size();relayout();go()},120)},{passive:true});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{size();relayout()});
+});
+/* ===== Assembly, the script half =====
+   Each part gets its own seeded exploded position, so a figure always comes
+   apart and goes together the same way on every visit. */
+if(motion)run(()=>{
+  /* While an opened figure assembles, its frame clips the flying parts so no
+     scrollbar flashes; the clip lifts once every box is home. */
+  document.querySelectorAll('.case-card').forEach(card=>{
+    let was=card.classList.contains('open'),tm=0;
+    new MutationObserver(()=>{
+      const now=card.classList.contains('open');
+      if(now&&!was&&!card.classList.contains('quiet')){card.classList.add('assembling');clearTimeout(tm);tm=setTimeout(()=>card.classList.remove('assembling'),2000)}
+      was=now;
+    }).observe(card,{attributes:true,attributeFilter:['class']});
+  });
+  const rr=s=>{const x=Math.sin(s*12.9898+78.233)*43758.5453;return x-Math.floor(x)};
+  document.querySelectorAll('.arch-box,.metric-card,.hero-stats .stat,.oss-fig').forEach((el,i)=>{
+    const big=el.matches('.arch-box,.metric-card');
+    const ax=big?180:60,ay=big?120:40;
+    el.style.setProperty('--ex',Math.round((rr(i)-.5)*2*ax)+'px');
+    el.style.setProperty('--ey',Math.round((rr(i+.5)-.5)*2*ay)+'px');
+    el.style.setProperty('--er',Math.round((rr(i+.25)-.5)*(big?70:24))+'deg');
+  });
 });
 window.__pageOk=true;
 </script>
