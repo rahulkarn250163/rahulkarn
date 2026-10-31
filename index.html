@@ -1474,7 +1474,9 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .cpu-log,.cpu-hud{display:none}
 /* The view: substrate, package, die and lid stacked in an isometric frame. */
 .cpu-view{position:relative;aspect-ratio:1;perspective:1800px;perspective-origin:50% 35%;container-type:inline-size}
-.cpu-iso{position:absolute;inset:13%;transform-style:preserve-3d;transform:rotateX(56deg) rotateZ(calc(-40deg + var(--cr,1)*10deg))}
+.cpu-iso{position:absolute;inset:13%;transform-style:preserve-3d;transform:rotateX(calc(56deg*(1 - var(--cf,0)))) rotateZ(calc((-40deg + var(--cr,1)*10deg)*(1 - var(--cf,0)))) scale(calc(1 + var(--cf,0)*.06))}
+.cpu-sand{display:none}
+.motion .cpu-sand{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;transform:translateZ(10px)}
 .cpu-sub{position:absolute;inset:-9%;background-color:var(--wash);border:1px solid var(--ink);background-image:radial-gradient(circle,color-mix(in srgb,var(--ink) 50%,transparent) 1.2px,transparent 1.7px);background-size:5% 5%;transform:translateZ(calc(var(--s0,0)*1px));opacity:var(--o0,1)}
 .cpu-pkg{position:absolute;inset:-2%;background:#2b2926;border:1px solid var(--ink);background-image:repeating-linear-gradient(90deg,transparent 0 6%,rgba(201,196,184,.55) 6% 7%),repeating-linear-gradient(0deg,transparent 0 6%,rgba(201,196,184,.55) 6% 7%);background-size:100% 4%,4% 100%;background-repeat:no-repeat;background-position:0 0,0 0;transform:translateZ(8px);opacity:var(--o1,1)}
 .cpu-die{position:absolute;inset:6%;background-color:#151413;border:1px solid #57534c;transform:translateZ(16px);transform-style:preserve-3d;background-image:linear-gradient(rgba(242,239,231,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(242,239,231,.05) 1px,transparent 1px);background-size:4% 4%;opacity:var(--o2,1)}
@@ -1493,11 +1495,9 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   .cpu-view{width:min(78vw,360px);margin:0 auto}
 }
 /* With motion the plate pins and fabricates. */
-.motion .cpu{height:320vh;padding:0;border:0;margin-top:0}
-@keyframes cpu-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+.motion .cpu{height:380vh;padding:0;border:0;margin-top:0}
 @keyframes bus-run{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 @keyframes cpu-shine{from{background-position:160% 0}to{background-position:-60% 0}}
-.motion .cpu-iso{animation:cpu-float 7s ease-in-out infinite}
 .motion .cpu-bus path.pulse{stroke:#fff3e6;stroke-width:2.6;stroke-dasharray:.07 .93;animation:bus-run 1.8s linear infinite;opacity:calc(var(--bp,0)*.95)}
 .motion .mod::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 40%,rgba(255,243,230,.16) 50%,transparent 60%) no-repeat;background-size:250% 100%;animation:cpu-shine 3.6s linear infinite}
 .motion .cpu-lid::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%) no-repeat;background-size:250% 100%;animation:cpu-shine 4.4s ease-in-out infinite}
@@ -1515,7 +1515,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .motion .cpu-step-name{color:var(--ink);font-weight:600}
 .motion .cpu-bar{flex:1;height:2px;background:var(--line);position:relative}
 .motion .cpu-bar i{position:absolute;inset:0;background:var(--red);transform-origin:left;transform:scaleX(var(--cp,0))}
-.motion .cpu-lid{display:flex;position:absolute;inset:4%;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;background:linear-gradient(135deg,#dcd8ce,#aaa598 42%,#ece9e2 58%,#9e998c);border:1px solid #6a675f;color:#2a2826;transform:translateZ(calc(var(--lz,280)*1px));opacity:var(--lo,0);pointer-events:none}
+.motion .cpu-lid{display:flex;position:absolute;inset:4%;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;background:linear-gradient(135deg,#dcd8ce,#aaa598 42%,#ece9e2 58%,#9e998c);border:1px solid #6a675f;color:#2a2826;transform:translateZ(calc(var(--lz,24)*1px));opacity:var(--lo,0);pointer-events:none}
 .motion .cpu-lid b{font-size:clamp(18px,2.2vw,28px);letter-spacing:.24em}
 .motion .cpu-lid :is(b,span){position:relative;z-index:1}
 .motion .cpu-lid span{font-size:11px;letter-spacing:.14em;font-variant-caps:all-small-caps}
@@ -2481,7 +2481,7 @@ ORDER  BY DueDate</pre>
         </div>
         <div class="bp-col">
           <h3>Colophon</h3>
-          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,924</b> lines and <b>307</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
+          <p class="bp-colophon"><b>Vol. V, No. 8.</b> One HTML file of <b>3,935</b> lines and <b>307</b> KB, counted at commit: no build, no libraries. Besides this file your browser fetched the portrait, two font files and, if it asked for one, an icon. Set in Newsreader by Production Type, a variable serif with optical sizes, under the SIL Open Font License. The square beside the moon stops the motion. Printed in Kathmandu.</p>
           <p class="bp-eds">Earlier editions: <a href="https://github.com/rahulkarn250163/rahulkarn/tree/86769d9" target="_blank" rel="noopener">Vol. I, Dec 2025</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/41ee530" target="_blank" rel="noopener">Vol. II, Feb 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3b7a64c" target="_blank" rel="noopener">Vol. III, Jul 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/93b1918" target="_blank" rel="noopener">Vol. IV, Aug 2026</a> · <a href="https://github.com/rahulkarn250163/rahulkarn/tree/3296345" target="_blank" rel="noopener">Vol. V, Oct 2026</a></p>
         </div>
         </div>
@@ -3401,17 +3401,8 @@ if(motion)run(()=>{
   }
   addEventListener('scroll',()=>{if(!raf&&live)raf=requestAnimationFrame(loop)},{passive:true});
 });
-if(motion&&finePointer)run(()=>{
-  const reg=document.createElement('div');reg.className='reg';reg.setAttribute('aria-hidden','true');
-  reg.innerHTML='<svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="17" cy="17" r="9"/><path d="M17 1v32M1 17h32"/></svg>';
-  document.body.appendChild(reg);
-  let x=-99,y=-99,tx=-99,ty=-99,on=false,raf=0;
-  const tick=()=>{raf=0;if(!live){reg.remove();return}x+=(tx-x)*.22;y+=(ty-y)*.22;reg.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';if(Math.abs(tx-x)+Math.abs(ty-y)>.3)raf=requestAnimationFrame(tick)};
-  addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;tx=e.clientX;ty=e.clientY;if(!on){on=true;x=tx;y=ty;reg.classList.add('on')}reg.classList.toggle('hot',!!e.target.closest('a,button,label,input,summary'));if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
-  document.documentElement.addEventListener('pointerleave',()=>{on=false;reg.classList.remove('on')});
-});
 /* ===== Motion III, the script half =====
-   Headline weight swell, ticker velocity and the magnetic primary button. Each
+   Headline weight swell and ticker velocity. Each
    loop stands down and clears what it set when live turns false. */
 if(motion)run(()=>{
   const hs=[...document.querySelectorAll('.hero-title,.sec-heading')];
@@ -3453,35 +3444,10 @@ if(motion)run(()=>{
   }
   addEventListener('scroll',()=>{if(!raf&&live){lastT=performance.now();raf=requestAnimationFrame(loop)}},{passive:true});
 });
-if(motion&&finePointer)run(()=>{
-  const btns=[...document.querySelectorAll('.btn-primary')];
-  if(!btns.length)return;
-  let px=-1e4,py=-1e4,raf=0;
-  const off=new Map();
-  const release=b=>{if(!off.has(b))return;off.delete(b);b.classList.remove('mag');b.style.removeProperty('translate')};
-  function tick(){
-    raf=0;
-    if(!live){btns.forEach(release);return}
-    btns.forEach(b=>{
-      if(b.disabled){release(b);return}
-      const r=b.getBoundingClientRect();
-      if(!r.width||r.bottom<-80||r.top>innerHeight+80){release(b);return}
-      const o=off.get(b)||[0,0],L=r.left-o[0],T=r.top-o[1],R=L+r.width,B=T+r.height;
-      const dist=Math.hypot(px-clamp(px,L,R),py-clamp(py,T,B));
-      if(dist>=80){release(b);return}
-      const s=1-dist/80,cx=(L+R)/2,cy=(T+B)/2;
-      const tx=clamp((px-cx)/(r.width/2+80),-1,1)*6*s,ty=clamp((py-cy)/(r.height/2+80),-1,1)*6*s;
-      off.set(b,[tx,ty]);b.classList.add('mag');
-      b.style.translate=tx.toFixed(2)+'px '+ty.toFixed(2)+'px';
-    });
-  }
-  addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
-  document.documentElement.addEventListener('pointerleave',()=>{px=py=-1e4;btns.forEach(release)});
-});
 /* ===== Motion III, the script half: the camera =====
    One scroll pass sets --fold on each section header as it rises into view,
-   --lp on the lead as it leaves, and --mp on the masthead; the pointer tilts
-   cards and the portrait. Everything clears when the Still control is pressed. */
+   --lp on the lead as it leaves, and --mp on the masthead. Everything clears
+   when the Still control is pressed. */
 if(motion)run(()=>{
   const root=document.documentElement,lead=document.querySelector('.lead'),mh=document.querySelector('.masthead-name');
   const heads=[...document.querySelectorAll('.sec .sec-header')];
@@ -3499,18 +3465,6 @@ if(motion)run(()=>{
   addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
   addEventListener('resize',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
   frame();
-});
-if(motion&&finePointer)run(()=>{
-  document.querySelectorAll('.photo-frame,.case-card .case-header,.oss-fig,.stat,.notice,.edu-card,.contact-card,.arch-box').forEach(el=>{
-    el.classList.add('tilt');
-    const max=el.matches('.photo-frame')?10:el.matches('.arch-box')?14:6;
-    el.addEventListener('pointermove',e=>{
-      if(!live||e.pointerType!=='mouse')return;
-      const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-      el.classList.add('tilting');el.style.setProperty('--tx',(x*max*2).toFixed(2));el.style.setProperty('--ty',(-y*max*2).toFixed(2));
-    });
-    el.addEventListener('pointerleave',()=>{if(el.classList.contains('in'))el.style.setProperty('--d','0s');el.classList.remove('tilting');el.style.removeProperty('--tx');el.style.removeProperty('--ty')});
-  });
 });
 /* ===== Fig. 0, the helix =====
    Two strands, one in ink and one in red, turned about a vertical axis. Each rung
@@ -3668,6 +3622,19 @@ if(motion)run(()=>{
     for(let j=1;j<pts.length;j++){const [ax,ay]=pts[j-1],[bx,by]=pts[j],d=Math.hypot(bx-ax,by-ay);if(dist<=d){const f=d?dist/d:0;return [ax+(bx-ax)*f,ay+(by-ay)*f]}dist-=d}
     return pts[pts.length-1];
   }
+  /* Sand: grains that gather from loose positions into a part's outline; the
+     part turns solid once most of them have landed. Seeded, so it is the same
+     sand every time and it runs backwards when the reader scrolls up. */
+  function sand(x,y,w,h,f,seed,count,spread,color){
+    if(f<=0||f>=1)return;
+    const fade=1-clamp((f-.8)/.2,0,1);ctx.fillStyle=color;
+    for(let i=0;i<count;i++){
+      const d=rnd(seed+i*5.3)*.42,gk=clamp((f-d)/.55,0,1);if(gk<=0)continue;
+      const tx=x+rnd(seed+i*1.31)*w,ty=y+rnd(seed+i*2.17)*h,an=rnd(seed+i*3.07)*6.2832,r=spread*(.4+rnd(seed+i*4.11)*.6);
+      const e=1-Math.pow(1-gk,3),sx=tx+Math.cos(an)*r,sy=ty+Math.sin(an)*r*.8+spread*.2;
+      ctx.globalAlpha=(.35+.6*gk)*fade;ctx.fillRect(sx+(tx-sx)*e-.7,sy+(ty-sy)*e-.7,1.4,1.4);
+    }
+  }
   function drawBoard(t){
     const g=L;if(!g)return;
     const die=ease(P/.32),done=ease((P-(N-.25))/.25);
@@ -3694,14 +3661,14 @@ if(motion)run(()=>{
           }
         }
       });
-      /* pads fly in from an exploded view and settle */
+      /* pads gather from sand and set */
       gr.pads.forEach((pd,i)=>{
-        const fl=1-a,ox=pd.ex*fl,oy=pd.ey*fl,rot=fl*pd.er;
-        const breathe=1+.06*Math.sin(t*.003+i+gi*2)*clamp(tr,0,1);
-        ctx.save();ctx.translate(pd.px+ox,pd.py+oy);ctx.rotate(rot);ctx.scale(breathe,breathe);
-        ctx.globalAlpha=a;ctx.fillStyle='#0d0d0c';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1;
+        const pf=clamp(l/.45-i*.06,0,1.2),sol=clamp((pf-.6)/.35,0,1);
+        sand(pd.px-6,pd.py-6,12,12,pf,gi*131+i*17,22,70,'#e9dcc0');
+        ctx.save();ctx.translate(pd.px,pd.py);
+        ctx.globalAlpha=sol;ctx.fillStyle='#0d0d0c';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1;
         ctx.beginPath();ctx.rect(-5,-5,10,10);ctx.fill();ctx.stroke();
-        ctx.fillStyle='#e0644f';ctx.globalAlpha=a*clamp(tr*1.15-i*.05,0,1);ctx.fillRect(-2.5,-2.5,5,5);
+        ctx.fillStyle='#e0644f';ctx.globalAlpha=sol*clamp(tr*1.15-i*.05,0,1);ctx.fillRect(-2.5,-2.5,5,5);
         ctx.restore();
         const lab=clamp((l-.3-i*.04)*6,0,1);
         if(lab>0&&W>=520){
@@ -3714,42 +3681,42 @@ if(motion)run(()=>{
           ctx.restore();
         }
       });
-      /* this side's pins slide in toward the die */
+      /* this side's pins set in place as the side forms */
       gr.pins.forEach(pn=>{
-        const fl=1-a;
-        ctx.save();ctx.translate(pn.x+pn.ox*30*fl,pn.y+pn.oy*30*fl);
-        ctx.globalAlpha=a;ctx.fillStyle=live&&tr<1?'#e0644f':'#c9c4b8';
+        ctx.save();ctx.translate(pn.x,pn.y);
+        ctx.globalAlpha=clamp((a-.4)/.5,0,1);ctx.fillStyle=live&&tr<1?'#e0644f':'#c9c4b8';
         if(pn.ox)ctx.fillRect(pn.ox>0?0:-10,-1.6,10,3.2);else ctx.fillRect(-1.6,pn.oy>0?0:-10,3.2,10);
         ctx.restore();
       });
     });
-    /* loose SMD parts round the die arrive with it */
+    /* loose SMD parts round the die gather with it */
+    const df=clamp(P/.32,0,1.2),dsol=clamp((df-.55)/.4,0,1);
     g.parts.forEach(pt=>{
-      const fl=1-die,ex=(rnd(pt.seed)-.5)*W*fl,ey=(rnd(pt.seed+1)-.5)*H*fl;
-      ctx.save();ctx.translate(pt.x+ex,pt.y+ey);ctx.rotate(fl*(rnd(pt.seed+2)-.5)*4);
-      ctx.globalAlpha=die*.8;ctx.fillStyle='#2a2826';ctx.strokeStyle='rgba(242,239,231,.6)';ctx.lineWidth=1;
+      sand(pt.x-pt.w/2,pt.y-pt.h/2,pt.w,pt.h,df,pt.seed,16,60,'#c9c4b8');
+      ctx.save();ctx.translate(pt.x,pt.y);
+      ctx.globalAlpha=dsol*.8;ctx.fillStyle='#2a2826';ctx.strokeStyle='rgba(242,239,231,.6)';ctx.lineWidth=1;
       ctx.fillRect(-pt.w/2,-pt.h/2,pt.w,pt.h);ctx.strokeRect(-pt.w/2,-pt.h/2,pt.w,pt.h);
       ctx.fillStyle='rgba(242,239,231,.7)';ctx.fillRect(-pt.w/2,-pt.h/2,2,pt.h);ctx.fillRect(pt.w/2-2,-pt.h/2,2,pt.h);
       ctx.restore();
     });
-    /* the die drops in on the first shot and glows harder as the board fills */
-    const ds=1+(1-die)*.9,dr=(1-die)*.5;
-    ctx.save();ctx.translate(g.cx,g.cy-(1-die)*H*.18);ctx.rotate(dr);ctx.scale(ds,ds);
-    ctx.globalAlpha=die;
+    /* the die gathers from sand on the first shot and glows harder as the board fills */
+    sand(g.cx-g.half,g.cy-g.half,g.D,g.D,df,7,280,g.S*1.1,'#e9dcc0');
+    ctx.save();ctx.translate(g.cx,g.cy);
+    ctx.globalAlpha=dsol;
     const heat=clamp(P/N,0,1);
     ctx.shadowColor='#e0644f';ctx.shadowBlur=(10+22*heat)*(.85+.15*Math.sin(t*.004));
     ctx.fillStyle='#161514';ctx.strokeStyle='#f2efe7';ctx.lineWidth=1.4;
     ctx.beginPath();ctx.rect(-g.half,-g.half,g.D,g.D);ctx.fill();ctx.shadowBlur=0;ctx.stroke();
     /* the die's own grid fills in quarter by quarter, one per shot */
-    ctx.globalAlpha=die*.2;ctx.lineWidth=1;
+    ctx.globalAlpha=dsol*.2;ctx.lineWidth=1;
     for(let k=1;k<6;k++){const v=-g.half+k*g.D/6;ctx.beginPath();ctx.moveTo(v,-g.half+6);ctx.lineTo(v,g.half-6);ctx.moveTo(-g.half+6,v);ctx.lineTo(g.half-6,v);ctx.stroke()}
     const q=g.D/2-6;
-    [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy],i)=>{const f=ease(clamp(P-i,0,1)/.5);if(f<=0)return;ctx.globalAlpha=die*.16*f;ctx.fillStyle='#e0644f';ctx.fillRect(sx<0?-q:0,sy<0?-q:0,q*f,q*f)});
-    ctx.globalAlpha=die;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(-g.half+9,-g.half+9,3,0,Math.PI*2);ctx.fill();
+    [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy],i)=>{const f=ease(clamp(P-i,0,1)/.5);if(f<=0)return;ctx.globalAlpha=dsol*.16*f;ctx.fillStyle='#e0644f';ctx.fillRect(sx<0?-q:0,sy<0?-q:0,q*f,q*f)});
+    ctx.globalAlpha=dsol;ctx.fillStyle='#e0644f';ctx.beginPath();ctx.arc(-g.half+9,-g.half+9,3,0,Math.PI*2);ctx.fill();
     const name='RAHUL KARN',typed=clamp((P-.18)*4,0,1),shown=name.slice(0,Math.ceil(name.length*typed));
     ctx.fillStyle='#f2efe7';ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.font='600 '+Math.round(g.D*.1)+'px '+font;ctx.fillText(shown,0,-6);
-    ctx.globalAlpha=die*.65*typed;ctx.font='italic '+Math.round(g.D*.08)+'px '+font;
+    ctx.globalAlpha=dsol*.65*typed;ctx.font='italic '+Math.round(g.D*.08)+'px '+font;
     ctx.fillText(done>.5?'Solution Architect':GROUPS[cur].name.toLowerCase()+' · '+(cur+1)+' of '+N,0,g.D*.13,g.D-14);
     ctx.restore();
     /* completion: a ring of light runs round the board once all four sides are in */
@@ -3836,27 +3803,62 @@ if(motion)run(()=>{
   });
 });
 /* ===== The processor, the script half =====
-   The scroll through the pinned plate is the fab line. Step 0 lays the
-   substrate and package; steps 1 to 8 each drop one unit onto the die and draw
-   its bus; step 9 lowers the lid. The copy, the build log and the step counter
-   follow the same playhead. Still and reduced motion get the finished die. */
+   The scroll through the pinned plate is the fab line, damped so a wheel step
+   glides. Nothing drops or swings: every part forms from sand. Step 0 gathers
+   the die out of loose grains; steps 1 to 8 each gather one unit's grains into
+   its outline before it turns solid and its bus draws; step 9 forms the lid the
+   same way. One more scroll then turns the finished chip upright to face the
+   reader. The copy, the build log and the counter follow the same playhead.
+   Still and reduced motion get the finished die. */
 if(motion)run(()=>{
   const sec=document.getElementById('processor');if(!sec)return;
-  const steps=[...sec.querySelectorAll('.cpu-step')],N=steps.length;
-  const iso=sec.querySelector('.cpu-iso'),mods=[...sec.querySelectorAll('.mod')],paths=[...sec.querySelectorAll('.cpu-bus path')];
+  const steps=[...sec.querySelectorAll('.cpu-step')],N=steps.length,U=N+1;
+  const iso=sec.querySelector('.cpu-iso'),die=sec.querySelector('.cpu-die'),mods=[...sec.querySelectorAll('.mod')],paths=[...sec.querySelectorAll('.cpu-bus path')];
   const lid=sec.querySelector('.cpu-lid'),nEl=sec.querySelector('.cpu-step-n'),nameEl=sec.querySelector('.cpu-step-name'),bar=sec.querySelector('.cpu-bar'),log=sec.querySelector('.cpu-log');
   const kinds=steps.map(s=>s.querySelector('.cs-k').lastChild.textContent.trim());
-  if(log)kinds.forEach((k,i)=>{const li=document.createElement('li');li.textContent=k;log.appendChild(li)});
+  if(log)kinds.forEach(k=>{const li=document.createElement('li');li.textContent=k;log.appendChild(li)});
   const logLis=log?[...log.children]:[];
   const ease=k=>1-Math.pow(1-clamp(k,0,1),3);
   const pad=n=>String(n).padStart(2,'0');
+  const rnd=s=>{const x=Math.sin(s*12.9898+78.233)*43758.5453;return x-Math.floor(x)};
+  /* The sand: one canvas on the die's own plane, so the grains share its tilt. */
+  const cv=document.createElement('canvas');cv.className='cpu-sand';cv.setAttribute('aria-hidden','true');die.appendChild(cv);
+  const ctx=cv.getContext('2d');
+  let W=0,H=0,dpr=1;
+  function size(){dpr=Math.min(window.devicePixelRatio||1,2);W=die.clientWidth;H=die.clientHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+  /* Grains per part, in die percent: a target inside the part, a start somewhere
+     loose around it, and a delay so they do not all arrive at once. */
+  function grains(rect,count,seed){
+    const g=[];
+    for(let i=0;i<count;i++){
+      const tx=rect[0]+rnd(seed+i*1.31)*rect[2],ty=rect[1]+rnd(seed+i*2.17)*rect[3];
+      const a=rnd(seed+i*3.07)*Math.PI*2,d=28+rnd(seed+i*4.11)*55;
+      g.push([tx+Math.cos(a)*d,ty+Math.sin(a)*d*.8+18,tx,ty,rnd(seed+i*5.3)*.42]);
+    }
+    return g;
+  }
+  const rectOf=m=>[+m.style.getPropertyValue('--x'),+m.style.getPropertyValue('--y'),+m.style.getPropertyValue('--w'),+m.style.getPropertyValue('--h')];
+  const SAND={die:grains([0,0,100,100],320,11),lid:grains([-2,-2,104,104],300,97)};
+  mods.forEach(m=>{const r=rectOf(m);SAND['m'+m.dataset.step]=grains(r,Math.round(46+r[2]*r[3]/14),+m.dataset.step*37)});
+  function drawSand(set,f,color){
+    if(f<=0||f>=1)return;
+    const fade=1-clamp((f-.78)/.22,0,1);
+    ctx.fillStyle=color;
+    for(const [sx,sy,tx,ty,d] of set){
+      const g=clamp((f-d)/.55,0,1);if(g<=0)continue;
+      const e=1-Math.pow(1-g,3),x=(sx+(tx-sx)*e)*W/100,y=(sy+(ty-sy)*e)*H/100;
+      ctx.globalAlpha=(.35+.6*g)*fade;
+      ctx.fillRect(x-.7,y-.7,1.4,1.4);
+    }
+  }
   let raf=0,onScreen=false,lastP=-1,P=-1,lastT=0;
   function reset(){
     lastP=-1;P=-1;lastT=0;
-    [iso,lid,bar].forEach(el=>el&&['--cr','--s0','--o0','--o1','--o2','--lz','--lo','--cp'].forEach(q=>el.style.removeProperty(q)));
-    mods.forEach(m=>{m.style.removeProperty('--mz');m.style.removeProperty('--mo');m.classList.remove('cur')});
-    paths.forEach(p=>p.style.removeProperty('--bp'));
+    [iso,lid,bar].forEach(el=>el&&['--cr','--cf','--o0','--o1','--o2','--lo','--cp'].forEach(q=>el.style.removeProperty(q)));
+    mods.forEach(m=>{m.style.removeProperty('--mo');m.classList.remove('cur')});
+    paths.forEach(p=>{p.style.removeProperty('--bp');if(p._pulse)p._pulse.style.removeProperty('--bp')});
     steps.forEach(s=>{s.style.removeProperty('--so');s.style.removeProperty('--pe')});
+    if(ctx)ctx.clearRect(0,0,cv.width,cv.height);
   }
   function frame(t){
     raf=0;
@@ -3867,27 +3869,35 @@ if(motion)run(()=>{
     if(P<0)P=tgt;
     const dt=lastT&&t?Math.min(64,t-lastT):16;lastT=t||0;
     P+=(tgt-P)*(1-Math.pow(1-.14,dt/16.7));
-    if(Math.abs(tgt-P)<.0004)P=tgt;
+    if(Math.abs(tgt-P)<.0004||!onScreen)P=tgt;
     if(P!==tgt&&onScreen)raf=requestAnimationFrame(frame);else lastT=0;
     const p=P;
     if(p===lastP)return;lastP=p;
-    const s=p*N,cur=Math.min(N-1,Math.floor(s));
-    iso.style.setProperty('--cr',p.toFixed(4));
-    const f0=ease(s/.6);
-    iso.style.setProperty('--s0',((1-f0)*-90).toFixed(1));
-    iso.style.setProperty('--o0',clamp(s/.35,0,1).toFixed(3));
-    iso.style.setProperty('--o1',clamp((s-.25)/.35,0,1).toFixed(3));
-    iso.style.setProperty('--o2',clamp((s-.45)/.4,0,1).toFixed(3));
+    const s=p*U,cur=Math.min(N-1,Math.floor(s));
+    const f0=clamp(s/.85,0,1);
+    iso.style.setProperty('--cr',clamp(s/N,0,1).toFixed(4));
+    iso.style.setProperty('--o0',clamp(s/.3,0,1).toFixed(3));
+    iso.style.setProperty('--o1',clamp((s-.15)/.35,0,1).toFixed(3));
+    iso.style.setProperty('--o2',clamp((f0-.55)/.4,0,1).toFixed(3));
+    const forms=[];
     mods.forEach(m=>{
-      const k=+m.dataset.step,f=ease((s-k)/.6);
-      m.style.setProperty('--mz',((1-f)*220).toFixed(1));
-      m.style.setProperty('--mo',clamp((s-k)*4,0,1).toFixed(3));
-      m.classList.toggle('cur',k===cur);
+      const k=+m.dataset.step,f=clamp((s-k)/.75,0,1);
+      m.style.setProperty('--mo',clamp((f-.55)/.35,0,1).toFixed(3));
+      m.classList.toggle('cur',k===cur&&f>.55);
+      forms.push([SAND['m'+k],f,k===cur?'#f0a08f':'#e9dcc0']);
     });
-    paths.forEach(pt=>{const k=+pt.dataset.step,v=clamp((s-k-.35)/.45,0,1).toFixed(3);pt.style.setProperty('--bp',v);if(pt._pulse)pt._pulse.style.setProperty('--bp',+v>=1?1:0)});
-    const fl=ease((s-(N-1))/.7);
-    lid.style.setProperty('--lz',(280-256*fl).toFixed(1));
-    lid.style.setProperty('--lo',fl.toFixed(3));
+    paths.forEach(pt=>{const k=+pt.dataset.step,v=clamp((s-k-.45)/.35,0,1).toFixed(3);pt.style.setProperty('--bp',v);if(pt._pulse)pt._pulse.style.setProperty('--bp',+v>=1?1:0)});
+    const fl=clamp((s-(N-1))/.7,0,1);
+    lid.style.setProperty('--lo',clamp((fl-.5)/.4,0,1).toFixed(3));
+    /* the turn: one more scroll stands the chip up to face the reader */
+    iso.style.setProperty('--cf',ease(s-N).toFixed(4));
+    if(ctx&&W){
+      ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+      drawSand(SAND.die,f0,'#e9dcc0');
+      forms.forEach(([set,f,c])=>drawSand(set,f,c));
+      drawSand(SAND.lid,fl,'#d6d1c4');
+      ctx.globalAlpha=1;
+    }
     steps.forEach((st,i)=>{
       const l=clamp(s-i,0,1);
       const o=i===cur?clamp(Math.min(i===0?1:l*7,i===N-1?1:(1-l)*7),0,1):0;
@@ -3901,15 +3911,16 @@ if(motion)run(()=>{
     bar.style.setProperty('--cp',p.toFixed(4));
   }
   const go=()=>{if(!raf&&live&&onScreen)raf=requestAnimationFrame(frame)};
+  size();
   new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;if(onScreen)go();else if(live&&!raf)raf=requestAnimationFrame(frame)}).observe(sec);
   addEventListener('scroll',go,{passive:true});
-  addEventListener('resize',()=>{lastP=-1;go()},{passive:true});
+  let rt=0;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{size();lastP=-1;go()},120)},{passive:true});
   new MutationObserver(()=>{if(!live){reset()}}).observe(rootEl,{attributes:true,attributeFilter:['class']});
   /* Keyboard focus on a later step moves the fab line to it. */
   sec.addEventListener('focusin',e=>{
     if(!live)return;const i=steps.findIndex(s=>s.contains(e.target));if(i<0)return;
-    const r=sec.getBoundingClientRect(),span=r.height-innerHeight,want=span*Math.min(.999,(i+.7)/N);
-    const now=Math.min(N-1,Math.floor(clamp(-r.top/(span||1),0,1)*N));
+    const r=sec.getBoundingClientRect(),span=r.height-innerHeight,want=span*Math.min(.999,(i+.7)/U);
+    const now=Math.min(N-1,Math.floor(clamp(-r.top/(span||1),0,1)*U));
     if(now!==i)scrollTo({top:scrollY+r.top+want,behavior:'instant'});
     lastP=-1;P=-1;frame();
   });
