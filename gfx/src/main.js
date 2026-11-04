@@ -9,6 +9,7 @@ import * as chipMod from './chip.js';
 import * as plateMod from './plate.js';
 import * as eclipseMod from './eclipse.js';
 import * as dxMod from './dx.js';
+import {prepare as prepareForge} from './forge/index.js';
 
 const root = document.documentElement;
 const themeNow = () => (root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
@@ -71,7 +72,8 @@ export async function boot({report = () => {}, wantIntro = true, press, word} = 
   /* key legends and chip text are drawn with the page's own type */
   try { await document.fonts.ready; } catch (e) { /* draw with the fallback */ }
 
-  const total = (wantIntro ? 10 : 0) + FIGS.reduce((s, f) => s + f.weight, 0);
+  const wantForge = innerWidth >= 1024;
+  const total = (wantIntro ? 10 : 0) + FIGS.reduce((s, f) => s + f.weight, 0) + (wantForge ? 5 : 0);
   let done = 0;
   const step = w => { done += w; report(done / total); };
 
@@ -103,13 +105,25 @@ export async function boot({report = () => {}, wantIntro = true, press, word} = 
     }
     step(fig.weight);
   }
+  /* the products in the empty spaces, on the web only */
+  let forge = null;
+  if (wantForge) {
+    try {
+      forge = await prepareForge(k => report((done + k * 5) / total));
+    } catch (e) {
+      console.error('forge', e);
+    }
+    step(5);
+  }
   /* Still or reduced motion arrived during the build: nothing mounts, the twins stay. */
   if (!root.classList.contains('motion')) {
+    if (forge) forge.stop();
     entries.forEach(e => { try { e.part.dispose(); } catch (err) { /* the context may already be gone */ } e.canvas.remove(); });
     if (api.intro) { try { api.intro.dispose(); } catch (err) { /* same */ } api.intro = null; }
     return {three: false};
   }
   entries.forEach(mount);
+  if (forge) forge.start();
 
   const themeObserver = new MutationObserver(() => {
     const t = themeNow();
@@ -120,6 +134,7 @@ export async function boot({report = () => {}, wantIntro = true, press, word} = 
 
   /* The Still control and a reduced-motion change: every figure hands back to its twin. */
   api.stop = () => {
+    if (forge) forge.stop();
     observers.forEach(o => o.disconnect());
     observers = [];
     mounted.forEach(e => {
