@@ -13,3 +13,7 @@ build_og_image.py
 rahulkarn-me-modification-spec.md
 
 *.tmp
+
+# The local build for gfx/: bundle tooling and dev lab. gfx/*.min.js are the committed output, gfx/src their source.
+build_gfx.py
+.tools/

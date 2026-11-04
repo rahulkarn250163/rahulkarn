@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Edition rule. Vol. counts redesigns: I Dec 2025 (86769d9), II Feb 2026 (41ee530), III Jul 2026 (3b7a64c), IV Aug 2026 (93b1918), V Oct 2026 (3296345). No. counts pushes within the volume. At every commit: bump No. in the dateline, the Colophon and the EDITION constant in the script; retype the line count and the size in KB in the Colophon; add a Corrections line for any change to a figure or a claim, with the commit hash; bump sitemap.xml. The page never measures itself. -->
+<!-- Edition rule. Vol. counts redesigns: I Dec 2025 (86769d9), II Feb 2026 (41ee530), III Jul 2026 (3b7a64c), IV Aug 2026 (93b1918), V Oct 2026 (3296345). No. counts pushes within the volume. At every commit: bump No. in the dateline and in the colophon line at the foot of the page; bump sitemap.xml. A new Vol. also changes the EDITION constant in the script. The page never measures itself. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -51,8 +51,14 @@
        still under the sheet (.curtain) until the name has landed in the masthead. */
     /* A slow or data-saver connection goes straight to the page. */
     var c=navigator.connection,slow=!!(c&&(c.saveData||/\b[23]g\b/.test(c.effectiveType||'')));
-    if(!slow&&!location.hash)d.classList.add('intro','curtain');
-    setTimeout(function(){if(!window.__revealArmed)d.classList.remove('motion','intro','curtain');if(!window.__pageOk)d.classList.remove('js')},2500);setTimeout(function(){d.classList.remove('curtain')},5600);
+    if(!slow&&!location.hash){
+      d.classList.add('intro','curtain');
+      /* nothing on the page runs until the load is done; this sheet is removed at the lift */
+      var hold=document.createElement('style');hold.id='introHold';
+      hold.textContent='*,*::before,*::after{animation-play-state:paused!important}.loader,.loader *,.loader *::before,.loader *::after{animation-play-state:running!important}';
+      document.head.appendChild(hold);
+    }
+    setTimeout(function(){if(!window.__revealArmed){d.classList.remove('motion','intro','curtain');var h=document.getElementById('introHold');if(h)h.remove()}if(!window.__pageOk)d.classList.remove('js')},2500);setTimeout(function(){d.classList.remove('curtain')},18000);
   }
 })();
 </script>
@@ -577,7 +583,7 @@ html:not(.js) .till-actions,html:not(.js) .till-go{display:none}
 html:not(.motion) .eclipse{--mx:0;--tot:1;--dia:0}
 .eclipse.ev,html:not(.motion) .eclipse.ev{--tot:0;--dia:0}
 html:not(.motion) .ec-cap-m{display:none}
-.eclipse svg{display:block;width:184px;height:auto;margin:0 auto;overflow:visible}
+.eclipse svg{display:block;width:250px;height:auto;margin:0 auto;overflow:visible}
 .ec-sun{fill:var(--red)}
 .ec-moon,.ec-limb{transform:translate(calc(var(--mx)*1px),calc(var(--my,0)*1px))}
 .eclipse.live .ec-moon,.eclipse.live .ec-limb{transition:transform .9s var(--ease)}
@@ -663,19 +669,20 @@ html.no-smcp .slip-head i{text-transform:none;font-size:var(--fs-1);letter-spaci
    the still page. --t0 holds the lead back while the press run (.intro) clears.
 
    House rules, so later additions are held to them:
-   - At most three groups move in a viewport at once.
+   - The web (1024px and up) goes all the way: nothing plays only once. Whatever has
+     left the screen entirely is put back and plays again on the next arrival, every
+     scroll moves something, and empty space is not left empty (gfx/src/field.js, the
+     swarm). Every headline is set by its own technology (gfx/src/type). Phones keep it
+     simple: each thing plays once, and there is no swarm.
    - A section settles top-down: rule and label, headline, standfirst, rows, figures.
-   - Anything that moves finishes inside 1s. --snap draws and lifts, --ease rises
-     and fades, --spring only on the quote mark and the timeline diamonds.
-     Nothing rotates on entrance.
+   - The swarm and the type effects end as plain page type and never sit on the words.
+     Text stays crisp and the frame rate holds, whatever else is asked of the page.
    - Only scoreboard measurements roll (hero stats, Open Source figures, the nav
      folio), one 0-9 turn each. Ordinals and ledger figures are set type that inks in.
-   - Perpetual motion is the wire, the eclipse rays and the now-line pulse.
-     Everything else is finite, and the working figures move only when pressed.
    - One hover response per element, inside @media(hover:hover). Nothing follows,
      leans toward, inverts under or scrambles for the pointer. */
 :root{--ease:cubic-bezier(.2,.7,.2,1);--snap:cubic-bezier(.7,0,.2,1);--spring:cubic-bezier(.3,1.45,.5,1);--t0:0s}
-.motion.intro{--t0:2.9s}
+.motion.intro{--t0:4.1s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}}
 @keyframes fade{from{opacity:0}}
 @keyframes unveil{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}
@@ -686,25 +693,186 @@ html.no-smcp .slip-head i{text-transform:none;font-size:var(--fs-1);letter-spaci
 @keyframes flow{0%{transform:translateY(-3px);opacity:0}15%,70%{opacity:1}100%{transform:translateY(17px);opacity:0}}
 @keyframes strike{to{transform:none}}
 @keyframes stamp{from{opacity:0;transform:scale(1.9) translateY(-.08em);filter:blur(10px)}}
-@keyframes lift-off{to{transform:translateY(-100%)}}
 @keyframes gone{to{visibility:hidden}}
 @keyframes ink{from{color:var(--faint)}}
 
-/* The press run: the name is stamped on an ink sheet, the sheet lifts off a page
-   that is already set, and the plate type is carried into the masthead. The name
-   sits on its own layer in difference blend, so it reads white on the sheet and
-   ink on the paper with no change of colour in the code. The page is held still
-   under the sheet (html.curtain) so nothing fires behind it. */
+/* The press run: the parts of a computer fly in and land as one machine (the 3D rig
+   in gfx/, or the Canvas 2D rig under the markup on a machine that cannot run it). Its
+   screen lights in the paper's colour, the name is stamped on it, and the camera
+   pushes in until the lit screen fills the frame, while the plate type is carried into
+   the masthead. Only then does the sheet fade off the page: nothing of the page shows
+   before that. The page is held still under the sheet (html.curtain). Nothing on the
+   page runs until the load is done (html.go): every delay here counts from that moment,
+   and the rig's clock shares it. Beats: name 2.8s, push 3.4s, handoff 3.55s, fade 4.25s. */
 .press,.press-name{display:none}
 html.curtain{overflow:hidden;scrollbar-gutter:stable;background:var(--ink)}
-.motion.intro .press{display:block;position:fixed;inset:0;z-index:300;touch-action:none;animation:gone 0s 5.2s forwards}
-.motion.intro .press-name{display:grid;place-items:center;position:fixed;inset:0;z-index:301;pointer-events:none;mix-blend-mode:difference;color:#fff;animation:gone 0s 5.2s forwards}
-.press-ink{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:calc(50vh + var(--pf)/2 + 22px);background:var(--ink);animation:lift-off .8s var(--snap) 2.6s forwards}
+.motion.intro .press{display:block;position:fixed;inset:0;z-index:300;background:var(--ink);touch-action:none;cursor:pointer;animation:gone 0s 5.5s forwards}
+.motion.intro .press-name{display:grid;place-items:center;position:fixed;inset:0;z-index:301;pointer-events:none;color:var(--ink);animation:gone 0s 5.5s forwards}
+.motion.intro .press.out{opacity:0;transition:opacity .45s ease}
+.press-rig,.press-gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.press-lit{display:none;position:absolute;inset:0;background:var(--bg)}
+.press-boot{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:22px;padding-top:calc(50vh + var(--pf)/2 + 22px);animation:boot-off .22s ease 3.4s forwards}
+@keyframes boot-off{to{opacity:0}}
 .press,.press-name{--pf:min(clamp(46px,11vw,132px),calc((100vw - 24px)/7.2))}
 .press-word{display:inline-block;font-size:var(--pf);font-weight:700;line-height:1;text-transform:uppercase;letter-spacing:.01em;white-space:nowrap;will-change:transform}
-.press-word span{display:inline-block;animation:stamp .5s var(--ease) both;animation-delay:calc(1.65s + var(--i)*.04s)}
-.press-rule{width:min(520px,70vw);height:2px;background:var(--tick-accent);transform-origin:left;animation:draw .5s var(--snap) 1.9s both}
-.press-sub{font-size:11px;text-transform:uppercase;letter-spacing:.3em;color:color-mix(in srgb,var(--bg) 62%,transparent);animation:fade .4s ease 2.1s both}
+.press-word span{display:inline-block;animation:stamp .34s var(--ease) both;animation-delay:calc(2.8s + var(--i)*.028s)}
+.press-rule{width:min(520px,70vw);height:2px;background:var(--tick-accent);transform-origin:left;animation:draw .4s var(--snap) 2.95s both}
+.press-sub{font-size:11px;text-transform:uppercase;letter-spacing:.3em;color:var(--mid);animation:fade .3s ease 3.05s both}
+.press-skip{position:absolute;right:20px;bottom:16px;font-size:11px;text-transform:uppercase;letter-spacing:.3em;color:#8d897f;animation:fade .4s ease .9s both}
+@media(max-width:640px){
+  .press-boot{gap:10px;padding-top:calc(50vh + var(--pf)/2 + 10px)}
+  .press-sub{font-size:9px;letter-spacing:.2em}
+}
+/* The 3D layer: each figure's canvas sits exactly where its Canvas 2D twin is, and the
+   twin stays in the page for print and for machines that cannot run it. */
+.gl-fig{position:absolute;display:block;pointer-events:none}
+.reel .gl-fig{z-index:1}
+@media screen{.helix.gl>canvas:not(.gl-fig),.reel.gl .reel-chip{visibility:hidden}.cpu-view.gl .cpu-iso,.eclipse.gl svg>*{display:none}}
+/* Digital transformation: a dark stage after the paper plate. Without motion it reads as
+   a plain list beside a flat diagram; with it, the section pins and the scene plays. */
+.dx{background:#0d0d0c;color:#f2efe7;padding:var(--s-5,64px) 0;border-top:3px solid var(--ink)}
+.dx-stage{max-width:1160px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:center}
+.dx-kicker{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;color:#e0644f;font-weight:600}
+.dx-kicker b{color:#f2efe7;margin-right:8px}
+.dx-h{font-size:var(--fs-5);font-weight:560;line-height:1.08;letter-spacing:-.02em;margin:10px 0 12px;text-wrap:balance;color:#f2efe7}
+.dx-h em{font-style:italic;font-weight:440}
+.dx-desc{font-size:var(--fs-3);font-style:italic;color:#b9b4a8;line-height:1.45;margin-bottom:22px;max-width:32em;text-wrap:pretty}
+.dx-steps{list-style:none;border-top:1px solid #f2efe7}
+.dx-step{padding:14px 0;border-bottom:1px solid #34322d}
+.ds-k{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;color:#e0644f;font-weight:600}
+.ds-k b{color:#b9b4a8;margin-right:6px;font-variant-numeric:lining-nums tabular-nums}
+.ds-t{font-size:var(--fs-4);font-weight:560;line-height:1.15;margin:4px 0 6px;color:#f2efe7}
+.ds-d{color:#cfcabd;line-height:1.5;text-wrap:pretty}
+.ds-f{margin-top:8px;color:#f2efe7;font-weight:600;font-variant-numeric:lining-nums}
+.ds-f::before{content:'';display:inline-block;width:18px;height:1px;background:#e0644f;vertical-align:.3em;margin-right:8px}
+.ds-go{display:inline-block;margin-top:10px;color:#f2efe7;font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;border-bottom:1px solid #e0644f}
+.dx-view{position:relative;aspect-ratio:1;container-type:inline-size}
+.dx-flat{list-style:none;position:absolute;inset:6%;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-content:center;font-variant-caps:all-small-caps;letter-spacing:.08em}
+.dx-flat li{border:1px solid #57534c;padding:18px 6px;text-align:center;color:#cfcabd}
+.dx-flat .hub{border-color:#e0644f;color:#f2efe7}
+.dx-hud{display:none}
+.dx-view.gl .dx-flat{display:none}
+@media(max-width:820px){
+  .dx-stage{grid-template-columns:1fr;gap:12px;padding:0 20px}
+  .dx-view{width:min(78vw,360px);margin:0 auto}
+}
+.motion .dx{height:460vh;padding:0;border:0}
+.motion .dx-stage{position:sticky;top:0;height:100vh;height:100svh;max-width:none;overflow:clip;padding:calc(var(--nav-h,46px) + 20px) max(32px,calc(50% - 548px)) 28px;align-items:center;background:radial-gradient(90% 80% at 72% 50%,#1b1a18 0,#0d0d0c 70%)}
+.motion .dx-steps{position:relative;border:0;min-height:15.5em}
+.motion .dx-step{position:absolute;left:0;right:0;top:0;border:0;padding:12px 0 0;border-top:1px solid #f2efe7;opacity:var(--so,0);transform:translateY(calc((1 - var(--so,0))*16px));pointer-events:var(--pe,none)}
+.motion .dx-step:first-child{opacity:var(--so,1)}
+.motion .dx-step:focus-within{opacity:1;pointer-events:auto;background:#0d0d0c;z-index:2;transform:none}
+.motion .dx-fig{position:relative}
+.motion .dx-view{width:min(100%,calc(100svh - var(--nav-h,46px) - 90px));justify-self:center;margin:0 auto}
+.motion .dx-hud{display:flex;align-items:center;gap:14px;position:absolute;left:0;right:0;bottom:-6px;font-size:12px;letter-spacing:.12em;font-variant-caps:all-small-caps;font-variant-numeric:tabular-nums;color:#b9b4a8}
+.motion .dx-step-name{color:#f2efe7;font-weight:600}
+.motion .dx-bar{flex:1;height:2px;background:#34322d;position:relative}
+.motion .dx-bar i{position:absolute;inset:0;background:#e0644f;transform-origin:left;transform:scaleX(var(--cp,0))}
+@media(max-width:820px){
+  .motion .dx-stage{grid-template-columns:1fr;gap:6px;align-content:start;padding:calc(var(--nav-h,46px) + 10px) 20px 14px}
+  .motion .dx-view{order:-1;width:min(64vw,38svh,300px)}
+  .motion .dx-fig{order:-1}
+  .motion .dx-desc{display:none}
+}
+.dx-labels{color:#f2efe7;font-variant-numeric:lining-nums;line-height:1.1}
+.dx-labels b{font-size:clamp(12px,3.2cqi,20px);font-weight:600;letter-spacing:.06em;font-variant-caps:all-small-caps}
+@media print{.dx{height:auto!important;background:#fff;color:#000;break-inside:avoid}.dx-h,.ds-t,.ds-f,.dx-kicker b{color:#000}.dx-desc,.ds-d,.ds-k,.ds-k b{color:#333}.dx-step{position:static!important;opacity:1!important;transform:none!important}.dx-view,.dx-hud{display:none!important}.dx-stage{display:block;position:static!important;height:auto!important}}
+/* The figures' type is real page text, set on whole pixels over the canvas. */
+.gl-labels{position:absolute;pointer-events:none}
+.gl-label{position:absolute;left:0;top:0;display:block;white-space:nowrap;text-align:center}
+.gl-label>*{display:block}
+.chip-labels{z-index:1;color:#f2efe7;font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-variant-numeric:lining-nums}
+.chip-labels b{font-weight:500}
+.chip-labels .die b{font-size:1em;font-weight:600;letter-spacing:.07em}
+.chip-labels .die i{font-size:.74em;letter-spacing:.01em;text-transform:none;opacity:.8;margin-top:1px}
+.plate-labels{color:#c4bfb3;line-height:1.15;font-variant-numeric:lining-nums}
+.gl-label{transform-origin:0 0}
+.plate-labels b{font-size:clamp(11px,3.5cqi,21px);font-weight:600;letter-spacing:.09em}
+.plate-labels i{font-size:clamp(10px,2.9cqi,16px);opacity:.78;margin-top:2px}
+.plate-labels .fab>*{display:inline}
+.plate-labels .fab i{margin:0 0 0 .7em}
+.plate-labels .lid{color:#17181a}
+.plate-labels .lid b{font-size:clamp(20px,6.4cqi,36px);letter-spacing:.06em}
+.plate-labels .lid i{font-size:clamp(10px,2.3cqi,15px);font-style:normal;font-weight:500;opacity:1;margin-top:3px}
+.motion .cpu-stage{overflow:clip}
+@container (max-width:300px){.plate-labels .gl-label:not(.lid) i{display:none}}
+/* Fig. 5: the sky over Kathmandu. grahan itself runs in the reader's browser (gfx/sky.min.js, loaded
+   as the section nears, so the press run never waits for it). The script draws the dial; the rest
+   is type and two range inputs, so it still works on the Still page, without the animation. */
+.oss-head>.sky{grid-row:4;margin:8px 0 30px}
+.sky{--sk-day:#f3efe6;--sk-night:#100f0d;min-width:0;padding-top:16px;border-top:1px solid var(--line);container-type:inline-size;min-height:620px}
+:root[data-theme="dark"] .sky{--sk-day:#25231f;--sk-night:#0b0a09}
+.sky.ready{min-height:0}
+.sky:not(.ready)>*{visibility:hidden}
+.sky-body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:10px 26px;align-items:center}
+.sky-dome{display:block;width:100%;height:auto;aspect-ratio:1;overflow:visible;--n:0}
+.sk-day{fill:var(--sk-day)}
+.sk-night{fill:var(--sk-night)}
+.sk-band{fill:none;stroke:var(--line);stroke-opacity:.38}
+.sk-rim{fill:none;stroke:var(--ink);stroke-width:1.3}
+.sk-grid{fill:none;stroke:color-mix(in srgb,var(--line),#6a665d calc(var(--n)*100%));stroke-width:.8;stroke-dasharray:2 4}
+.sk-tick{stroke:var(--gray);stroke-width:.8}
+.sk-dir{font-size:13px;font-weight:600;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.sk-alt{font-size:8.5px;fill:color-mix(in srgb,var(--gray),#b9b4a8 calc(var(--n)*100%));font-variant-numeric:lining-nums}
+.sk-sunpath{fill:none;stroke:var(--red);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.sk-moonpath{fill:none;stroke:color-mix(in srgb,var(--gray),#c9c4b7 calc(var(--n)*100%));stroke-width:1.1;stroke-dasharray:1 4;stroke-linecap:round}
+.sk-hourdot{fill:var(--red)}
+.sk-hourtxt{font-size:9px;fill:color-mix(in srgb,var(--gray),#c9c4b7 calc(var(--n)*100%));text-anchor:middle;dominant-baseline:central;font-variant-numeric:lining-nums}
+.sk-star{fill:none;stroke:#f2efe7;stroke-linecap:round;stroke-width:1.7}
+.sk-big{stroke-width:3}
+.sk-con{fill:none;stroke:#f2efe7;stroke-opacity:.2;stroke-width:.6}
+.sk-sundisc{fill:#f4a53c;stroke:#c8501f;stroke-width:1}
+.sk-ray{stroke:#e0764a;stroke-width:1.5;stroke-linecap:round}
+.sk-moondark{fill:color-mix(in srgb,#d3cdbf,#3b3933 calc(var(--n)*100%));stroke:color-mix(in srgb,var(--gray),#8d897d calc(var(--n)*100%));stroke-width:.8}
+.sk-moonlit{fill:color-mix(in srgb,#fffdf6,#ece8dc calc(var(--n)*100%))}
+.sk-sil .sk-moondark{fill:#1b1a17}
+.sky-date{font-size:var(--fs-4);font-weight:560;line-height:1.15;color:var(--ink);text-wrap:balance;font-variant-numeric:lining-nums}
+.sky-when{margin-top:5px;font-style:italic;color:var(--gray);line-height:1.35;font-variant-numeric:lining-nums tabular-nums}
+.sky-dl{margin:14px 0 0;border-top:1px solid var(--ink)}
+.sky-dl>div{display:grid;grid-template-columns:4em minmax(0,1fr);gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.sky-dl dt{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;font-weight:600;color:var(--gray);line-height:1.5}
+.sky-dl dd{margin:0;color:var(--text);line-height:1.35;font-variant-numeric:lining-nums tabular-nums}
+.sky-dl dd b{font-weight:600;color:var(--ink)}
+.sky-dl dd span{display:block;margin-top:1px;color:var(--gray);font-size:.92em}
+.sky-dl .hot dt,.sky-dl .hot dd>b{color:var(--red)}
+.sky-do{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-top:13px}
+.sky-btn{appearance:none;background:none;border:0;border-bottom:1px solid var(--red);padding:1px 0;color:var(--ink);font:inherit;font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;font-weight:600;cursor:pointer}
+.sky-btn[disabled]{color:var(--gray);border-color:transparent;cursor:default}
+html:not(.motion) .sky-play{display:none}
+.sky-goto{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;color:var(--gray);font-weight:600}
+.sky-goto input{margin-left:4px;padding:0;background:none;border:0;border-bottom:1px solid var(--line);color:var(--ink);font:inherit;font-variant-caps:normal;letter-spacing:0;font-weight:400;font-variant-numeric:lining-nums;color-scheme:light}
+:root[data-theme="dark"] .sky-goto input{color-scheme:dark}
+.sky-rules{display:grid;gap:9px;margin-top:16px}
+.sky-rule{display:grid;grid-template-columns:3em minmax(0,1fr);gap:8px}
+.sky-rule>span{font-size:var(--fs-1);font-variant-caps:all-small-caps;letter-spacing:.1em;font-weight:600;color:var(--gray);line-height:24px}
+.sky-track{position:relative;min-width:0}
+.sky-track input{position:relative;z-index:1;display:block;width:100%;height:24px;margin:0;background:none;appearance:none;-webkit-appearance:none;cursor:ew-resize}
+.sky-track input::-webkit-slider-runnable-track{height:24px;background:none}
+.sky-track input::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:24px;background:var(--ink);border:2px solid var(--bg);border-radius:0}
+.sky-track input::-moz-range-track{height:24px;background:none}
+.sky-track input::-moz-range-thumb{width:6px;height:20px;background:var(--ink);border:2px solid var(--bg);border-radius:0}
+.sky-ticks{position:absolute;inset:0 0 auto;height:24px;border-bottom:1px solid var(--ink)}
+.sky-ticks i{position:absolute;bottom:0;left:calc(5px + var(--p)*(100% - 10px));width:1.5px;margin-left:-.75px;height:var(--h);background:var(--red)}
+.sky-band{--sr:.26;--ss:.74;position:absolute;left:5px;right:5px;top:17px;height:7px;background:linear-gradient(90deg,var(--sk-night) calc(var(--sr)*100% - 2%),#f4a53c calc(var(--sr)*100%),var(--sk-day) calc(var(--sr)*100% + 3%),var(--sk-day) calc(var(--ss)*100% - 3%),#f4a53c calc(var(--ss)*100%),var(--sk-night) calc(var(--ss)*100% + 2%));border:1px solid var(--line);border-bottom-color:var(--ink);box-sizing:border-box}
+.sky-scale{position:relative;height:15px;font-size:var(--fs-1);color:var(--gray);font-variant-numeric:lining-nums tabular-nums;line-height:15px}
+.sky-scale span{position:absolute;left:calc(5px + var(--p)*(100% - 10px));translate:-50% 0}
+.sky-count{min-height:1.4em;margin-top:9px;font-size:var(--fs-1);color:var(--gray);line-height:1.4;font-variant-numeric:lining-nums}
+.sky-cap{margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:var(--fs-1);font-style:italic;color:var(--gray);line-height:1.45;font-variation-settings:"opsz" 12}
+.sky-cap b{font-style:normal;font-weight:600;color:var(--ink)}
+@container (max-width:620px){
+  .sky-body{grid-template-columns:minmax(0,1fr)}
+  .sky-dome{max-width:430px;margin:0 auto}
+}
+/* The rim and the Sun's path draw in as the figure arrives. */
+.motion .sky:not(.in) .sk-draw{stroke-dasharray:1;stroke-dashoffset:1}
+.motion .sky .sk-draw{stroke-dasharray:1;transition:stroke-dashoffset 1.1s var(--ease)}
+.motion .sky:not(.in) .sk-fade{opacity:0}
+.motion .sky .sk-fade{transition:opacity .7s .5s var(--ease)}
+/* Beside the dial, Fig. 4 stays in view while the reader works the rules. */
+@media (min-width:821px){.oss-head>.eclipse{position:sticky;top:calc(var(--nav-h,46px) + 14px)}}
+.eclipse.scrub .ec-moon,.eclipse.scrub .ec-limb{transition:none}
+@media print{.sky{display:none!important}}
+@media print{.gl-fig,.gl-labels,.press-gl,.press-lit{display:none!important}}
 
 /* Masthead: with the press run the name arrives from the plate, so the masthead's
    own copy stays hidden until the handoff lands (.set), and the sheet lifts off a
@@ -737,6 +905,11 @@ html.curtain{overflow:hidden;scrollbar-gutter:stable;background:var(--ink)}
 .motion .hero-title::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ink);transform-origin:left;animation:draw .6s var(--snap) calc(var(--t0) + 1.2s) both}
 .motion .hero-title em{background:linear-gradient(var(--red),var(--red)) no-repeat 0 96%/0 .07em;transition:background-size .7s var(--snap) 1.5s}
 .motion .hero-title.in em{background-size:100% .07em}
+
+/* A headline with data-type waits unseen for its effect (gfx/src/type), then becomes plain text
+   again. If the bundle never arrives, html.ty-off shows it as it is. */
+.motion [data-type]:not(.ty-on):not(.ty-done){visibility:hidden}
+html.ty-off [data-type]{visibility:visible!important}
 
 /* Headlines set word by word: each word rises out of its own slot. */
 .wd{display:inline-block;clip-path:inset(-.15em -.25em -.12em -.12em)}
@@ -938,7 +1111,6 @@ html.curtain{overflow:hidden;scrollbar-gutter:stable;background:var(--ink)}
 .motion .notice.in .notice-no{display:inline-block;animation:slam .7s var(--ease) calc(var(--d,0s) + .2s) both}
 .motion .classified.in{animation:boxdraw .9s var(--snap) var(--d,0s) both}
 /* Every headline leans into the scroll and settles when it stops. */
-.motion .sec-heading{transform:skewY(calc(var(--sk,0)*1deg));transform-origin:left;will-change:transform}
 /* The portrait drifts with the page; the eclipse corona breathes. */
 .motion .photo-frame img{transform:scale(var(--pz,1));transform-origin:50% 30%}
 .motion .ec-spin line{animation:rayglow 1.8s ease-in-out infinite alternate}
@@ -980,11 +1152,6 @@ html.curtain{overflow:hidden;scrollbar-gutter:stable;background:var(--ink)}
 .motion.intro .masthead-name.set .mh-l{animation:mh-ink 1.1s var(--snap) calc(var(--i)*35ms) both}
 .motion:not(.intro) .mh-l{animation:stamp .5s var(--ease) both,mh-ink 1.1s var(--snap) both;animation-delay:calc(.05s + var(--i)*.03s),calc(.05s + var(--i)*35ms)}
 
-/* 2. Headline weight swell: the script sets --w (480 to 600) by scroll progress.
-   This replaces the skew lean. */
-.motion .hero-title{font-variation-settings:"opsz" 72,"wght" var(--w,500)}
-.motion .sec-heading{font-variation-settings:"opsz" 60,"wght" var(--w,580);transform:none;will-change:auto}
-
 /* 3. Registration slip: the plates land a touch out of register, then settle. Once. */
 .motion .sec.in .sec-heading{animation:reg-slip .5s steps(4) calc(var(--d,0s) + 120ms) both}
 
@@ -1023,40 +1190,16 @@ html.curtain{overflow:hidden;scrollbar-gutter:stable;background:var(--ink)}
 }
 .motion .case-header:focus-within .case-figure{font-variation-settings:"opsz" 72,"wght" 700}
 /* ===== Motion III: depth =====
-   The page is given a camera. Sections fold up off the table as they arrive,
-   the lead is set on three planes that part as you scroll, cards and the
-   portrait tilt toward the pointer, and the case files open like a box lid.
+   Cards and the portrait tilt toward the pointer, and the case files open like a box
+   lid. Type is never transformed or blurred by the scroll, so it stays crisp.
    All of it lives under .motion, so the Still page stays flat and complete. */
-.motion .sec .sec-header{transform:perspective(1200px) rotateX(calc(var(--fold,0)*28deg)) translateZ(calc(var(--fold,0)*-120px));transform-origin:50% 100%;opacity:calc(1 - var(--fold,0)*.6);will-change:transform}
-.motion .lead .hero-title{transform:perspective(1000px) translate3d(0,calc(var(--lp,0)*-60px),calc(var(--lp,0)*80px))}
-.motion .masthead-name{transform:translateZ(0) scale(calc(1 - var(--mp,0)*.06));letter-spacing:calc(var(--mp,0)*.06em);filter:blur(calc(var(--mp,0)*1.5px))}
 .motion .tilt.tilting{transform:perspective(900px) rotateX(calc(var(--ty,0)*1deg)) rotateY(calc(var(--tx,0)*1deg))!important;transition:transform .08s linear!important}
 .motion .photo-frame.tilting{box-shadow:calc(var(--tx,0)*-1.2px) calc(var(--ty,0)*1.2px + 14px) 30px -18px rgba(0,0,0,.45)}
 .motion .case-card .case-body{transform-origin:50% 0;transform:perspective(1200px) rotateX(-14deg);opacity:.2;transition:transform .8s var(--ease),opacity .6s ease}
 .motion .case-card.open .case-body{transform:none;opacity:1}
 .motion .notice{transform-origin:0 50%}
 .motion .notice:not(.in){transform:perspective(900px) rotateY(38deg) translateZ(-80px)}
-/* Film grain and a letterbox that opens on the press run, so the first second plays like a title card. */
-.motion .grain{position:fixed;inset:-50%;z-index:390;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .9s steps(6) infinite}
-:root[data-theme="dark"] .motion .grain,:root[data-theme="dark"].motion .grain{opacity:.08}
-@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-2%)}60%{transform:translate(-2%,-4%)}80%{transform:translate(4%,2%)}100%{transform:translate(0,0)}}
-.motion .letterbox{position:fixed;left:0;right:0;height:12vh;background:#0b0b0b;z-index:302;pointer-events:none;animation:lb 1.4s var(--snap) 1.8s both}
-.motion .letterbox.t{top:0;transform-origin:top}
-.motion .letterbox.b{bottom:0;transform-origin:bottom}
-@keyframes lb{from{transform:scaleY(1)}to{transform:scaleY(0)}}
-html:not(.intro) .letterbox{display:none}
-.grain,.letterbox{display:none}
-.motion .grain{display:block}
-.motion.intro .letterbox{display:block}
-@media print{.grain,.letterbox{display:none!important}}
-/* Cinematography: a lens vignette, a dolly push-in as each section takes the
-   frame, and a rack focus that pulls the incoming header from soft to sharp. */
-.vignette{display:none}
-.motion .vignette{display:block;position:fixed;inset:0;z-index:389;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 62%,rgba(0,0,0,.10) 100%)}
-:root[data-theme="dark"].motion .vignette{background:radial-gradient(120% 90% at 50% 45%,transparent 58%,rgba(0,0,0,.45) 100%)}
-.motion .sec .sec-header{filter:blur(calc(var(--fold,0)*3px))}
-@media print{.vignette{display:none!important}}
-/* The Record: the sources stay open (every superscript points here); corrections and the colophon fold behind one line. */
+:root[data-theme="dark"]/* The Record: the sources stay open (every superscript points here); corrections and the colophon fold behind one line. */
 .bp-sources{grid-column:1/-1;border-left:none;padding-left:0}
 .bp-sources .bp-src{columns:2 22em;column-gap:40px}
 .bp-sources .bp-src li{break-inside:avoid}
@@ -1067,9 +1210,10 @@ html:not(.intro) .letterbox{display:none}
 .rec-more[open] summary::after{content:' 2'}
 .rec-more summary:hover{color:var(--ink)}
 .bp-two{grid-template-columns:repeat(2,minmax(0,1fr))}
-/* The loader: the edition counts itself in before the press run. */
+/* The loader: its number is the share of the real load that is done. */
 .loader{display:none}
-.motion.intro .loader{display:grid;place-items:center;position:fixed;inset:0;z-index:320;background:var(--bg);color:var(--ink);animation:ld-out .7s var(--snap) 1.5s forwards,gone 0s 2.3s forwards}
+.motion.intro .loader{display:grid;place-items:center;position:fixed;inset:0;z-index:320;background:var(--bg);color:var(--ink)}
+.motion.intro.go .loader{animation:ld-out .7s var(--snap) forwards,gone 0s .8s forwards}
 .ld-in{display:flex;flex-direction:column;align-items:center;gap:14px;width:min(420px,80vw)}
 .ld-label{font-size:13px;font-variant-caps:all-small-caps;letter-spacing:.32em;color:var(--mid);animation:fade .5s ease both}
 .ld-label::after{content:'';display:inline-block;width:1.2em;text-align:left;animation:ld-dots 1.2s steps(4) infinite}
@@ -1405,6 +1549,8 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .motion .shot-go{color:#f2efe7;border-color:#e0644f;opacity:clamp(0,calc((var(--l,1) - .34)*8),1)}
 @media(max-width:820px){
   .motion .reel-chip{width:100%;opacity:.2}
+  .reel .gl-fig{opacity:.4}
+  .chip-labels .gl-label:not(.die){display:none}
   .motion .shot>*{max-width:100%}
   .motion .shot{padding:calc(9svh + 40px) 20px calc(9svh + 40px)}
   .motion .shot-n{font-size:clamp(44px,min(17vw,11svh),96px)}
@@ -1568,7 +1714,6 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 .helix.live .pairs i{visibility:hidden}
 .helix.live .pairs li.off{pointer-events:none}
 .helix.live figcaption{margin-top:auto}
-.motion .lead .helix{transform:perspective(1000px) translate3d(0,calc(var(--lp,0)*40px),calc(var(--lp,0)*-120px))}
 @media(max-width:900px){
   .lead .lead-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 32px}
   .helix{--gap:96px}
@@ -1629,43 +1774,391 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="loader" aria-hidden="true">
   <div class="ld-in">
-    <p class="ld-label">Loading portfolio</p>
+    <p class="ld-label" id="ldLabel">Loading portfolio</p>
     <p class="ld-n"><span id="ldN">000</span><small>%</small></p>
     <div class="ld-bar"><i id="ldBar"></i></div>
     <p class="ld-sub">Rahul Karn · Solution Architect · Kathmandu</p>
   </div>
 </div>
 <script>
-/* The loader counts what the page is actually waiting for: the type, the portrait
-   and the document. It reads 100 at 1.4s whatever happens, so the press run is
-   never held back by a slow file. */
+/* The loader does the real work before the page is shown: the type, the portrait and
+   the 3D layer, with every model built, every shader compiled and every texture
+   uploaded, so nothing hitches once the reader is in. The number is the share of that
+   work actually done. At 100 the press run goes (html.go). A connection or machine
+   that cannot run the 3D layer keeps the page's Canvas 2D drawings. If the load runs
+   past LOAD_MAX the press run goes anyway, and what is still building takes over from
+   its twin when it is ready. Without the press run (a deep link) this runs unseen. */
 (function(){
-  var d=document.documentElement;if(!d.classList.contains('intro'))return;
-  var n=document.getElementById('ldN'),bar=document.getElementById('ldBar'),done=0,total=3,shown=0,t0=performance.now();
-  function tick(){done++}
-  try{document.fonts.ready.then(tick,tick)}catch(e){tick()}
-  document.addEventListener('DOMContentLoaded',function(){tick();var im=document.querySelector('.photo-frame img');if(!im||im.complete)tick();else{im.addEventListener('load',tick);im.addEventListener('error',tick)}});
-  (function f(){
-    var el=performance.now()-t0,cap=Math.min(1,el/1400),real=done/total,target=Math.min(cap,Math.max(cap*.7,real*cap+.0))*100;
-    if(el>=1400)target=100;
-    shown+=(target-shown)*.25;if(target===100&&shown>99.4)shown=100;
-    n.textContent=('00'+Math.round(shown)).slice(-3);bar.style.transform='scaleX('+(shown/100).toFixed(3)+')';
-    if(shown<100)requestAnimationFrame(f);
-  })();
+  var d=document.documentElement;if(!d.classList.contains('motion'))return;
+  var intro=d.classList.contains('intro'),LOAD_MAX=12000,MIN_SHOW=900,t0=performance.now();
+  var n=document.getElementById('ldN'),bar=document.getElementById('ldBar'),label=document.getElementById('ldLabel');
+  var W={type:1,img:1,code:4,gl:14},got={type:0,img:0,code:0,gl:0},shown=0,went=false,timer=0;
+  var c=navigator.connection,phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
+  var can3d=!!window.WebGL2RenderingContext&&!(c&&(c.saveData||/\b[23]g\b/.test(c.effectiveType||'')))&&!(phone&&(navigator.deviceMemory||4)<6);
+  function say(s){if(label&&!went)label.textContent=s}
+  function share(){var a=0,b=0;for(var k in W){a+=W[k]*got[k];b+=W[k]}return a/b}
+  function skip(e){
+    var press=document.querySelector('.press');
+    if(!window.__goAt||window.__skipped||!press||!press.isConnected)return;
+    if(e&&e.type==='keydown'&&/^(Tab|Shift|Control|Alt|Meta)$/.test(e.key))return;
+    window.__skipped=true;
+    var T=(parseFloat(getComputedStyle(d).getPropertyValue('--t0'))||0)*1000,rem=T-(performance.now()-window.__goAt);
+    if(rem>0){
+      document.getAnimations().forEach(function(a){try{if(a.playState==='running'&&a.currentTime!==null)a.currentTime+=rem}catch(err){}});
+      window.__goAt-=rem;
+    }
+    document.dispatchEvent(new Event('press:skip'));
+    document.removeEventListener('keydown',skip);
+  }
+  function go(){
+    if(went||!intro)return;went=true;clearInterval(timer);
+    if(n)n.textContent='100';if(bar)bar.style.transform='scaleX(1)';
+    window.__goAt=performance.now();
+    var hold=document.getElementById('introHold');if(hold)hold.remove();
+    d.classList.add('go');
+    var g=window.__gfx;
+    if(g&&g.intro)g.intro.play();else if(window.__rig2d)window.__rig2d();
+    document.dispatchEvent(new Event('press:go'));
+    var press=document.querySelector('.press');
+    if(press)press.addEventListener('pointerdown',skip);
+    document.addEventListener('keydown',skip);
+  }
+  if(intro){
+    var last=t0;
+    timer=setInterval(function(){
+      /* eased by the clock, not the tick: a background tab's timer runs slow */
+      var now=performance.now(),el=now-t0,target=share();
+      shown+=(target-shown)*(1-Math.pow(.78,(now-last)/33));last=now;if(target>=1&&shown>.96)shown=1;
+      if(n)n.textContent=('00'+Math.round(shown*100)).slice(-3);
+      if(bar)bar.style.transform='scaleX('+shown.toFixed(3)+')';
+      if((shown>=1&&el>=MIN_SHOW)||el>=LOAD_MAX)go();
+    },33);
+  }
+  var fontsDone=function(){got.type=1};
+  try{Promise.all([document.fonts.load('700 1em Newsreader'),document.fonts.load('400 1em Newsreader'),document.fonts.load('italic 400 1em Newsreader')]).then(function(){return document.fonts.ready}).then(fontsDone,fontsDone)}catch(e){fontsDone()}
+  function images(){
+    var ims=[].slice.call(document.images);
+    if(!ims.length){got.img=1;return}
+    var left=ims.length,one=function(){left--;got.img=1-left/ims.length};
+    /* decode() waits for a frame that a background tab never draws, so it only gets a head start on the load event */
+    ims.forEach(function(im){
+      var seen=false,ok=function(){if(seen)return;seen=true;one()},after=function(){setTimeout(ok,400)};
+      if(im.decode)im.decode().then(ok,ok);
+      if(im.complete)after();else{im.addEventListener('load',after);im.addEventListener('error',ok)}
+    });
+  }
+  function fetchCode(url){
+    if(!window.fetch)return Promise.resolve();
+    return fetch(url).then(function(r){
+      var total=+r.headers.get('content-length')||420000,seen=0;
+      if(!r.body||!r.body.getReader)return r.arrayBuffer();
+      var rd=r.body.getReader();
+      return (function pump(){return rd.read().then(function(x){if(x.done)return;seen+=x.value.length;got.code=Math.min(.96,seen/total);return pump()})})();
+    });
+  }
+  function load3d(){
+    if(!can3d){got.code=got.gl=1;return}
+    var url=new URL('gfx/gfx.min.js',location.href).href;
+    say('Loading the engine');
+    fetchCode(url).then(function(){return import(url)}).then(function(m){
+      got.code=1;say('Building the machine');
+      return m.boot({wantIntro:intro,press:document.querySelector('.press'),word:document.querySelector('.press-word'),report:function(k){got.gl=k;if(k>.72)say('Compiling shaders')}});
+    }).then(function(){got.gl=1},function(e){console.error(e);got.code=got.gl=1});
+  }
+  function ready(){images();if(intro)load3d();else if(window.requestIdleCallback)requestIdleCallback(load3d,{timeout:2500});else setTimeout(load3d,400)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
 })();
 </script>
 <div class="press" aria-hidden="true">
-  <div class="press-ink">
+  <canvas class="press-rig"></canvas>
+  <div class="press-lit"></div>
+  <div class="press-boot">
     <div class="press-rule"></div>
     <div class="press-sub">Kathmandu Edition · Vol. V</div>
   </div>
+  <span class="press-skip">Skip</span>
 </div>
 <div class="press-name" aria-hidden="true"><span class="press-word"><span style="--i:0">R</span><span style="--i:1">a</span><span style="--i:2">h</span><span style="--i:3">u</span><span style="--i:4">l</span> <span style="--i:5">K</span><span style="--i:6">a</span><span style="--i:7">r</span><span style="--i:8">n</span></span></div>
+<script>
+/* The rig, Canvas 2D: the fallback for machines that cannot run the 3D layer in gfx/.
+   After the count, the parts of a computer fly in from every side of the
+   sheet and land as one machine. The tower comes first and is fitted out in the
+   order a builder would, the monitor goes up beside it, the keyboard lands and
+   every key finds its own place. It is a small box model on one canvas with a
+   hand-rolled camera. When the last part is down the camera turns to face the
+   screen, the screen lights in the paper's own colour under the name, and the push
+   carries on until it fills the frame. The press run's CSS beats read the same clock. */
+(function(){
+  var d=document.documentElement;if(!d.classList.contains('intro'))return;
+  var press=document.querySelector('.press'),cv=press.querySelector('.press-rig'),word=document.querySelector('.press-word'),ctx=cv.getContext('2d');
+  if(!ctx)return;
+  var T0=0,TAU=Math.PI*2,NONE={};
+  var POWER=3.98,TURN=[3.85,4.55],PUSH=[4.9,5.75],FIRST=1.62;
+  var hex=function(n){var s=getComputedStyle(d).getPropertyValue(n).trim();return [1,3,5].map(function(i){return parseInt(s.slice(i,i+2),16)})};
+  var SHEET=hex('--ink'),PAPER=hex('--bg'),ACCENT=hex('--tick-accent'),STEPS=48,GREY=[],RED=[];
+  var rgb=function(a,b,k){return 'rgb('+[0,1,2].map(function(i){return Math.round(a[i]+(b[i]-a[i])*k)})+')'};
+  for(var q=0;q<=STEPS;q++){GREY.push(rgb(SHEET,PAPER,q/STEPS));RED.push(rgb(SHEET,ACCENT,q/STEPS))}
+  var LIT=rgb(PAPER,PAPER,0);
+  var tone=function(r,v){return r[Math.max(0,Math.min(STEPS,Math.round(v*STEPS)))]};
+  var rnd=function(s){var x=Math.sin(s*12.9898+78.233)*43758.5453;return x-Math.floor(x)};
+  var clamp01=function(k){return k<0?0:k>1?1:k};
+  var snap=function(k){k=clamp01(k);return k<.5?16*k*k*k*k*k:1-Math.pow(2-2*k,5)/2};
+  var glide=function(k){k=clamp01(k);return k*k*(3-2*k)};
+
+  /* The model, in desk units: x across, y up, z toward the reader. Parts draw in the
+     order they are declared, back to front from the camera's side of the desk. Each
+     has its own clock: launch, flight time, where it comes from in reaches, its
+     tumble, and whether it is heavy enough to shake the camera when it lands. */
+  var parts=[],cur;
+  function part(t,dur,from,spin,heavy){cur={t:t,d:dur,f:from,r:spin,h:heavy,faces:[]};parts.push(cur)}
+  function face(v,n,t,o){cur.faces.push({v:v,n:n,t:t,o:o||NONE})}
+  function box(a,b,c,x,y,z,t,o){
+    face([[a,b,z],[x,b,z],[x,y,z],[a,y,z]],[0,0,1],t,o);
+    face([[x,b,c],[a,b,c],[a,y,c],[x,y,c]],[0,0,-1],t,o);
+    face([[a,b,c],[a,b,z],[a,y,z],[a,y,c]],[-1,0,0],t,o);
+    face([[x,b,z],[x,b,c],[x,y,c],[x,y,z]],[1,0,0],t,o);
+    face([[a,y,z],[x,y,z],[x,y,c],[a,y,c]],[0,1,0],t,o);
+    face([[a,b,c],[x,b,c],[x,b,z],[a,b,z]],[0,-1,0],t,o);
+  }
+  function onX(x,b,c,y,z,t,o){face([[x,b,c],[x,b,z],[x,y,z],[x,y,c]],[-1,0,0],t,o)}
+  function onY(y,a,c,x,z,t,o){face([[a,y,z],[x,y,z],[x,y,c],[a,y,c]],[0,1,0],t,o)}
+  function onZ(z,a,b,x,y,t,o){face([[a,b,z],[x,b,z],[x,y,z],[a,y,z]],[0,0,1],t,o)}
+  function disc(axis,p,u,v,r,t,o,n){
+    var vs=[];n=n||22;
+    for(var i=0;i<n;i++){var a=i/n*TAU,cu=u+Math.cos(a)*r,cw=v+Math.sin(a)*r;vs.push(axis==='x'?[p,cu,cw]:axis==='y'?[cu,p,cw]:[cu,cw,p])}
+    face(vs,axis==='x'?[-1,0,0]:axis==='y'?[0,1,0]:[0,0,1],t,o);
+  }
+  function fan(x,y,z,r){
+    disc('x',x,y,z,r,.05);
+    for(var i=0;i<7;i++){
+      var a=i/7*TAU,pt=function(rr,da){return [x-.02,y+Math.cos(a+da)*rr,z+Math.sin(a+da)*rr]};
+      face([pt(r*.3,0),pt(r*.92,.28),pt(r*.92,.7),pt(r*.3,.46)],[-1,0,0],.36,{fan:[y,z]});
+    }
+    disc('x',x-.04,y,z,r*.28,.62,{red:1},12);
+  }
+  function loft(cx,cz,rs,t){
+    var n=12,pt=function(r,i){var a=i/n*TAU;return [cx+Math.cos(a)*r[1],r[0],cz+Math.sin(a)*r[2]]};
+    for(var j=0;j<rs.length-1;j++)for(var i=0;i<n;i++){
+      var m=(i+.5)/n*TAU,up=(rs[j][1]-rs[j+1][1])/(rs[j+1][0]-rs[j][0]),l=Math.sqrt(1+up*up);
+      face([pt(rs[j],i),pt(rs[j],i+1),pt(rs[j+1],i+1),pt(rs[j+1],i)],[Math.cos(m)/l,up/l,Math.sin(m)/l],t,{own:1});
+    }
+    var top=rs[rs.length-1],cap=[];for(i=0;i<n;i++)cap.push(pt(top,i));
+    face(cap,[0,1,0],t,{own:1});
+  }
+  var i,j,z;
+  /* Monitor: foot, neck, shell, then the glass. */
+  part(2.08,.7,[.5,-1.15,.25],[.8,0,.5],1);box(-4,0,-15,18,1,-1,.25);
+  part(2.22,.62,[.15,-1.2,0],[.5,.4,0]);box(4,1,-10,10,16,-7.5,.2);
+  part(2.38,.76,[1,.95,-.2],[.5,-1.1,.4],1);box(-6,20,-9.5,20,40,-7,.16);box(-20,14,-7,34,46,-4.4,.22);onZ(-4.39,6.2,14.9,7.8,15.3,.7,{red:1});
+  part(2.64,.62,[1.2,.2,.5],[0,.9,.3]);box(-18.8,16.4,-4.4,32.8,44.8,-4.2,.07);
+  face([[-16,16.4,-4.19],[-4,16.4,-4.19],[12,44.8,-4.19],[0,44.8,-4.19]],[0,0,1],.9,{a:.05,nl:1});
+  face([[-1,16.4,-4.19],[2,16.4,-4.19],[18,44.8,-4.19],[15,44.8,-4.19]],[0,0,1],.9,{a:.05,nl:1});
+  var glass=cur;
+  /* Tower: the back of the case, the board, then what plugs into it. */
+  part(1.62,.8,[-1.3,.3,.35],[.5,.9,.3],1);
+  box(-56,0,-24,-37,.8,14,.24);box(-37.6,.8,-24,-37,45,14,.16);box(-56,.8,-24,-37.6,45,-23.2,.18);
+  for(i=0;i<5;i++)onZ(-23.19,-52,9+i*2.4,-39,10.2+i*2.4,.32);
+  part(1.98,.66,[-.7,1.15,.2],[.6,.5,.2]);
+  box(-38.1,6.5,-22,-37.6,43,6.5,.2);
+  for(i=0;i<18;i++){var ty=8+rnd(i+.5)*33,tz=-21+rnd(i+.7)*18,tl=3+rnd(i+.9)*9;if(i%3)onX(-38.11,ty,tz,ty+.12,tz+tl,.5,{nl:1});else onX(-38.11,ty,tz,ty+tl*.6,tz+.12,.5,{nl:1})}
+  box(-39.4,38.5,-21,-38.1,41.5,-7,.34);box(-39.4,24,-21,-38.1,38,-18.6,.34);box(-38.7,25.5,-16.5,-38.1,36.5,-5.5,.12);
+  for(i=0;i<4;i++)box(-38.7,21,-1.4+i*1.6,-38.1,42,-.2+i*1.6,.1);
+  box(-38.8,15,-21,-38.1,16.2,4,.1);
+  part(2.12,.55,[-.5,1.25,.1],[1.4,0,.7]);box(-39.3,27,-15,-38.7,35,-7,.56);onX(-39.31,28,-14,34,-8,.8);onX(-39.32,28.4,-13.6,29.4,-12.6,.9,{red:1});
+  part(2.26,.62,[-1.2,.75,.3],[.4,1.1,0]);box(-43,25,-17,-39.3,37,-5,.3);
+  for(i=0;i<9;i++){onY(37.01,-43+i*.42,-17,-42.88+i*.42,-5,.1,{nl:1});onZ(-4.99,-43+i*.42,25,-42.88+i*.42,37,.1,{nl:1})}
+  box(-45,25,-17,-43,37,-5,.14);fan(-45.01,31,-11,5.4);
+  for(i=0;i<4;i++){
+    part(2.38+i*.06,.52,[-.2+i*.1,1.3,.25],[.3,i%2?.7:-.7,.9]);z=-1.4+i*1.6;
+    box(-41.6,21.5,z,-38.7,41.4,z+1.1,.38);box(-41.6,41.4,z,-38.7,42,z+1.1,.62,{red:1});
+    for(j=0;j<4;j++)onZ(z+1.11,-41,23+j*4.6,-39.2,26.6+j*4.6,.16,{nl:1});
+  }
+  part(1.84,.66,[-1,-.95,.3],[.7,.3,.5],1);box(-56,.8,-23.2,-37.6,7,-3,.22);onX(-56.01,2,-20,5.8,-8,.42);
+  for(i=0;i<4;i++)onX(-56.02,2.7+i*.8,-19,2.95+i*.8,-9,.14,{nl:1});
+  part(2.54,.7,[-1.3,-.2,.3],[.3,-.9,.2],1);
+  box(-41.6,12.5,-18,-38.8,15,2,.14);box(-45.4,8.5,-21,-41.6,19.5,7,.27);box(-46.6,8,-22.5,-41.6,20,-21,.48);
+  onX(-45.41,18.4,-20,19,6,.62,{red:1});fan(-45.42,13.4,-16,4.1);fan(-45.42,13.4,-7,4.1);fan(-45.42,13.4,2,4.1);
+  part(2.68,.58,[-.9,-1.05,.4],[1,.5,.4]);box(-53,.8,-1,-42,3.6,13,.5);disc('y',3.61,-47.5,4,4.4,.74);disc('y',3.62,-47.5,4,1,.42,null,12);
+  face([[-44,3.63,10.6],[-43.2,3.63,11],[-46.6,3.63,4.6],[-47.2,3.63,4.2]],[0,1,0],.62,{red:1,nl:1});
+  /* The lid goes on last: roof, front, and the side glass that keeps the parts in view. */
+  part(2.82,.6,[-.4,1.25,.1],[.5,.2,.5]);box(-56,45,-24,-37,46,14,.26);
+  for(i=0;i<7;i++)onY(46.01,-54,-20+i*4.6,-39,-19.2+i*4.6,.1,{nl:1});
+  part(2.92,.62,[-.75,-.25,.7],[.2,.9,.1],1);box(-56,0,14,-37,46,16,.22);
+  for(i=0;i<8;i++)onZ(16.01,-53,13+i*2.6,-40,13.8+i*2.6,.08,{nl:1});
+  disc('z',16.01,-46.5,41,1.4,.72,{red:1},14);
+  part(3.06,.66,[-1.35,.1,.2],[0,.6,.2]);onX(-56.02,0,-24,46,14,.7,{a:.08,ds:1});
+  face([[-56.03,0,-18],[-56.03,0,-8],[-56.03,46,6],[-56.03,46,-4]],[-1,0,0],.9,{a:.05,nl:1,ds:1});
+  /* Keyboard: the deck, then sixty-two keys from every direction. */
+  part(2.66,.7,[.1,-1.3,.5],[1,.1,.2],1);box(-15,0,8,25,1.3,23,.22);
+  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1.5,1,1,1,1,1,1,1,1,1,1,1,1,1.5],[1.75,1,1,1,1,1,1,1,1,1,1,1,2.25],[2.25,1,1,1,1,1,1,1,1,1,1,2.75],[1.25,1.25,1.25,6.25,1.25,1.25,1.25,1.25]].forEach(function(r,ri){
+    var x=-14.5;r.forEach(function(w,ci){
+      var s=ri*17+ci+1,a=rnd(s*1.7)*TAU,rr=1+rnd(s*2.3)*.5,kz=9+ri*2.7,enter=ri===2&&ci===r.length-1;
+      part(2.8+rnd(s*3.1)*.52,.5+rnd(s*4.7)*.14,[Math.cos(a)*rr,Math.sin(a)*rr+.2,rnd(s*5.9)*.4],[rnd(s*6.1)*5-2.5,rnd(s*7.3)*5-2.5,rnd(s*8.9)*5-2.5]);
+      box(x,1.3,kz,x+w*2.6-.34,2.4,kz+2.36,enter?.62:.42,enter?{red:1}:null);
+      x+=w*2.6;
+    });
+  });
+  /* Mouse. */
+  part(3.26,.62,[1.3,-.7,.4],[.6,1.2,.4]);loft(32,16,[[0,2.9,5],[.5,3,5.1],[1.7,2.9,5],[2.7,2.2,3.9],[3.2,1.2,2.2]],.38);box(31.72,2.7,12.4,32.28,3.6,14.2,.62,{red:1});
+  parts.forEach(function(p){
+    var mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
+    p.faces.forEach(function(f){f.v.forEach(function(v){for(var a=0;a<3;a++){if(v[a]<mn[a])mn[a]=v[a];if(v[a]>mx[a])mx[a]=v[a]}})});
+    p.c=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];
+  });
+  /* The leads along the desk draw once everything is down. */
+  var WIRES=[[3.3,[-15,.25,12],[-24,.25,4],[-30,.25,10],[-37,.25,3]],[3.42,[32,.25,11],[32,.25,6],[28,.25,6],[25,.25,10]],[3.5,[2,.25,-13],[-10,.25,-22],[-25,.25,-6],[-37,.25,-12]]];
+  var SCREEN={x0:-18.8,x1:32.8,y0:16.4,y1:44.8,z:-4.19},SW=SCREEN.x1-SCREEN.x0,SH=SCREEN.y1-SCREEN.y0,SCX=7,SCY=30.6;
+
+  /* The camera orbits the desk while the parts land, then turns to face the screen
+     at the size the name needs, then pushes until the glass covers the frame. */
+  var vw=0,vh=0,dpr=1,f=0,reach=0,Dw=430,Dface=120,Dfill=90,fitted=false;
+  var cy=0,sy=0,cp=0,sp=0,Tx=0,Ty=0,Tz=0,D=430,Cx=0,Cy=0,Cz=0,zoom=1,fanA=0,pw=0;
+  var px=0,py=0,pok=false;
+  function size(){
+    dpr=Math.min(window.devicePixelRatio||1,2);vw=innerWidth;vh=innerHeight;
+    cv.width=Math.round(vw*dpr);cv.height=Math.round(vh*dpr);
+    var s0=Math.min(vw*.88/108,vh*.72/66);f=s0*Dw;reach=Math.max(vw,vh)/s0*.78;
+    Dfill=f/(Math.max(vw/SW,vh/SH)*1.04);fitted=false;
+  }
+  /* Read once the type has settled: the screen is sized to the name, and on a short
+     window the name comes down to fit the screen. */
+  function fitFace(){
+    fitted=true;
+    var w=word.offsetWidth||vw*.6,sf=Math.min(w/.76/SW,.94*vw/SW,.72*vh/SH);
+    Dface=f/sf;
+    if(w>sf*SW*.84){var fs=parseFloat(getComputedStyle(word).fontSize)*sf*SW*.84/w;[press,word.parentNode].forEach(function(el){el.style.setProperty('--pf',fs.toFixed(1)+'px')})}
+  }
+  function camera(t){
+    var a=glide((t-1.4)/2.5),yaw=(58-18*a)*Math.PI/180,pit=(27-7*a)*Math.PI/180;
+    D=Dw*(1.12-.12*a);Tx=-11;Ty=19;Tz=-2;
+    var b=snap((t-TURN[0])/(TURN[1]-TURN[0]));
+    if(b>0){
+      if(!fitted)fitFace();
+      yaw*=1-b;pit*=1-b;Tx+=(SCX-Tx)*b;Ty+=(SCY-Ty)*b;Tz+=(SCREEN.z-Tz)*b;
+      D=Math.exp(Math.log(D)+(Math.log(Dface)-Math.log(D))*b);
+      var c=snap((t-PUSH[0])/(PUSH[1]-PUSH[0]));
+      if(c>0)D=Math.exp(Math.log(Dface)+(Math.log(Dfill)-Math.log(Dface))*c);
+    }
+    for(var i=0;i<parts.length;i++){var p=parts[i];if(p.h){var h=t-p.t-p.d;if(h>0&&h<.5)Ty+=.34*Math.exp(-h*11)*Math.sin(h*46)}}
+    cy=Math.cos(yaw);sy=Math.sin(yaw);cp=Math.cos(pit);sp=Math.sin(pit);
+    Cx=Tx-sy*cp*D;Cy=Ty+sp*D;Cz=Tz+cy*cp*D;zoom=f/D;
+  }
+  function project(x,y,z){
+    var dx=x-Tx,dy=y-Ty,dz=z-Tz,vx=cy*dx+sy*dz,z1=-sy*dx+cy*dz,vy=cp*dy-sp*z1,vz=sp*dy+cp*z1,w=D-vz;
+    pok=w>14;if(!pok)return;
+    var s=f/w;px=vw/2+vx*s;py=vh/2-vy*s;
+  }
+  var LX=-.25,LY=.8,LZ=.55;
+  function drawPart(p,t){
+    var k=(t-p.t)/p.d;if(k<=0)return;
+    var mv=k<1,ep=p.h?2.6:3.6,a=mv?Math.pow(1-k,ep):0,b=mv?Math.pow(1-k,2.4):0;
+    var ox=p.f[0]*a*reach,oy=p.f[1]*a*reach,oz=p.f[2]*a*reach,c=p.c;
+    var r00=1,r01=0,r02=0,r10=0,r11=1,r12=0,r20=0,r21=0,r22=1;
+    if(mv){
+      var ax=p.r[0]*b*3,ay=p.r[1]*b*3,az=p.r[2]*b*3,cx=Math.cos(ax),sx=Math.sin(ax),cg=Math.cos(ay),sg=Math.sin(ay),cz=Math.cos(az),sz=Math.sin(az);
+      r00=cz*cg;r01=cz*sg*sx-sz*cx;r02=cz*sg*cx+sz*sx;r10=sz*cg;r11=sz*sg*sx+cz*cx;r12=sz*sg*cx-cz*sx;r20=-sg;r21=cg*sx;r22=cg*cx;
+      /* a short streak behind whatever is still in the air */
+      var back=Math.pow(1-Math.max(0,k-.1),ep);
+      project(c[0]+ox,c[1]+oy,c[2]+oz);
+      if(pok){var hx=px,hy=py;project(c[0]+p.f[0]*back*reach,c[1]+p.f[1]*back*reach,c[2]+p.f[2]*back*reach);
+        if(pok){ctx.globalAlpha=.32;ctx.strokeStyle=tone(RED,.9);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(px,py);ctx.stroke();ctx.globalAlpha=1}}
+    }
+    var hit=mv?1:t-p.t-p.d,flash=hit<.26?1-hit/.26:0,edge=flash>0?tone(RED,.45+.55*flash):tone(GREY,.46);
+    var lw=Math.max(.5,Math.min(1.5,zoom*.07));
+    for(var i=0;i<p.faces.length;i++){
+      var F=p.faces[i],o=F.o,n=F.n,vs=F.v,nx=n[0],ny=n[1],nz=n[2];
+      if(mv){var nnx=r00*nx+r01*ny+r02*nz,nny=r10*nx+r11*ny+r12*nz;nz=r20*nx+r21*ny+r22*nz;nx=nnx;ny=nny}
+      var v0=vs[0],wx=v0[0],wy=v0[1],wz=v0[2];
+      if(mv){var qx=wx-c[0],qy=wy-c[1],qz=wz-c[2];wx=c[0]+ox+r00*qx+r01*qy+r02*qz;wy=c[1]+oy+r10*qx+r11*qy+r12*qz;wz=c[2]+oz+r20*qx+r21*qy+r22*qz}
+      if(!o.ds&&nx*(Cx-wx)+ny*(Cy-wy)+nz*(Cz-wz)<=0)continue;
+      var skip=false;ctx.beginPath();
+      for(var j=0;j<vs.length;j++){
+        var v=vs[j],x=v[0],y=v[1],z=v[2];
+        if(o.fan){var dy=y-o.fan[0],dz=z-o.fan[1],fc=Math.cos(fanA),fs=Math.sin(fanA);y=o.fan[0]+dy*fc-dz*fs;z=o.fan[1]+dy*fs+dz*fc}
+        if(mv){var ux=x-c[0],uy=y-c[1],uz=z-c[2];x=c[0]+ox+r00*ux+r01*uy+r02*uz;y=c[1]+oy+r10*ux+r11*uy+r12*uz;z=c[2]+oz+r20*ux+r21*uy+r22*uz}
+        project(x,y,z);if(!pok){skip=true;break}
+        if(j)ctx.lineTo(px,py);else ctx.moveTo(px,py);
+      }
+      if(skip)continue;
+      ctx.closePath();
+      var l=nx*LX+ny*LY+nz*LZ,shade=.6+.8*(l>0?l:l*.25),fill=o.red?tone(RED,F.t*shade*(.5+.5*pw)):tone(GREY,F.t*shade);
+      if(o.a)ctx.globalAlpha=o.a;
+      ctx.fillStyle=fill;ctx.fill();
+      if(!o.nl){
+        if(o.a)ctx.globalAlpha=.5;
+        ctx.strokeStyle=o.own?fill:edge;ctx.lineWidth=o.own?.6:lw;ctx.stroke();
+      }
+      if(o.a)ctx.globalAlpha=1;
+    }
+  }
+  function screen(t){
+    var on=clamp01((t-POWER)/.3);if(on<=0)return;
+    var w=clamp01(on/.42),h=clamp01((on-.42)/.58),hw=SW/2*w,hh=Math.max(.14,SH/2*h*h);
+    project(SCX-hw,SCY-hh,SCREEN.z);var ax=px,ay=py;project(SCX+hw,SCY-hh,SCREEN.z);var bx=px,by=py;project(SCX+hw,SCY+hh,SCREEN.z);var ex=px,ey=py;project(SCX-hw,SCY+hh,SCREEN.z);
+    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.lineTo(ex,ey);ctx.lineTo(px,py);ctx.closePath();
+    var glow=clamp01(1-(t-POWER-.1)/1.2);
+    ctx.shadowColor=LIT;ctx.shadowBlur=(18+zoom*5)*glow*dpr;ctx.fillStyle=LIT;ctx.fill();ctx.shadowBlur=0;
+  }
+  function ground(t){
+    var g=clamp01((t-FIRST)/.8);if(g<=0)return;
+    project(-9.5,0,0);
+    var R=Math.max(vw,vh)*.62,grad=ctx.createRadialGradient(px,py,0,px,py,R);
+    grad.addColorStop(0,tone(GREY,.2));grad.addColorStop(1,tone(GREY,0));
+    ctx.strokeStyle=grad;ctx.lineWidth=1;ctx.beginPath();
+    var e=glide(g),ex=e*156,ez=e*84,x0,y0,o0,a;
+    for(a=-156;a<=156;a+=13){project(a-9.5,0,-ez);x0=px;y0=py;o0=pok;project(a-9.5,0,ez);if(o0&&pok){ctx.moveTo(x0,y0);ctx.lineTo(px,py)}}
+    for(a=-78;a<=78;a+=13){project(-9.5-ex,0,a);x0=px;y0=py;o0=pok;project(-9.5+ex,0,a);if(o0&&pok){ctx.moveTo(x0,y0);ctx.lineTo(px,py)}}
+    ctx.stroke();
+    /* a ring goes out across the desk under anything heavy */
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i];if(!p.h)continue;
+      var h=(t-p.t-p.d)/.55;if(h<=0||h>=1)continue;
+      var r=6+h*30;ctx.globalAlpha=(1-h)*.55;ctx.strokeStyle=tone(RED,.9);ctx.lineWidth=1;ctx.beginPath();
+      for(var n=0;n<=28;n++){var th=n/28*TAU;project(p.c[0]+Math.cos(th)*r*1.3,0,p.c[2]+Math.sin(th)*r);if(pok){if(n)ctx.lineTo(px,py);else ctx.moveTo(px,py)}}
+      ctx.stroke();ctx.globalAlpha=1;
+    }
+  }
+  function wires(t){
+    ctx.strokeStyle=tone(GREY,.42);ctx.lineWidth=Math.max(1,zoom*.16);ctx.lineCap='round';
+    WIRES.forEach(function(w){
+      var g=clamp01((t-w[0])/.4);if(g<=0)return;
+      ctx.beginPath();
+      for(var i=0;i<=22*g;i++){
+        var u=i/22,m=1-u,bx=m*m*m*w[1][0]+3*m*m*u*w[2][0]+3*m*u*u*w[3][0]+u*u*u*w[4][0],bz=m*m*m*w[1][2]+3*m*m*u*w[2][2]+3*m*u*u*w[3][2]+u*u*u*w[4][2];
+        project(bx,.25,bz);if(pok){if(i)ctx.lineTo(px,py);else ctx.moveTo(px,py)}
+      }
+      ctx.stroke();
+    });
+  }
+  function paint(t){
+    camera(t);
+    pw=clamp01((t-POWER)/.3);
+    var spin=clamp01((t-POWER)/.9);fanA=spin*spin*(t-POWER)*14;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.fillStyle=GREY[0];ctx.fillRect(0,0,vw,vh);
+    ctx.lineJoin='round';
+    ground(t);wires(t);
+    for(var i=0;i<parts.length;i++){drawPart(parts[i],t);if(parts[i]===glass)screen(t)}
+  }
+  /* The clock's numbers count from the start of the old loader: 1.5s before the lift. */
+  window.__rig2d=function(){
+    T0=performance.now()-1500;
+    size();addEventListener('resize',size,{passive:true});
+    (function frame(now){
+      if(!cv.isConnected||!d.classList.contains('intro'))return;
+      var t=((now||performance.now())-T0)/1000;
+      if(t>PUSH[1]+1.2)return;
+      requestAnimationFrame(frame);
+      paint(t);
+    })();
+  };
+})();
+</script>
 
 <header id="top">
   <div class="container">
     <div class="dateline"><div class="dateline-inner">
-      <span><span class="vol">Vol. V, No. 8</span> · Kathmandu, Nepal<span class="clock"></span></span>
+      <span><span class="vol">Vol. V, No. 9</span> · Kathmandu, Nepal<span class="clock"></span></span>
       <div class="ear"><span class="ear-txt"></span><b class="late-stamp">Late Edition</b><button type="button" class="verify-btn" aria-expanded="false" aria-controls="verify" hidden>Verify</button></div>
       <a class="open-note" href="#contact">Open to Solution Architect Roles</a>
     </div>
@@ -1759,6 +2252,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       <li><a href="#open-source"><b>04</b>Open Source</a>
         <ol class="ei-cases">
           <li><a href="#fig4"><b>Fig. 4</b>The next eclipse over Kathmandu</a></li>
+          <li><a href="#fig5"><b>Fig. 5</b>The sky over Kathmandu</a></li>
         </ol>
       </li>
       <li><a href="#experience"><b>05</b>Experience</a></li>
@@ -1775,7 +2269,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
     <div class="lead-grid">
       <div class="lead-copy">
         <p class="now-line">Now <span class="nl-long">Solution Architect / Digital Transformation Officer, Nepal Life Insurance</span><span class="nl-short">Solution Architect, Nepal Life</span></p>
-        <h1 class="hero-title">I architect systems that move real money, <em>and still ship the code.</em></h1>
+        <h1 class="hero-title" data-type="swarm">I architect systems that move real money, <em>and still ship the code.</em></h1>
         <p class="hero-sub">Solution architect on the digital transformation of a life insurer in Kathmandu, with nine years of hands-on .NET underneath.</p>
         <div class="hero-actions">
           <a href="rahul_karn_resume.pdf" download="Rahul_Karn_Resume.pdf" class="btn-primary"><span class="btn-label" data-label="Download CV">Download CV</span> <svg aria-hidden="true" focusable="false" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
@@ -1792,6 +2286,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
         <li><a href="#experience"><span class="a">2017</span><i aria-hidden="true"></i><span class="b">first production .NET</span></a></li>
         <li><a href="#experience"><span class="a">20+ product lines</span><i aria-hidden="true"></i><span class="b">one premium engine</span></a></li>
         <li><a href="#case1"><span class="a">5,000+ agents</span><i aria-hidden="true"></i><span class="b">85,000+ customers</span></a></li>
+        <li><a href="#experience"><span class="a">Digital transformation</span><i aria-hidden="true"></i><span class="b">Nepal Life Insurance</span></a></li>
         <li><a href="#case1"><span class="a">Monolith</span><i aria-hidden="true"></i><span class="b">modular</span></a></li>
         <li><a href="#case1"><span class="a">YARP gateway</span><i aria-hidden="true"></i><span class="b">IdentityServer</span></a></li>
         <li><a href="#case2"><span class="a">Oracle</span><i aria-hidden="true"></i><span class="b">SQL Server</span></a></li>
@@ -1830,7 +2325,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       <li class="shot">
         <p class="shot-k"><b>01</b> Case 1 · Enterprise portal</p>
         <p class="shot-n">90,000<small>clients</small></p>
-        <p class="shot-l">moved from a monolith to a modular platform, with no breaking API change on the way</p>
+        <p class="shot-l" data-type="stream">moved from a monolith to a modular platform, with no breaking API change on the way</p>
         <dl class="shot-ba">
           <div style="--j:0"><dt>API layer</dt><dd><span class="was">None</span> → Versioned</dd></div>
           <div style="--j:1"><dt>Security</dt><dd><span class="was">Bolt-on</span> → OIDC, RBAC, OWASP</dd></div>
@@ -1842,7 +2337,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       <li class="shot">
         <p class="shot-k"><b>02</b> Case 2 · Oracle and SQL Server</p>
         <p class="shot-n">~50%<small>query latency</small></p>
-        <p class="shot-l">off query latency across the insurance data layer, found by reading the execution plans</p>
+        <p class="shot-l" data-type="stream">off query latency across the insurance data layer, found by reading the execution plans</p>
         <dl class="shot-ba">
           <div style="--j:0"><dt>Latency</dt><dd><span class="was">1×</span> → 0.5×</dd></div>
           <div style="--j:1"><dt>Timeouts a week</dt><dd><span class="was">12+</span> → under 1</dd></div>
@@ -1854,7 +2349,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       <li class="shot">
         <p class="shot-k"><b>03</b> Case 3 · Payments</p>
         <p class="shot-n">0<small>duplicate charges</small></p>
-        <p class="shot-l">one idempotency key buys exactly one charge, and reconciliation checks the gateway against the ledger</p>
+        <p class="shot-l" data-type="stream">one idempotency key buys exactly one charge, and reconciliation checks the gateway against the ledger</p>
         <dl class="shot-ba">
           <div style="--j:0"><dt>Reconciliation</dt><dd><span class="was">2 days</span> → near real time</dd></div>
           <div style="--j:1"><dt>Failed payments</dt><dd><span class="was">Days</span> → minutes</dd></div>
@@ -1866,7 +2361,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       <li class="shot">
         <p class="shot-k"><b>04</b> After hours · grahan</p>
         <p class="shot-n">v1.0<small>on npm</small></p>
-        <p class="shot-l">a zero-dependency TypeScript sky engine, checked against Swiss Ephemeris before it shipped</p>
+        <p class="shot-l" data-type="stream">a zero-dependency TypeScript sky engine, checked against Swiss Ephemeris before it shipped</p>
         <dl class="shot-ba">
           <div style="--j:0"><dt>Tests</dt><dd>279 cases, Singapore to the Arctic</dd></div>
           <div style="--j:1"><dt>Eclipses</dt><dd>909 detected and typed</dd></div>
@@ -1884,7 +2379,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 <section id="about" class="sec">
   <div class="container">
     <div class="kicker"><b>01</b> About</div>
-    <h2 class="sec-heading">Owns the architecture,<br><em>and reads the execution plan.</em></h2>
+    <h2 class="sec-heading" data-type="holo">Owns the architecture,<br><em>and reads the execution plan.</em></h2>
     <div class="about-body">
       <blockquote class="pull-quote">
         <p>I build production systems alongside the engineers shipping them, which keeps the architecture honest.</p>
@@ -1906,7 +2401,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   <div class="container">
     <div class="sec-header">
       <div class="kicker"><b>02</b> Expertise</div>
-      <h2 class="sec-heading">Every skill here,<br><em>each with its receipt</em></h2>
+      <h2 class="sec-heading" data-type="proof">Every skill here,<br><em>each with its receipt</em></h2>
       <p class="sec-desc">Read each row left to right: the discipline and its stack, the production result it delivered, and where the evidence and its measurement live.</p>
     </div>
     <div class="ledger">
@@ -1973,7 +2468,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   <div class="cpu-stage">
     <div class="cpu-copy">
       <p class="cpu-kicker"><b>Plate</b> Nine years of work, piece by piece</p>
-      <h2 class="cpu-h" id="cpu-h">What I build,<br><em>and where it runs</em></h2>
+      <h2 class="cpu-h" id="cpu-h" data-type="photon">What I build,<br><em>and where it runs</em></h2>
       <p class="cpu-desc">Solution architect at Nepal Life Insurance in Kathmandu. Each piece below is part of that work, with the number behind it and where to read more.</p>
       <ol class="cpu-steps" role="list">
         <li class="cpu-step"><p class="cs-k"><b>00</b> Foundation</p><h3 class="cs-t">.NET, nine years of it</h3><p class="cs-d">Production C# and .NET since October 2017: a multi-tenant real estate platform first, then Web Forms migrations at Nepal Life, and ASP.NET Core services on .NET 10 today.</p><p class="cs-f">C#, ASP.NET Core, EF Core, Web API, Oracle, SQL Server</p><a class="cs-go" href="#experience">See the record</a></li>
@@ -2020,12 +2515,36 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   </div>
 </section>
 
+<section class="dx" id="transformation" aria-labelledby="dx-h" hidden>
+  <div class="dx-stage">
+    <div class="dx-copy">
+      <p class="dx-kicker"><b>Transformation</b> A life insurer, made ready for what comes next</p>
+      <h2 class="dx-h" id="dx-h">Digital transformation,<br><em>from the file to the platform</em></h2>
+      <p class="dx-desc">A life policy runs for decades. The systems behind it have to last as long, and keep changing. As Digital Transformation Officer at Nepal Life Insurance, this is the work of getting there.</p>
+      <ol class="dx-steps" role="list">
+        <li class="dx-step"><p class="ds-k"><b>01</b> Digitize</p><h3 class="ds-t">Every journey, in one place</h3><p class="ds-d">Policy issuance, claims, and the agent and customer journeys move onto software, on one identity model.</p><p class="ds-f">5,000+ agents and 85,000+ customers on one model</p></li>
+        <li class="dx-step"><p class="ds-k"><b>02</b> Modernize</p><h3 class="ds-t">A monolith, made modular</h3><p class="ds-d">The legacy platform had no API layer and security was bolt-on. It moved to bounded contexts behind a gateway, phased rather than rewritten.</p><p class="ds-f">90,000 clients moved; 0 breaking API changes</p></li>
+        <li class="dx-step"><p class="ds-k"><b>03</b> Connect</p><h3 class="ds-t">Contracts between every part</h3><p class="ds-d">API-first contracts, versioned, with a backward-compatibility policy, so six engineers ship in parallel and new features go out without full regression.</p><p class="ds-f">Releases from monthly to bi-weekly</p></li>
+        <li class="dx-step"><p class="ds-k"><b>04</b> Speed up</p><h3 class="ds-t">Days become minutes</h3><p class="ds-d">Payments reconcile against the gateway's records as they happen, and the audit trail is there when it is asked for.</p><p class="ds-f">Reconciliation 2 days to near real time; audit prep 2 weeks to 1 day</p></li>
+        <li class="dx-step"><p class="ds-k"><b>05</b> Cloud-ready</p><h3 class="ds-t">Services that can stand alone</h3><p class="ds-d">Phase two takes the modules out of the monolith and into cloud-ready services, each able to change on its own.</p><p class="ds-f">The 2026 transformation mandate</p></li>
+        <li class="dx-step"><p class="ds-k"><b>06</b> What comes next</p><h3 class="ds-t">Ready for data and AI</h3><p class="ds-d">With the platform in place, the data can work: applied research at Nepal Life into fraud detection, claims triage and underwriting.</p><p class="ds-f">Fraud detection, claims triage, underwriting</p><a class="ds-go" href="#case1">Read how it was done</a></li>
+      </ol>
+    </div>
+    <div class="dx-fig">
+      <div class="dx-view">
+        <ul class="dx-flat" role="list"><li>Policy issuance</li><li>Claims</li><li>Payments</li><li class="hub">Gateway</li><li>Identity</li><li>Agents</li><li>Customers</li></ul>
+      </div>
+      <div class="dx-hud"><span class="dx-step-n">01 / 06</span><span class="dx-step-name">Digitize</span><i class="dx-bar"><i></i></i></div>
+    </div>
+  </div>
+</section>
+
 <!-- CASE STUDIES -->
 <section id="case-studies" class="sec">
   <div class="container">
     <div class="sec-header">
       <div class="kicker"><b>03</b> Case Studies</div>
-      <h2 class="sec-heading">Selected work,<br><em>in practice</em></h2>
+      <h2 class="sec-heading" data-type="quantum">Selected work,<br><em>in practice</em></h2>
       <p class="sec-desc">Three production systems from the same insurer: the problem, the decisions, and what changed. The decisions are filed as public notices at the foot of this section.</p>
       <button type="button" class="link-quiet unfold" id="unfoldAll" data-open="Unfold all three" data-close="Fold all three" hidden>Unfold all three</button>
     </div>
@@ -2283,7 +2802,7 @@ ORDER  BY DueDate</pre>
   <div class="container">
     <div class="sec-header oss-head has-ev">
       <div class="kicker"><b>04</b> Open Source</div>
-      <h2 class="sec-heading">After hours: <em>grahan</em>,<br>a sky engine on npm</h2>
+      <h2 class="sec-heading" data-type="lens">After hours: <em>grahan</em>,<br>a sky engine on npm</h2>
       <p class="sec-desc">grahan (<span lang="ne">ग्रहण</span>, “eclipse”) is a zero-dependency TypeScript engine for astronomy, panchang, and the Bikram Sambat calendar. I learned TypeScript and npm from scratch to ship it, and wrote the reference answers before the formulas.</p>
       <figure class="eclipse ev" id="fig4" style="--my:86.1">
         <svg viewBox="-110 -96 220 232" focusable="false" aria-hidden="true">
@@ -2295,6 +2814,46 @@ ORDER  BY DueDate</pre>
           <circle class="ec-diamond" r="3.2"/>
         </svg>
         <figcaption class="ec-cap"><b>Fig. 4.</b> Next over Kathmandu: <b>Monday 2 August 2027</b>. Total from Spain to Somalia; here a partial, magnitude 0.075, 2.5% of the Sun, low in the west, 16:27 to 17:12 NPT, greatest at 16:50. <b class="ec-when"></b><span class="ec-then">Then 1 June 2030 (7.4%) and 21 May 2031 (31.3%).</span><span class="ec-src">Sources: NASA GSFC <a href="https://eclipse.gsfc.nasa.gov/SEdecade/SEdecade2021.html" target="_blank" rel="noopener">2021 to 2030</a>, <a href="https://eclipse.gsfc.nasa.gov/SEdecade/SEdecade2031.html" target="_blank" rel="noopener">2031 to 2040</a> · <a href="https://www.timeanddate.com/eclipse/in/nepal/kathmandu?iso=20270802" target="_blank" rel="noopener">timeanddate</a>. A sketch: discs not to scale, bite on the limb facing the central path.</span></figcaption>
+      </figure>
+      <figure class="sky" id="fig5" aria-labelledby="fig5-cap">
+        <div class="sky-body">
+          <svg class="sky-dome" viewBox="-216 -216 432 432" focusable="false" role="img" aria-labelledby="fig5-cap"></svg>
+          <div class="sky-read">
+            <p class="sky-date"></p>
+            <p class="sky-when"></p>
+            <dl class="sky-dl">
+              <div><dt>Sun</dt><dd data-s="sun"></dd></div>
+              <div><dt>Moon</dt><dd data-s="moon"></dd></div>
+              <div class="sky-ecl"><dt>Eclipse</dt><dd data-s="ecl"></dd></div>
+            </dl>
+            <div class="sky-do">
+              <button type="button" class="sky-btn" data-do="now">Now</button>
+              <button type="button" class="sky-btn sky-play" data-do="play">Play the day</button>
+              <button type="button" class="sky-btn" data-do="next">Next eclipse</button>
+              <label class="sky-goto">Any date <input type="date" min="1900-01-01" max="2100-12-31"></label>
+            </div>
+          </div>
+        </div>
+        <div class="sky-rules">
+          <div class="sky-rule sky-hour">
+            <span>Hour</span>
+            <div class="sky-track">
+              <i class="sky-band"></i>
+              <input type="range" min="0" max="1439" step="1" value="720" aria-label="Time of day in Kathmandu">
+              <div class="sky-scale" aria-hidden="true"><span style="--p:0">0</span><span style="--p:.25">6</span><span style="--p:.5">12</span><span style="--p:.75">18</span><span style="--p:1">24</span></div>
+            </div>
+          </div>
+          <div class="sky-rule sky-year">
+            <span>Year</span>
+            <div class="sky-track">
+              <div class="sky-ticks" aria-hidden="true"></div>
+              <input type="range" min="0" max="73413" step="1" value="46000" aria-label="Date, 1900 to 2100">
+              <div class="sky-scale" aria-hidden="true"><span style="--p:0">1900</span><span style="--p:.2487">1950</span><span style="--p:.4975">2000</span><span style="--p:.7463">2050</span><span style="--p:1">2100</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="sky-count"></p>
+        <figcaption class="sky-cap" id="fig5-cap"><b>Fig. 5.</b> The sky over Kathmandu, worked out in your browser by @grahan/core 1.0.1, the package on npm. North is up; the rim is the horizon, the centre straight overhead, and the outer band runs to 18° below. The dates and tithi come from @grahan/calendars and @grahan/vedic. Sun and Moon are drawn larger than life, and overlap only as far as the real discs do. Stars are a backdrop at J2000.</figcaption>
       </figure>
     </div>
     <div class="oss-figures">
@@ -2334,7 +2893,7 @@ ORDER  BY DueDate</pre>
   <div class="container">
     <div class="sec-header">
       <div class="kicker"><b>05</b> Experience</div>
-      <h2 class="sec-heading">Nine years in production,<br><em>from premium engine to platform</em></h2>
+      <h2 class="sec-heading" data-type="echo">Nine years in production,<br><em>from premium engine to platform</em></h2>
       <p class="sec-desc">From software engineer to the solution architect on Nepal Life's digital transformation, with the code still in hand at every step.</p>
     </div>
     <div class="timeline">
@@ -2406,7 +2965,7 @@ ORDER  BY DueDate</pre>
   <div class="container">
     <div class="sec-header">
       <div class="kicker"><b>06</b> Education</div>
-      <h2 class="sec-heading">Education &amp;<br><em>professional training</em></h2>
+      <h2 class="sec-heading" data-type="train">Education &amp;<br><em>professional training</em></h2>
       <p class="sec-desc">An engineering degree with one IEEE paper, an MBA in accounting and finance, a data-science master's in progress, and the insurance, database and AML/CFT training behind the work.</p>
     </div>
     <div class="edu-card"><div class="edu-top"><span class="edu-year">2025 – 2027</span><span class="edu-status active">In Progress</span></div><div><h3 class="edu-degree">MSc, Data Science &amp; Computational Intelligence</h3><p class="edu-inst">Coventry University, UK (Distance)</p><p class="edu-detail">Softwarica College · Expected Feb 2027</p></div></div>
@@ -2426,7 +2985,7 @@ ORDER  BY DueDate</pre>
 <section id="contact" class="sec">
   <div class="container">
     <div class="kicker"><b>07</b> Contact</div>
-    <h2 class="sec-heading">Open to <em>solution architect</em><br>and transformation roles</h2>
+    <h2 class="sec-heading" data-type="signal">Open to <em>solution architect</em><br>and transformation roles</h2>
     <div class="classified">
       <div class="ad">
         <h3 class="ad-head">Situations Wanted</h3>
@@ -2454,7 +3013,7 @@ ORDER  BY DueDate</pre>
   <div class="plate">
     <div class="container"><div class="footer-inner">
       <div class="footer-mark" aria-hidden="true"><span style="--i:0">R</span><span style="--i:1">a</span><span style="--i:2">h</span><span style="--i:3">u</span><span style="--i:4">l</span> <span style="--i:6">K</span><span style="--i:7">a</span><span style="--i:8">r</span><span style="--i:9">n</span></div>
-      <p class="colophon">Vol. V, No. 8 · Set in Newsreader · Printed in Kathmandu</p>
+      <p class="colophon">Vol. V, No. 9 · Set in Newsreader · Printed in Kathmandu</p>
       <p class="footer-copy">&copy; <span id="footerYear"></span> Rahul Karn · Kalanki, Kathmandu, Nepal</p>
       <div class="footer-social">
         <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener">LinkedIn</a>
@@ -2479,6 +3038,8 @@ const T0=motion?Math.round(parseFloat(cssVar('--t0'))*1000)||0:0;
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 /* Each flourish runs on its own, so one that fails never takes the rest with it. */
 const run=fn=>{try{fn()}catch(e){console.error(e)}};
+/* The press run starts when the load is done, not when this script runs. */
+const atGo=fn=>{if(!rootEl.classList.contains('intro')||window.__goAt)fn();else document.addEventListener('press:go',fn,{once:true})};
 const EDITION='Vol. V'; /* hand-maintained, with the number: see the edition rule at the top of the file */
 
 /* ===== Sky core =====
@@ -2555,7 +3116,7 @@ run(()=>{
   const FALLBACK='<b>Fig. 4.</b> A total solar eclipse<span class="ec-cap-m">, timed to the scroll</span>';
   const magAt=(mx,dmin)=>clamp((93-Math.hypot(mx,dmin))/92,0,1);
   const ymdMs=s=>Date.UTC(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8));
-  let ev=null,X=0,when=null;
+  let ev=null,X=0,when=null,scrubbed=0,lastTick=null;
   function pick(now){
     ev=EC.find(e=>e.c4ms>now)||null;
     fig.classList.toggle('ev',!!ev);fig.classList.remove('live');
@@ -2579,7 +3140,8 @@ run(()=>{
   }
   /* Called by the dateline tick with Kathmandu's date, every minute. */
   window.__ecTick=(now,ymd)=>{
-    if(!ev)return;
+    lastTick=[now,ymd];
+    if(scrubbed||!ev)return;
     const t=now.getTime();
     if(t>=ev.c4ms){pick(t);if(!ev)return}
     let s;
@@ -2597,6 +3159,29 @@ run(()=>{
     if(when)when.textContent=s+'.';
     const lc=s[0].toLowerCase()+s.slice(1);
     document.querySelectorAll('.ec-tick b').forEach(b=>b.textContent=lc);
+  };
+  /* Fig. 5 holds this figure on whichever eclipse the reader lands on: grahan's magnitude and
+     contact times, at that moment. Null hands it back to the scroll. */
+  window.__ecScrub=(e,now)=>{
+    if(!e){
+      if(!scrubbed)return;
+      scrubbed=0;fig.classList.remove('scrub');pick(Date.now());
+      if(lastTick)window.__ecTick(lastTick[0],lastTick[1]);
+      window.dispatchEvent(new Event('scroll'));
+      return;
+    }
+    const dmin=93-92*Math.min(e.mag,1),S=Math.sqrt(93*93-dmin*dmin);
+    if(scrubbed!==e.max){
+      scrubbed=e.max;
+      const at=new Date(e.max),hm=d=>new Intl.DateTimeFormat('en-GB',{timeZone:KTM,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(d));
+      fig.classList.add('ev','live','scrub');
+      if(head)head.classList.add('has-ev');
+      svg.setAttribute('viewBox','-110 -96 220 232');
+      fig.style.setProperty('--my',dmin.toFixed(1));
+      cap.innerHTML='<b>Fig. 4.</b> Set by Fig. 5: <b>'+dayF.format(at)+' '+dateF.format(at)+'</b>. Here '+(e.type==='partial'?'a partial':'an '+e.type)+', magnitude '+e.mag.toFixed(3)+', '+(e.obs*100).toFixed(1)+'% of the Sun, '+hm(e.c1)+' to '+hm(e.c4)+' Kathmandu time, greatest at '+hm(e.max)+'.<span class="ec-src">From grahan. A sketch: discs not to scale, the bite drawn on the lower limb.</span>';
+    }
+    const x=now<e.max?S*(1-(now-e.c1)/(e.max-e.c1)):-S*(now-e.max)/(e.c4-e.max);
+    fig.style.setProperty('--mx',x.toFixed(2));
   };
   pick(Date.now());
   const list=document.querySelector('.ticker-list');
@@ -2693,6 +3278,7 @@ run(()=>{
 /* Headlines are set word by word: each word gets its own clipping slot and an
    index for the stagger. <br> and <em> stay where they are. */
 function splitWords(el){
+  if(el.dataset.type)return;
   let n=0;
   (function walk(node){
     [...node.childNodes].forEach(c=>{
@@ -2758,7 +3344,7 @@ function tryPlate(){
 const REVEAL='.sec .kicker,.sec-desc,.about-text,.pull-quote,.ledger-row,.case-card,.oss-fig,.oss-col,.oss-links,.timeline-block,.edu-card,.classified,.contact-card,.hero-stats .stat,.stack-row,.stats-note,.jump,.unfold,.notices-head,.notice,.bp-col';
 const ODO='.hero-stats .stat-number,.oss-fig .stat-number';
 let reveal=null;
-const show=t=>{t.classList.add('in');t.querySelectorAll('.odo').forEach(o=>o.classList.add('go'));if(reveal)reveal.unobserve(t);if(t.matches('.footer-mark')){markInAt=performance.now();tryPlate()}};
+const show=t=>{t.classList.add('in');t.querySelectorAll('.odo').forEach(o=>o.classList.add('go'));if(reveal&&(innerWidth<1024||t.matches('.footer-mark')))reveal.unobserve(t);if(t.matches('.footer-mark')){markInAt=performance.now();tryPlate()}};
 if(motion){
   run(()=>document.querySelectorAll('.hero-title,.sec-heading').forEach(splitWords));
   run(()=>document.querySelectorAll(ODO).forEach(odometer));
@@ -2797,11 +3383,26 @@ if(motion){
     let i=0;
     hits.forEach(e=>{
       const t=e.target;
-      if(!t.style.getPropertyValue('--d')&&!t.matches('.sec,.split'))t.style.setProperty('--d',base+Math.min(i++*60,cap)+'ms');
+      if(!t.style.getPropertyValue('--d')&&!t.matches('.sec,.split')){t.style.setProperty('--d',base+Math.min(i++*60,cap)+'ms');t.dataset.dd=1}
       show(t);
     });
   },{rootMargin:'0px 0px -'+Math.min(Math.round(innerHeight*.12),140)+'px 0px'});
-  setTimeout(()=>{armedAt=performance.now();targets.forEach(t=>reveal.observe(t))},T0);
+  /* On the web nothing plays only once: whatever has left the screen entirely is put back, and plays
+     again on the next arrival, from above or below. Phones keep it simple. */
+  const gone=new IntersectionObserver(es=>{
+    if(innerWidth<1024)return;
+    es.forEach(e=>{
+      const t=e.target;
+      if(e.isIntersecting||!t.classList.contains('in')||t.matches('.footer-mark'))return;
+      t.classList.remove('in');
+      t.querySelectorAll('.odo').forEach(o=>o.classList.remove('go'));
+      if(t.dataset.dd){t.style.removeProperty('--d');delete t.dataset.dd}
+    });
+  });
+  /* The type effects wait for the press run's sheet to go, or the lead plays behind it. */
+  const armType=()=>{window.__typeArmed=true;if(window.__type)window.__type.arm()};
+  let armed=false;const arm=()=>{if(armed)return;armed=true;armedAt=performance.now();targets.forEach(t=>{reveal.observe(t);gone.observe(t)});if(rootEl.classList.contains('intro')&&document.querySelector('.press'))document.addEventListener('press:off',armType,{once:true});else armType()};
+  atGo(()=>setTimeout(arm,T0));document.addEventListener('press:skip',arm,{once:true});
   /* Keyboard focus lands on things that are visible. */
   document.addEventListener('focusin',e=>{
     const t=e.target.closest(REVEAL);if(t&&!t.classList.contains('in')){t.style.setProperty('--d','0ms');show(t)}
@@ -2832,8 +3433,14 @@ const motionToggle=document.getElementById('motionToggle');
 function stopMotion(){
   if(!live)return;
   live=false;
+  rootEl.classList.add('ty-off');
+  if(window.__type)window.__type.stop();
+  if(window.__field)window.__field.stop();
+  if(window.__gfx)window.__gfx.stop();
+  {const h=document.getElementById('introHold');if(h)h.remove()}
+  document.querySelectorAll('.gl-labels').forEach(el=>el.remove());
   rootEl.classList.remove('motion','intro','curtain');
-  document.querySelectorAll('.press,.press-name,.photo-ht,.loader,.letterbox').forEach(el=>el.remove());
+  document.querySelectorAll('.press,.press-name,.photo-ht,.loader').forEach(el=>el.remove());
   if(eclipse)['--mx','--tot','--dia','--dx','--ray'].forEach(p=>eclipse.style.removeProperty(p));
   document.querySelectorAll('.odo-s').forEach(st=>st.style.transition='none');
   if(wireTag)wireTag.disabled=true;
@@ -2878,18 +3485,35 @@ themeToggle.addEventListener('click',()=>{
   if(live){themeToggle.classList.remove('spin');void themeToggle.offsetWidth;themeToggle.classList.add('spin')}
 });
 
-/* The press run's handoff: the plate type is carried into the masthead's own
-   rect, then the masthead takes over and the sheet is cleared away. */
+/* The press run's handoff: as the camera pushes through the screen the plate type
+   is carried into the masthead's own rect, then the masthead takes over and the
+   sheet is cleared away. Measured at the moment it leaves, with the type settled.
+   A tap or a key skips straight to the page. */
 if(motion&&rootEl.classList.contains('intro'))run(()=>{
   const press=document.querySelector('.press'),layer=document.querySelector('.press-name'),word=layer.querySelector('.press-word'),mh=mastName.querySelector('.mh');
-  let finished=false;
-  const done=()=>{if(finished)return;finished=true;mastName.classList.add('set');press.remove();layer.remove();rootEl.classList.remove('curtain')};
-  setTimeout(done,4200);
-  const a=word.getBoundingClientRect(),b=mh.getBoundingClientRect();
-  const dx=(b.left+b.width/2)-(a.left+a.width/2),dy=(b.top+b.height/2)-(a.top+a.height/2),s=b.width/a.width;
-  const anim=word.animate([{transform:'none'},{transform:'translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px) scale('+s.toFixed(4)+')'}],
-    {duration:700,delay:3050,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});
-  anim.finished.then(done,done);
+  let finished=false,flight=null;
+  const done=()=>{
+    if(finished)return;finished=true;
+    mastName.classList.add('set');rootEl.classList.remove('curtain');
+    const clear=()=>{
+      press.remove();layer.remove();const ld=document.querySelector('.loader');if(ld)ld.remove();
+      const g=window.__gfx;if(g&&g.intro){g.intro.dispose();g.intro=null}
+      document.dispatchEvent(new Event('press:off'));
+    };
+    if(window.__skipped){if(flight)flight.cancel();clear();return}
+    press.classList.add('out');setTimeout(clear,460);
+  };
+  document.addEventListener('press:skip',done,{once:true});
+  atGo(()=>{
+    setTimeout(done,5000);
+    setTimeout(()=>{
+      if(finished||!layer.isConnected)return;
+      const a=word.getBoundingClientRect(),b=mh.getBoundingClientRect();
+      const dx=(b.left+b.width/2)-(a.left+a.width/2),dy=(b.top+b.height/2)-(a.top+a.height/2),s=b.width/a.width;
+      flight=word.animate([{transform:'none'},{transform:'translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px) scale('+s.toFixed(4)+')'}],{duration:700,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});
+      flight.finished.then(done,()=>{});
+    },3550);
+  });
 });
 
 /* The eclipse figure: the rays are drawn here; the scroll pass moves the Moon. */
@@ -2901,6 +3525,19 @@ run(()=>{
     ln.setAttribute('x2',(Math.cos(a)*r2).toFixed(2));ln.setAttribute('y2',(Math.sin(a)*r2).toFixed(2));
     spin.appendChild(ln);
   }
+});
+
+/* With the 3D layer the disc is a shader, and it keeps moving while it is on screen. */
+if(motion&&eclipse)run(()=>{
+  let on=false,raf=0;
+  const v=(n,d)=>{const s=eclipse.style.getPropertyValue(n);return s===''?d:+s};
+  const tick=t=>{
+    raf=0;if(!live||!on)return;
+    const g=window.__gfx&&window.__gfx.eclipse;
+    if(g)g.draw({mx:v('--mx',135),my:v('--my',0),tot:v('--tot',0),dia:v('--dia',0),dx:v('--dx',-46),ray:v('--ray',0),t:t/1000});
+    raf=requestAnimationFrame(tick);
+  };
+  new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on&&!raf)raf=requestAnimationFrame(tick)}).observe(eclipse);
 });
 
 const navbar=document.getElementById('navbar');
@@ -3311,7 +3948,7 @@ if(motion)run(()=>{
     let t0=0;
     const dur=frame.clientWidth<200?650:900;
     requestAnimationFrame(function step(t){
-      if(!t0)t0=Math.max(t,(first||t)+T0+(rootEl.classList.contains('intro')?300:900));
+      if(!t0){const intro=rootEl.classList.contains('intro');if(intro&&!window.__goAt){requestAnimationFrame(step);return}t0=Math.max(t,(intro?window.__goAt:(first||t))+T0+(intro?300:900))}
       const k=clamp((t-t0)/dur,0,1);
       if(k>0){frame.classList.add('printing');paint(1-Math.pow(1-k,3))}
       if(k<1){requestAnimationFrame(step);return}
@@ -3349,86 +3986,75 @@ if(motion)run(()=>{
     box.querySelectorAll('p,li,.nb').forEach((el,i)=>el.style.setProperty('--li',Math.min(i,8))));
 });
 if(motion)run(()=>{
-  const root=document.documentElement,img=document.querySelector('.photo-frame img'),frame=img&&img.closest('.photo-frame');
-  let lastY=scrollY,lastT=performance.now(),sk=0,raf=0;
+  const img=document.querySelector('.photo-frame img'),frame=img&&img.closest('.photo-frame');
+  let raf=0;
   function loop(){
     raf=0;
-    if(!live){root.style.removeProperty('--sk');return}
-    const now=performance.now(),y=scrollY,dt=Math.max(16,now-lastT),v=(y-lastY)/dt;
-    lastY=y;lastT=now;
-    sk+=(clamp(v*-2.2,-4,4)-sk)*.18;
-    if(Math.abs(sk)<.01)sk=0;
-    root.style.setProperty('--sk',sk.toFixed(3));
+    if(!live)return;
     if(frame){const r=frame.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)img.style.setProperty('--pz',(1+clamp(1-r.bottom/(innerHeight+r.height),0,1)*.12).toFixed(4))}
-    if(sk!==0)raf=requestAnimationFrame(loop);
   }
   addEventListener('scroll',()=>{if(!raf&&live)raf=requestAnimationFrame(loop)},{passive:true});
 });
-/* ===== Motion III, the script half =====
-   Headline weight swell and ticker velocity. Each
-   loop stands down and clears what it set when live turns false. */
+/* ===== Digital transformation, the script half =====
+   The scroll is the playhead, damped as on the plate. It picks the step in the copy and
+   drives the scene; the scene's signals keep moving while the section is on screen. */
 if(motion)run(()=>{
-  const hs=[...document.querySelectorAll('.hero-title,.sec-heading')];
-  if(!hs.length||!('IntersectionObserver' in window))return;
-  const vis=new Set();let raf=0;
-  const kick=()=>{if(!raf&&live)raf=requestAnimationFrame(frame)};
-  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));kick()});
-  hs.forEach(h=>io.observe(h));
-  function frame(){
+  const sec=document.getElementById('transformation');if(!sec||sec.hidden)return;
+  const steps=[...sec.querySelectorAll('.dx-step')],N=steps.length,nEl=sec.querySelector('.dx-step-n'),nameEl=sec.querySelector('.dx-step-name'),bar=sec.querySelector('.dx-bar');
+  const kinds=steps.map(s=>s.querySelector('.ds-k').lastChild.textContent.trim());
+  const pad=n=>String(n).padStart(2,'0');
+  let raf=0,onScreen=false,P=-1,lastT=0,lastP=-1;
+  function frame(t){
     raf=0;
-    if(!live){io.disconnect();hs.forEach(h=>{h.style.removeProperty('--w');h._w=0});return}
-    const vh=innerHeight;
-    vis.forEach(h=>{
-      const r=h.getBoundingClientRect(),p=clamp((vh-r.top)/(vh+r.height),0,1);
-      const w=h.classList.contains('hero-title')?clamp(440+Math.round(p*30)*4,440,560):clamp(480+Math.round(p*30)*4,480,600);
-      if(h._w!==w){h._w=w;h.style.setProperty('--w',w)}
+    if(!live){steps.forEach(s=>{s.style.removeProperty('--so');s.style.removeProperty('--pe')});bar.style.removeProperty('--cp');return}
+    const r=sec.getBoundingClientRect(),span=r.height-innerHeight,tgt=clamp(-r.top/(span||1),0,1);
+    if(P<0)P=tgt;
+    const dt=lastT&&t?Math.min(64,t-lastT):16;lastT=t||0;
+    P+=(tgt-P)*(1-Math.pow(1-.14,dt/16.7));
+    if(Math.abs(tgt-P)<.0004||!onScreen)P=tgt;
+    const s=P*N,cur=Math.min(N-1,Math.floor(s)),gl=window.__gfx&&window.__gfx.dx;
+    if(gl)gl.draw({s,N,cur,t:performance.now()/1000});
+    if(onScreen&&!document.hidden)raf=requestAnimationFrame(frame);else lastT=0;
+    if(P===lastP)return;lastP=P;
+    steps.forEach((st,i)=>{
+      const l=clamp(s-i,0,1),o=i===cur?clamp(Math.min(i===0?1:l*7,i===N-1?1:(1-l)*7),0,1):0;
+      st.style.setProperty('--so',o.toFixed(3));st.style.setProperty('--pe',o>.5?'auto':'none');
     });
+    const nt=pad(cur+1)+' / '+pad(N);
+    if(nEl.textContent!==nt)nEl.textContent=nt;
+    if(nameEl.textContent!==kinds[cur])nameEl.textContent=kinds[cur];
+    bar.style.setProperty('--cp',P.toFixed(4));
   }
-  addEventListener('scroll',kick,{passive:true});
-  addEventListener('resize',kick,{passive:true});
-  kick();
-});
-if(motion)run(()=>{
-  const tr=document.querySelector('.ticker-track');
-  if(!tr||!tr.getAnimations)return;
-  let r=1,lastY=scrollY,lastT=0,raf=0;
-  const anim=()=>{const a=tr.getAnimations();return a.find(x=>x.animationName==='ticker')||a[0]};
-  const set=v=>{const a=anim();if(a&&a.playbackRate!==v)a.playbackRate=v};
-  function loop(now){
-    raf=0;
-    if(!live){r=1;set(1);return}
-    const y=scrollY,dy=y-lastY,dt=Math.max(1,now-lastT);
-    lastY=y;lastT=now;
-    if(dy!==0){const t=Math.sign(dy)*clamp(1+Math.abs(dy)/12,1,4);r+=(t-r)*.3}
-    else r+=(1-r)*(1-Math.exp(-dt/150));
-    if(Math.abs(r-1)<.02)r=1;
-    set(+r.toFixed(3));
-    if(r!==1||dy!==0)raf=requestAnimationFrame(loop);
-  }
-  addEventListener('scroll',()=>{if(!raf&&live){lastT=performance.now();raf=requestAnimationFrame(loop)}},{passive:true});
-});
-/* ===== Motion III, the script half: the camera =====
-   One scroll pass sets --fold on each section header as it rises into view,
-   --lp on the lead as it leaves, and --mp on the masthead. Everything clears
-   when the Still control is pressed. */
-if(motion)run(()=>{
-  const root=document.documentElement,lead=document.querySelector('.lead'),mh=document.querySelector('.masthead-name');
-  const heads=[...document.querySelectorAll('.sec .sec-header')];
-  const g=document.createElement('div');g.className='grain';g.setAttribute('aria-hidden','true');document.body.appendChild(g);const vg=document.createElement('div');vg.className='vignette';vg.setAttribute('aria-hidden','true');document.body.appendChild(vg);
-  if(root.classList.contains('intro'))['t','b'].forEach(s=>{const d=document.createElement('div');d.className='letterbox '+s;d.setAttribute('aria-hidden','true');document.body.appendChild(d);setTimeout(()=>d.remove(),3400)});
-  let raf=0;
-  function frame(){
-    raf=0;
-    if(!live){heads.forEach(h=>h.style.removeProperty('--fold'));lead&&lead.style.removeProperty('--lp');mh&&mh.style.removeProperty('--mp');g.remove();vg.remove();heads.forEach(h=>h.parentElement&&h.parentElement.style.removeProperty('--fold'));return}
-    const vh=innerHeight;
-    heads.forEach(h=>{const r=h.getBoundingClientRect();if(r.top>vh*1.2||r.bottom<-vh*.2)return;const f=clamp((r.top-vh*.55)/(vh*.45),0,1).toFixed(3);h.style.setProperty('--fold',f);const c=h.parentElement;if(c)c.style.setProperty('--fold',f)});
-    if(lead){const r=lead.getBoundingClientRect();lead.style.setProperty('--lp',clamp(-r.top/(r.height||1),0,1).toFixed(3))}
-    if(mh){const r=mh.getBoundingClientRect();mh.style.setProperty('--mp',clamp(-r.top/200,0,1).toFixed(3))}
-  }
-  addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
-  addEventListener('resize',()=>{if(!raf)raf=requestAnimationFrame(frame)},{passive:true});
+  const go=()=>{if(!raf&&live&&onScreen)raf=requestAnimationFrame(frame)};
+  new IntersectionObserver(es=>{onScreen=es[0].isIntersecting;if(onScreen)go()}).observe(sec);
+  addEventListener('scroll',go,{passive:true});
+  document.addEventListener('visibilitychange',go);
+  /* keyboard focus on a later step moves the playhead to it */
+  sec.addEventListener('focusin',e=>{
+    if(!live)return;const i=steps.findIndex(s=>s.contains(e.target));if(i<0)return;
+    const r=sec.getBoundingClientRect();scrollTo({top:scrollY+r.top+(r.height-innerHeight)*Math.min(.999,(i+.6)/N),behavior:'instant'});
+  });
   frame();
 });
+/* ===== Type: each section's headline, set by its own technology =====
+   A small bundle of its own, in gfx/src/type. No shaders, and the load never waits for it. */
+if(motion)run(()=>{
+  import(new URL('gfx/type.min.js',location.href).href).then(m=>m.start()).catch(e=>{console.error('type',e);rootEl.classList.add('ty-off')});
+  if(innerWidth>=1024)import(new URL('gfx/field.min.js',location.href).href).then(m=>m.start()).catch(e=>console.error('field',e));
+  setTimeout(()=>{if(!window.__type)rootEl.classList.add('ty-off')},9000);
+});
+
+/* ===== Fig. 5: the sky over Kathmandu =====
+   grahan's own bundle, loaded as the section nears; the page's load never waits for it. */
+run(()=>{
+  const fig=document.getElementById('fig5');
+  if(!fig)return;
+  const load=()=>import(new URL('gfx/sky.min.js',location.href).href).then(m=>m.mount(fig)).catch(e=>{console.error('sky',e);fig.hidden=true});
+  if(!('IntersectionObserver' in window)){load();return}
+  const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();load()}},{rootMargin:'1400px 0px'});
+  io.observe(fig);
+});
+
 /* ===== Fig. 0, the helix =====
    Two strands, one in ink and one in red, turned about a vertical axis. Each rung
    carries a pair of facts; a label is lit as its rung turns broadside and dims as
@@ -3448,21 +4074,24 @@ run(()=>{
     cv.style.height=H+'px';cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
     R=clamp(W*.11,28,46);fig.style.setProperty('--gap',(2*R+44)+'px');
     top=18;step=(H-36)/N;
-    if(typeof measureLead==='function')measureLead();
   }
   const yAt=s=>top+(s+.5)*step;
   const shown=s=>(N-1-s)<zip*N+.5;
-  /* Scrolling out of the lead takes the helix apart: each rung leaves on its own
-     seeded line, ahead of the reel where the chips assemble. */
   const rr=s=>{const x=Math.sin(s*91.7+17.3)*24634.6345;return x-Math.floor(x)};
-  const leadEl=fig.closest('.lead');
-  let kx=0,leadTop=0,leadH=1;
-  const measureLead=()=>{if(leadEl){leadTop=leadEl.getBoundingClientRect().top+scrollY;leadH=leadEl.offsetHeight||1}};
+  /* the helix stays whole as the reader scrolls: no rung ever leaves its place */
+  const kx=0;
   const off=i=>[(rr(i)-.5)*W*1.2*kx,((rr(i+40)-.5)*H*.6-60)*kx];
   function draw(){
     const cx=W/2;
-    if(live&&leadEl){const q=clamp(((scrollY-leadTop)/leadH-.12)/.5,0,1);kx=q*q}else kx=0;
-    const fade=1-kx*.9;
+    const fade=1-kx*.9,gl=window.__gfx&&window.__gfx.helix;
+    if(gl){
+      items.forEach((li,i)=>{
+        const y=yAt(i)+off(i)[1],vis=shown(i),broad=Math.abs(Math.sin(i*TW+rot+kx*(rr(i+7)-.5)*6)),o=vis?(live?(.72+.28*broad)*(1-kx):1):0;
+        li.style.setProperty('--y',y.toFixed(1)+'px');li.style.setProperty('--o',(i===hot?1:o).toFixed(2));li.classList.toggle('off',(!vis||kx>.5)&&i!==hot);
+      });
+      gl.draw({W,H,N,TW,R,top,step,rot,zip,kx,hot,t:performance.now()/1000});
+      return;
+    }
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
     /* back strand first, then rungs, then the front strand, so depth reads */
     const segs=[];
@@ -3497,7 +4126,7 @@ run(()=>{
     const dt=lastT?Math.min(64,t-lastT):16;lastT=t;
     const y=scrollY,dy=y-lastY;lastY=y;
     rot+=dt*.00042+dy*.0045;
-    if(zip<1){if(!start)start=t+(rootEl.classList.contains('intro')?T0+200:350);const k=clamp((t-start)/1500,0,1);zip=1-Math.pow(1-k,3)}
+    if(zip<1){if(rootEl.classList.contains('intro'))start=window.__goAt?window.__goAt+T0+200:Infinity;else if(!start)start=t+350;const k=clamp((t-start)/1500,0,1);zip=1-Math.pow(1-k,3)}
     draw();
     if(onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
   }
@@ -3691,6 +4320,7 @@ if(motion)run(()=>{
   }
   function apply(){
     const f=P;cur=Math.min(N-1,Math.floor(f));
+    if(window.__reelShot!==cur){window.__reelShot=cur;document.dispatchEvent(new CustomEvent('reel:shot',{detail:cur}))}
     if(Math.abs(P-lastApplied)<.0004)return;lastApplied=P;
     reel.style.setProperty('--rp',(P/N).toFixed(4));
     shots.forEach((s,i)=>{
@@ -3723,7 +4353,9 @@ if(motion)run(()=>{
     P+=(target-P)*(1-Math.pow(1-.16,dt/16.7));
     if(Math.abs(target-P)<.0005||!onScreen)P=target;
     apply();
-    if(ctx&&W){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawBoard(t)}
+    const gl=window.__gfx&&window.__gfx.chip;
+    if(gl)gl.draw({W,H,P,N,cur,t:t/1000});
+    else if(ctx&&W){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawBoard(t)}
     if(onScreen&&!document.hidden)raf=requestAnimationFrame(frame);
     else lastT=0;
   }
@@ -3834,9 +4466,12 @@ if(motion)run(()=>{
     P+=(tgt-P)*(1-Math.pow(1-.14,dt/16.7));
     if(Math.abs(tgt-P)<.0004||!onScreen)P=tgt;
     if(P!==tgt&&onScreen)raf=requestAnimationFrame(frame);else lastT=0;
-    const p=P;
-    if(p===lastP)return;lastP=p;
+    const p=P,gl=window.__gfx&&window.__gfx.plate;
+    /* the 3D die keeps its signals running while it is on screen */
+    if(gl&&onScreen&&!raf)raf=requestAnimationFrame(frame);
     const s=p*U,cur=Math.min(N-1,Math.floor(s));
+    if(gl)gl.draw({s,N,cur,cf:ease(s-N),cr:clamp(s/N,0,1),t:performance.now()/1000});
+    if(p===lastP)return;lastP=p;
     const f0=clamp(s/.85,0,1);
     iso.style.setProperty('--cr',clamp(s/N,0,1).toFixed(4));
     iso.style.setProperty('--o0',clamp(s/.3,0,1).toFixed(3));
@@ -3854,7 +4489,7 @@ if(motion)run(()=>{
     lid.style.setProperty('--lo',clamp((fl-.5)/.4,0,1).toFixed(3));
     /* the turn: one more scroll stands the chip up to face the reader */
     iso.style.setProperty('--cf',ease(s-N).toFixed(4));
-    if(ctx&&W){
+    if(ctx&&W&&!gl){
       ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
       drawSand(SAND.die,f0,'#e9dcc0');
       forms.forEach(([set,f,c])=>drawSand(set,f,c));
