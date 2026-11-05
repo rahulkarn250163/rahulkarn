@@ -32,9 +32,11 @@
 <script>
 (function(){
   var d=document.documentElement;
-  /* The paper is white by default; dark is only ever an explicit choice from the toggle. */
+  /* The paper is white by default; dark is only ever an explicit choice from the toggle. Choices saved under the old
+     'theme' key are dropped, so everyone who had one starts again on white. */
   try{
-    if(localStorage.getItem('theme')==='dark'){
+    localStorage.removeItem('theme');
+    if(localStorage.getItem('paper')==='dark'){
       d.setAttribute('data-theme','dark');
       document.getElementById('themeColor').content='#121212';
     }
@@ -54,13 +56,22 @@
     if(!slow&&!location.hash){
       d.classList.add('intro','curtain');
       /* the opening shot, from orbit to the room: wide screens that can run it off the main thread */
-      if(innerWidth>=1024&&window.OffscreenCanvas&&window.Worker&&window.WebGL2RenderingContext&&HTMLCanvasElement.prototype.transferControlToOffscreen)d.classList.add('flying');
+      if(innerWidth>=1024&&window.OffscreenCanvas&&window.Worker&&window.WebGL2RenderingContext&&HTMLCanvasElement.prototype.transferControlToOffscreen){
+        /* it starts here, ahead of the body, so the shot and its Earth image are on their way before the rest of this file has arrived */
+        try{
+          var fc=document.createElement('canvas'),off=(fc.className='ld-fly',fc.transferControlToOffscreen()),fw=new Worker(new URL('gfx/fly.min.js',location.href)),box=[];
+          fw.onmessage=function(e){box.push(e)};
+          fw.postMessage({canvas:off,w:innerWidth,h:innerHeight,px:Math.min(window.devicePixelRatio||1,1.5)},[off]);
+          window.__flyEarly={canvas:fc,worker:fw,box:box};
+          d.classList.add('flying');
+        }catch(err){}
+      }
       /* nothing on the page runs until the load is done; this sheet is removed at the lift */
       var hold=document.createElement('style');hold.id='introHold';
       hold.textContent='*,*::before,*::after{animation-play-state:paused!important}.loader,.loader *,.loader *::before,.loader *::after{animation-play-state:running!important}';
       document.head.appendChild(hold);
     }
-    setTimeout(function(){if(!window.__revealArmed){d.classList.remove('motion','intro','curtain');var h=document.getElementById('introHold');if(h)h.remove()}if(!window.__pageOk)d.classList.remove('js')},2500);setTimeout(function(){d.classList.remove('curtain')},18000);
+    setTimeout(function(){if(!window.__revealArmed){d.classList.remove('motion','intro','curtain','flying');var h=document.getElementById('introHold');if(h)h.remove();if(window.__flyEarly){window.__flyEarly.worker.terminate();window.__flyEarly=null}}if(!window.__pageOk)d.classList.remove('js')},d.classList.contains('flying')?9000:2500);setTimeout(function(){d.classList.remove('curtain')},18000);
   }
 })();
 </script>
@@ -694,7 +705,7 @@ html.no-smcp .slip-head i{text-transform:none;font-size:var(--fs-1);letter-spaci
 @keyframes dash{to{stroke-dashoffset:0}}
 @keyframes flow{0%{transform:translateY(-3px);opacity:0}15%,70%{opacity:1}100%{transform:translateY(17px);opacity:0}}
 @keyframes strike{to{transform:none}}
-@keyframes stamp{from{opacity:0;transform:scale(1.9) translateY(-.08em);filter:blur(10px)}}
+@keyframes stamp{from{opacity:0;transform:scale(1.9) translateY(-.08em)}}
 @keyframes gone{to{visibility:hidden}}
 @keyframes ink{from{color:var(--faint)}}
 
@@ -1089,7 +1100,7 @@ html.ty-off [data-type]{visibility:visible!important}
 /* ===== Motion II: the second press run =====
    Everything here is gated on .motion, so the Still control, reduced motion and
    readers without the script keep the still page. */
-@keyframes slam{0%{opacity:0;transform:scale(2.4) rotate(-12deg);filter:blur(6px)}55%{opacity:1;transform:scale(.92) rotate(-2deg);filter:none}100%{transform:rotate(-2deg)}}
+@keyframes slam{0%{opacity:0;transform:scale(2.4) rotate(-12deg)}55%{opacity:1;transform:scale(.92) rotate(-2deg)}100%{transform:rotate(-2deg)}}
 @keyframes boxdraw{from{clip-path:inset(50% 50% 50% 50%)}to{clip-path:inset(-2px)}}
 @keyframes rayglow{from{stroke-opacity:.35}to{stroke-opacity:1}}
 @keyframes wireflow{to{stroke-dashoffset:-14}}
@@ -1787,7 +1798,6 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="loader" aria-hidden="true">
-  <canvas class="ld-fly"></canvas>
   <div class="ld-in">
     <p class="ld-label" id="ldLabel">Loading portfolio</p>
     <p class="ld-n"><span id="ldN">000</span><small>%</small></p>
@@ -1808,33 +1818,41 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   var intro=d.classList.contains('intro'),LOAD_MAX=12000,MIN_SHOW=900,t0=performance.now();
   var n=document.getElementById('ldN'),bar=document.getElementById('ldBar'),label=document.getElementById('ldLabel');
   var W={type:1,img:1,code:4,gl:14},got={type:0,img:0,code:0,gl:0},shown=0,went=false,timer=0;
+  /* how long the run through space holds for the load, in ms of the page being on screen, and how long the flight's
+     last frame holds for the press run: whatever is late, nobody is left watching a number that does not move */
+  var FLY_WAIT=7000,FLY_END_WAIT=4000,seen=0,capped=false,flyEnded=0;
   var c=navigator.connection,phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
   var can3d=!!window.WebGL2RenderingContext&&!(c&&(c.saveData||/\b[23]g\b/.test(c.effectiveType||'')))&&!(phone&&(navigator.deviceMemory||4)<6);
   function say(s){if(label&&!went)label.textContent=s}
   /* the opening shot flies on a worker's thread: nothing built on this one can make it drop a frame */
-  var fly=null,flyTold=false,sub=document.getElementById('ldSub');
+  var fly=null,flyTold=false,began=false,sub=document.getElementById('ldSub'),early=window.__flyEarly;
   function flyOff(){if(fly){fly.terminate();fly=null}d.classList.remove('flying')}
-  if(intro&&can3d&&d.classList.contains('flying')){
-    try{
-      var cv=document.querySelector('.ld-fly'),off=cv.transferControlToOffscreen(),lat="27.7172° N, 85.3240° E";
-      fly=window.__fly=new Worker(new URL('gfx/fly.min.js',location.href));
-      fly.onerror=flyOff;
-      fly.onmessage=function(e){
-        var m=e.data;
-        if(m.t==='fail'){flyOff();begin3d()}
-        /* a frame from the page after that one means the shot is really on screen: only now does its clock run */
-        if(m.t==='first')requestAnimationFrame(function(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){if(fly)fly.postMessage({shown:true});setTimeout(begin3d,240)},140)})})});
-        if(m.t==='done')go();
-        if(m.t==='hud'&&sub)sub.textContent=lat+' · '+(m.unit==='km'?Math.round(m.alt).toLocaleString('en-US')+' km':Math.round(m.alt)+' m');
-      };
-      fly.postMessage({canvas:off,w:innerWidth,h:innerHeight,px:Math.min(window.devicePixelRatio||1,1.5)},[off]);
-      addEventListener('resize',function(){if(fly)fly.postMessage({size:[innerWidth,innerHeight]})});
-      /* a tap or a key hurries it along, as far as the load allows */
-      var hurry=function(){if(fly)fly.postMessage({rush:true})};
-      document.querySelector('.loader').addEventListener('pointerdown',hurry);
-      addEventListener('keydown',hurry,{once:true});
-    }catch(err){flyOff()}
-  }else{d.classList.remove('flying')}
+  if(intro&&can3d&&early){
+    var lat="27.7172° N, 85.3240° E",hear=function(e){
+      var m=e.data;
+      if(m.t==='fail'){flyOff();begin3d()}
+      /* the worker has drawn; its clock runs once this page really has that frame to show, and two of its own frames later */
+      if(m.t==='first'){
+        var waited=performance.now(),show=function(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){if(fly)fly.postMessage({shown:true});setTimeout(begin3d,240)},160)})})};
+        (function check(){
+          if(performance.now()-waited>2400)return show();
+          createImageBitmap(early.canvas).then(function(b){b.close();show()},function(){requestAnimationFrame(check)});
+        })();
+      }
+      if(m.t==='done'){flyEnded=performance.now();if(got.gl>=1)go()}
+      if(m.t==='hud'&&sub)sub.textContent=lat+' · '+(m.unit==='km'?Math.round(m.alt).toLocaleString('en-US')+' km':Math.round(m.alt).toLocaleString('en-US')+' m');
+    };
+    fly=window.__fly=early.worker;
+    document.querySelector('.loader').prepend(early.canvas);
+    fly.onerror=function(){flyOff();begin3d()};
+    fly.onmessage=hear;
+    early.box.forEach(hear);
+    addEventListener('resize',function(){if(fly)fly.postMessage({size:[innerWidth,innerHeight]})});
+    /* a tap or a key hurries it along */
+    var hurry=function(e){if(fly&&!(e&&e.type==='keydown'&&/^(Tab|Shift|Control|Alt|Meta)$/.test(e.key)))fly.postMessage({rush:true})};
+    document.querySelector('.loader').addEventListener('pointerdown',hurry);
+    addEventListener('keydown',hurry);
+  }else{if(early)early.worker.terminate();d.classList.remove('flying')}
   function share(){var a=0,b=0;for(var k in W){a+=W[k]*got[k];b+=W[k]}return a/b}
   function skip(e){
     var press=document.querySelector('.press');
@@ -1868,11 +1886,16 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
     timer=setInterval(function(){
       /* eased by the clock, not the tick: a background tab's timer runs slow */
       var now=performance.now(),el=now-t0,target=share();
+      if(!document.hidden)seen+=now-last;
+      if(fly&&seen>=FLY_WAIT)capped=true;
+      if(capped&&fly)target=1;
       shown+=(target-shown)*(1-Math.pow(.78,(now-last)/33));last=now;if(target>=1&&shown>.96)shown=1;
       if(n)n.textContent=('00'+Math.round(shown*100)).slice(-3);
       if(bar)bar.style.transform='scaleX('+shown.toFixed(3)+')';
+      /* the bar sets the pace of the run through space */
+      if(fly)fly.postMessage({p:shown});
       if(fly&&shown>=1&&!flyTold){flyTold=true;fly.postMessage({ready:true})}
-      if((shown>=1&&el>=MIN_SHOW&&!fly)||(el>=LOAD_MAX+(fly?8000:0)))go();
+      if((shown>=1&&el>=MIN_SHOW&&!fly)||(el>=LOAD_MAX+(fly?48000:0))||(flyEnded&&(got.gl>=1||now-flyEnded>=FLY_END_WAIT)))go();
     },33);
   }
   var fontsDone=function(){got.type=1};
@@ -1880,7 +1903,9 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
   function images(){
     var ims=[].slice.call(document.images);
     if(!ims.length){got.img=1;return}
-    var left=ims.length,one=function(){left--;got.img=1-left/ims.length};
+    var left=ims.length,one=function(){left--;got.img=Math.max(got.img,1-left/ims.length)};
+    /* a portrait far down the page is no reason to hold the opening: a stalled request counts as done */
+    setTimeout(function(){got.img=1},2500);
     /* decode() waits for a frame that a background tab never draws, so it only gets a head start on the load event */
     ims.forEach(function(im){
       var seen=false,ok=function(){if(seen)return;seen=true;one()},after=function(){setTimeout(ok,400)};
@@ -1906,10 +1931,9 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
       return m.boot({wantIntro:intro,press:document.querySelector('.press'),word:document.querySelector('.press-word'),report:function(k){got.gl=k;if(k>.72)say('Compiling shaders')}});
     }).then(function(){got.gl=1},function(e){console.error(e);got.code=got.gl=1});
   }
-  /* the heavy build waits for the shot's first frame, so that frame is the first thing anyone sees */
-  var began=false;
+  /* the heavy build waits for the first frame of the shot, so that frame is the first thing anyone sees */
   function begin3d(){if(began)return;began=true;load3d()}
-  function ready(){images();if(intro&&fly){setTimeout(begin3d,2200)}else if(intro)load3d();else if(window.requestIdleCallback)requestIdleCallback(load3d,{timeout:2500});else setTimeout(load3d,400)}
+  function ready(){images();if(intro&&fly){setTimeout(begin3d,3000)}else if(intro)begin3d();else if(window.requestIdleCallback)requestIdleCallback(load3d,{timeout:2500});else setTimeout(load3d,400)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
 })();
 </script>
@@ -2202,7 +2226,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 <header id="top">
   <div class="container">
     <div class="dateline"><div class="dateline-inner">
-      <span><span class="vol">Vol. V, No. 10</span> · Kathmandu, Nepal<span class="clock"></span></span>
+      <span><span class="vol">Vol. V, No. 11</span> · Kathmandu, Nepal<span class="clock"></span></span>
       <div class="ear"><span class="ear-txt"></span><b class="late-stamp">Late Edition</b><button type="button" class="verify-btn" aria-expanded="false" aria-controls="verify" hidden>Verify</button></div>
       <a class="open-note" href="#contact">Open to Solution Architect Roles</a>
     </div>
@@ -3057,7 +3081,7 @@ ORDER  BY DueDate</pre>
   <div class="plate">
     <div class="container"><div class="footer-inner">
       <div class="footer-mark" aria-hidden="true"><span style="--i:0">R</span><span style="--i:1">a</span><span style="--i:2">h</span><span style="--i:3">u</span><span style="--i:4">l</span> <span style="--i:6">K</span><span style="--i:7">a</span><span style="--i:8">r</span><span style="--i:9">n</span></div>
-      <p class="colophon">Vol. V, No. 10 · Set in Newsreader · Printed in Kathmandu</p>
+      <p class="colophon">Vol. V, No. 11 · Set in Newsreader · Printed in Kathmandu</p>
       <p class="footer-copy">&copy; <span id="footerYear"></span> Rahul Karn · Kalanki, Kathmandu, Nepal</p>
       <div class="footer-social">
         <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener">LinkedIn</a>
@@ -3511,7 +3535,7 @@ themeToggle.addEventListener('click',()=>{
   const apply=()=>{
     const goingDark=rootEl.getAttribute('data-theme')!=='dark';
     if(goingDark)rootEl.setAttribute('data-theme','dark');else rootEl.removeAttribute('data-theme');
-    try{localStorage.setItem('theme',goingDark?'dark':'light')}catch(e){}
+    try{localStorage.setItem('paper',goingDark?'dark':'light')}catch(e){}
     setThemeToggleState();
   };
   /* The new paper spreads out from the toggle in a growing circle. */

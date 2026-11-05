@@ -1,15 +1,17 @@
 /* Every topic forms something. In each section's empty space a real product is put together piece by
    piece as the reader arrives, the way the computer's parts land in the press run, and it plays again
    on every arrival. It turns with the scroll, and a hard scroll shakes it apart until the page settles.
+   A product with a scrub() is run by the scroll instead of the clock: where you are in the section is how far
+   it has been built, in either direction.
    One renderer draws them all and copies each to its own small canvas in the page, so the browser
    scrolls it with the type and no frame of ours can hold the scroll up, while everything is compiled
    only once. All of it is built during the load, like every other figure. Web widths only. */
 import {THREE, createStage, studioEnv, breathe} from '../core.js';
 import * as tower from './tower.js';
-import * as knife from './knife.js';
+import * as stack from './stack.js';
 import * as trio from './trio.js';
 import * as orrery from './orrery.js';
-import * as turbine from './turbine.js';
+import * as jet from './jet.js';
 import * as scholar from './scholar.js';
 import * as satellite from './satellite.js';
 
@@ -64,7 +66,14 @@ const DEFS = [
     const a = docOf(q), b = docOf(s), jump = s.querySelector('.jump');
     return {r0: box(a.l - 12, pageRight(), a.b + 8, (jump ? docOf(jump).t : b.b) - 6)};
   }},
-  {id: 'skills', mod: knife, place: () => band('skills')},
+  {id: 'skills', mod: stack, place() {
+    const b = band('skills');
+    if (!b) return null;
+    /* a small window where the code is written, and the stack forming beside it */
+    const r = b.r0, l = r.cx - r.w / 2, top = r.cy - r.h / 2, ww = 268, wh = 180;
+    if (r.w < ww + 180) return b;
+    return {r0: box(l + ww + 8, l + r.w, top, top + r.h), win: {x: Math.round(l), y: Math.round(r.cy - wh / 2), w: ww}};
+  }},
   {id: 'cases', mod: trio, place: () => band('case-studies')},
   {id: 'oss', mod: orrery, place() {
     const s = document.getElementById('open-source'), h = s && s.querySelector('.sec-heading'), e = s && s.querySelector('.oss-head > .eclipse');
@@ -72,7 +81,7 @@ const DEFS = [
     const a = docOf(s), b = docOf(h), right = e ? docOf(e).l - 10 : pageRight();
     return {r0: box(inkRight([h]) + 28, right, a.t + 8, b.b + 8)};
   }},
-  {id: 'exp', mod: turbine, place: () => pinned('experience', '#experience .timeline-block')},
+  {id: 'exp', mod: jet, place: () => pinned('experience', '#experience .timeline-block')},
   {id: 'edu', mod: scholar, place: () => pinned('education', '#education .edu-card')},
   {id: 'contact', mod: satellite, place() {
     const s = document.getElementById('contact'), c = s && s.querySelector('.classified');
@@ -93,7 +102,7 @@ function makeEntry(def) {
   canvas.style.cssText = 'position:sticky;display:block;pointer-events:none;visibility:hidden';
   host.appendChild(canvas);
   document.body.appendChild(host);
-  return {def, prod: null, host, canvas, ctx: canvas.getContext('2d'), t0: null, ok: false, shown: false, r0: null, r1: null, y0: 0, y1: 0, left: 0, cw: 1, ch: 1, pw: 1, ph: 1};
+  return {def, prod: null, host, canvas, ctx: canvas.getContext('2d'), t0: null, play: null, ok: false, shown: false, r0: null, r1: null, y0: 0, y1: 0, left: 0, cw: 1, ch: 1, pw: 1, ph: 1};
 }
 
 function layout(e, W, H, dpr) {
@@ -110,7 +119,10 @@ function layout(e, W, H, dpr) {
   e.left = left;
   /* the host spans the stretch the product travels; the canvas sticks in the middle of the screen along it */
   e.host.style.left = left + 'px';
-  e.host.style.top = Math.round(e.y0 - ch / 2) + 'px';
+  const hostTop = Math.round(e.y0 - ch / 2);
+  e.host.style.top = hostTop + 'px';
+  e.hostTop = hostTop;
+  if (e.prod.place) e.prod.place(m.win ? {x: m.win.x - left, y: m.win.y - hostTop, w: m.win.w} : null);
   e.host.style.width = cw + 'px';
   e.host.style.height = Math.round(e.y1 - e.y0 + ch) + 'px';
   e.canvas.style.top = Math.round((H - ch) / 2) + 'px';
@@ -122,9 +134,9 @@ function layout(e, W, H, dpr) {
   if (pw !== e.pw || ph !== e.ph) { e.pw = pw; e.ph = ph; e.canvas.width = pw; e.canvas.height = ph; }
 }
 
-function pose(prod, t, spread) {
-  const reach = prod.reach || 2.4;
+function pose(prod, t, spread, clock = t) {
   for (const c of prod.pieces) {
+    const reach = c.reach || prod.reach || 2.4;
     const k = (t - c.at) / c.dur;
     if (k <= 0) { c.obj.visible = false; continue; }
     c.obj.visible = true;
@@ -141,13 +153,26 @@ function pose(prod, t, spread) {
     c.obj.rotation.set(c.rot.x + c.spin[0] * b, c.rot.y + c.spin[1] * b, c.rot.z + c.spin[2] * b);
     c.obj.scale.set(c.size.x * grow, c.size.y * grow, c.size.z * grow);
   }
-  if (prod.tick) prod.tick(t);
+  if (prod.tick) prod.tick(t, clock);
 }
 
 /* Built during the load: every product, its programs and its buffers, so none of it hitches later. */
 export async function prepare(report = () => {}) {
   const sheet = document.createElement('style');
-  sheet.textContent = '@media print{.forge-host{display:none!important}}';
+  sheet.textContent = `@media print{.forge-host{display:none!important}}
+.fg-win{position:absolute;box-sizing:border-box;z-index:1;background:var(--bg);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 30px rgba(0,0,0,.14);overflow:hidden;contain:layout paint;font:11px/17px ui-monospace,"Cascadia Code",Consolas,Menlo,monospace;color:var(--text);opacity:0}
+.fg-bar{display:flex;align-items:center;gap:5px;height:24px;padding:0 10px;border-bottom:1px solid var(--line);background:var(--wash);color:var(--mid);font-size:10px}
+.fg-bar i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.fg-bar i:first-child{background:var(--red)}
+.fg-bar span{margin-left:6px}
+.fg-code{padding:7px 0 8px}
+.fg-l{height:17px;padding:0 10px;white-space:pre}
+.fg-l.on{background:var(--wash)}
+.fg-l.on::after{content:'';display:inline-block;width:6px;height:12px;margin-left:1px;vertical-align:-2px;background:var(--red)}
+.fg-k{color:var(--red)}
+.fg-m{font-weight:700;color:var(--ink)}
+.fg-s{color:var(--mid)}
+.fg-beam{position:absolute;left:0;top:0;width:1px;height:1px;background:var(--red);transform-origin:0 50%;opacity:0;will-change:transform}`;
   document.head.appendChild(sheet);
   const W = () => document.documentElement.clientWidth, H = () => document.documentElement.clientHeight;
 
@@ -173,10 +198,11 @@ export async function prepare(report = () => {}) {
   }
 
   /* set one product where it belongs in its canvas, at the size its space allows */
-  function aim(e, x, w, h, u, t, spread, HH) {
-    const {prod} = e, scale = Math.min(w / 2 / prod.ex, h / 2 / prod.ey), D = (e.ch / (2 * Math.tan(FOV * Math.PI / 360))) / scale;
-    pose(prod, t, spread);
-    prod.root.rotation.set(prod.pitch + u * .24, prod.yaw - u * 1.15 * (prod.turn || 1) + Math.sin(t * .35) * .06, 0);
+  function aim(e, x, w, h, u, t, spread, HH, clock = t) {
+    const {prod} = e, v = prod.view ? prod.view(t, clock) : prod, scale = Math.min(w / 2 / v.ex, h / 2 / v.ey), D = (e.ch / (2 * Math.tan(FOV * Math.PI / 360))) / scale;
+    pose(prod, t, spread, clock);
+    prod.root.rotation.set(v.pitch + u * .24, v.yaw - u * 1.15 * (prod.turn || 1) + Math.sin(clock * .35) * .06, v.roll || 0);
+    prod.root.position.set(v.dx || 0, v.dy || 0, 0);
     camera.position.set(0, 0, D);
     camera.near = Math.max(.5, D * .25);
     camera.far = D * 4;
@@ -194,10 +220,17 @@ export async function prepare(report = () => {}) {
     e.ctx.clearRect(0, 0, e.pw, e.ph);
     e.ctx.drawImage(src, 0, src.height - e.ph, e.pw, e.ph, 0, 0, e.pw, e.ph);
   }
+  /* where a point of the product falls in its host, for anything in the page drawn to meet it */
+  const seen = new THREE.Vector3();
+  const projector = {t: 0, e: null, at(v) {
+    seen.copy(v).applyMatrix4(this.e.prod.root.matrixWorld).project(camera);
+    return {x: (seen.x + 1) / 2 * this.e.cw, y: (1 - seen.y) / 2 * this.e.ch};
+  }};
 
   for (let i = 0; i < DEFS.length; i++) {
     const e = makeEntry(DEFS[i]);
     e.prod = DEFS[i].mod.make();
+    if (e.prod.mount) e.prod.mount(e.host);
     scene.add(e.prod.root);
     live.push(e);
     report((i + 1) / DEFS.length * .7);
@@ -218,7 +251,7 @@ export async function prepare(report = () => {}) {
 
   let raf = 0, alive = true, prevS = scrollY, prevT = 0, lag = 0;
   const state = {frames: 0, cost: 0, on: []};
-  const hide = e => { if (e.shown) { e.shown = false; e.canvas.style.visibility = 'hidden'; } };
+  const hide = e => { if (e.shown) { e.shown = false; e.canvas.style.visibility = 'hidden'; if (e.prod.show) e.prod.show(false); } };
 
   function frame(now) {
     raf = 0;
@@ -233,16 +266,27 @@ export async function prepare(report = () => {}) {
     for (const e of live) {
       if (!e.ok) continue;
       const cy = clamp(s + HH / 2, e.y0, Math.max(e.y0, e.y1));
-      const m = e.y1 > e.y0 ? smooth(clamp((cy - e.y0) / Math.min(HH * .7, e.y1 - e.y0))) : 0;
+      const m = e.y1 > e.y0 ? smooth(clamp((cy - e.y0) / Math.min(HH * .36, e.y1 - e.y0))) : 0;
       const w = mix(e.r0.w, e.r1.w, m), h = mix(e.r0.h, e.r1.h, m), x = mix(e.r0.cx, e.r1.cx, m), y = cy - s;
       const top = y - h / 2, bottom = y + h / 2;
       /* entirely gone: it starts over on the next arrival */
-      if (bottom < -60 || top > HH + 60) { e.t0 = null; hide(e); continue; }
+      if (bottom < -60 || top > HH + 60) { e.t0 = null; e.play = null; hide(e); continue; }
       if (e.t0 === null && y < HH * .86 && bottom > HH * .12) e.t0 = now;
       if (e.t0 === null) continue;
-      if (!e.shown) { e.shown = true; e.canvas.style.visibility = 'visible'; }
-      aim(e, x, w, h, y / HH - .5, (now - e.t0) / 1000, spread, HH);
+      if (!e.shown) { e.shown = true; e.canvas.style.visibility = 'visible'; if (e.prod.show) e.prod.show(true); }
+      const clock = (now - e.t0) / 1000;
+      let t = clock, shake = spread;
+      if (e.prod.scrub) {
+        /* how far through the section the reader is, eased so a wheel's steps do not show. With no column to travel
+           down, the product builds across the time it is on screen */
+        const p = e.y1 > e.y0 ? clamp((cy - e.y0) / (e.y1 - e.y0)) : clamp((s + HH * .6 - e.y0) / (HH * .7)), want = e.prod.scrub(p, e.y1 > e.y0 ? cy - e.y0 : p * 1300);
+        e.play = e.play === null ? want : e.play + (want - e.play) * (1 - Math.exp(-dt / 150));
+        t = e.play;
+        shake = 0;
+      }
+      aim(e, x, w, h, y / HH - .5, t, shake, HH, clock);
       shoot(e);
+      if (e.prod.after) { projector.t = t; projector.e = e; e.prod.after(projector); }
       state.on.push(e.def.id);
     }
     if (state.on.length) {
@@ -259,7 +303,7 @@ export async function prepare(report = () => {}) {
 
   const api = window.__forge = {
     state, measure,
-    scenes: () => live.filter(e => e.ok).map(e => ({id: e.def.id, y0: e.y0, y1: e.y1, w: Math.round(e.r0.w), h: Math.round(e.r0.h), cx: Math.round(e.r0.cx), r1w: Math.round(e.r1.w), r1h: Math.round(e.r1.h), cw: e.cw, ch: e.ch})),
+    scenes: () => live.filter(e => e.ok).map(e => ({id: e.def.id, y0: e.y0, y1: e.y1, w: Math.round(e.r0.w), h: Math.round(e.r0.h), cx: Math.round(e.r0.cx), r1w: Math.round(e.r1.w), r1h: Math.round(e.r1.h), cw: e.cw, ch: e.ch, pieces: e.prod.pieces.length})),
     start() {
       ro = new ResizeObserver(relayout);
       ro.observe(document.body);
