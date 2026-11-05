@@ -1,6 +1,6 @@
 /* Experience: "Nine years in production, from premium engine to platform." The section opens on the whole aircraft,
    the role held now, and reading down takes it apart in the reverse of how it was built: skin panels peel off the
-   frames, the wings shed their slats, flaps and ribs, some three hundred pieces in the space of a few scrolls, until
+   frames, the wings shed their slats, flaps and ribs, nearly four hundred pieces over the length of the section, until
    only the engine is left, cut away so you can see into it, where the work began. Reading back up builds the jet.
    The scroll is the clock: t is 0 at the engine and END at the finished aircraft.
 
@@ -10,8 +10,8 @@
 import {THREE, std, phys, mats, merge, M, cyl, lathe, alongX, builder, glide, glowing} from './kit.js';
 
 const END = 9.6, TAU = Math.PI * 2, R = 1.12, TOP = Math.PI * 1.5;
-/* how far down the section the whole build is spent, in px, so it stays dense however long the section is */
-const SPAN = 1100, HOLD = 70;
+/* the build runs the length of the section: the whole jet as it opens, the engine alone as it ends, with a short hold at each */
+const HOLD_TOP = .04, HOLD_END = .06;
 const log = Math.log;
 const mix = (a, b, k) => a + (b - a) * k;
 const clamp01 = k => Math.max(0, Math.min(1, k));
@@ -374,8 +374,7 @@ export function make() {
   const view = {ex: 1.46, ey: .92, pitch: .16, yaw: .52, roll: 0, dx: 0, dy: 0};
   return {
     root: b.root, pieces: b.pieces, ex: 12, ey: 6, pitch: .34, yaw: .62, reach: 6, turn: .3,
-    /* the build is spent in the first stretch of the section, and the engine holds down the rest of it */
-    scrub: (p, px) => END * (1 - clamp01((px - HOLD) / SPAN)),
+    scrub: p => END * (1 - clamp01((p - HOLD_TOP) / (1 - HOLD_TOP - HOLD_END))),
     view(t, clock) {
       const k = pull(t);
       /* the finished aircraft's outline from this angle is wider on the side of the near wing, so it sits a little left */
