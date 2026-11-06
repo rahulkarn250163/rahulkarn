@@ -958,7 +958,9 @@ html.ty-off [data-type]{visibility:visible!important}
   transition:opacity .6s var(--ease),transform .9s var(--ease),background-color .2s,color .2s,border-color .2s;
   transition-delay:var(--d,0s),var(--d,0s),0s,0s,0s}
 .motion :is(.ledger-row,.contact-card):not(.in){transform:translateX(-20px)}
+.motion :is(.sec .kicker,.sec-desc,.about-text,.pull-quote,.ledger-row,.case-card,.oss-fig,.oss-col,.oss-links,.timeline-block,.edu-card,.classified,.contact-card,.hero-stats .stat,.stack-row,.stats-note,.jump,.unfold,.notices-head,.notice).in{opacity:1;transform:none}
 /* Keyboard focus lands on things that are visible. */
+.motion :is(.ledger-row,.case-card,.oss-links,.classified,.contact-card,.edu-card,.timeline-block,.jump,.unfold,.oss-col,.stack-row,.hero-stats .stat,.about-text,.sec-desc,.notice):focus-within{opacity:1;transform:none;transition-duration:0s;transition-delay:0s}
 .motion .sec .kicker::after{transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease) .25s}
 .motion .sec .kicker.in::after{transform:none}
 /* Ledger figures, case numbers and the notice stamps are set type: they ink in
@@ -1101,6 +1103,8 @@ html.ty-off [data-type]{visibility:visible!important}
 @keyframes caret{50%{opacity:0}}
 @keyframes rule-run{from{transform:scaleX(0)}}
 /* Body copy: each paragraph and list item wipes up out of its own line, after its column. */
+.motion :is(.about-text p,.oss-col p,.timeline-block li,.edu-card li,.notice-body .nb,.ad-body p){opacity:0;transform:translateY(12px);clip-path:inset(-10% -4% 100% -4%);transition:opacity .5s ease,transform .9s var(--ease),clip-path .9s var(--ease);transition-delay:calc(var(--d,0s) + .18s + var(--li,0)*70ms)}
+.motion :is(.about-text,.oss-col,.timeline-block,.edu-card,.notice,.classified).in :is(p,li,.nb),.motion :is(.about-text,.oss-col,.timeline-block,.edu-card,.notice,.classified):focus-within :is(p,li,.nb){opacity:1;transform:none;clip-path:inset(-10% -4% -10% -4%)}
 /* Kickers are set on the teletype, one character at a time, with a caret. */
 .motion .sec .kicker .kc{opacity:0}
 .motion .sec .kicker.in .kc{opacity:1;animation:kc .01s steps(1) calc(var(--d,0s) + var(--k)*32ms) both}
@@ -2200,7 +2204,7 @@ html:not(.motion) .ticker-list{flex-shrink:1;flex-wrap:wrap}
 <header id="top">
   <div class="container">
     <div class="dateline"><div class="dateline-inner">
-      <span><span class="vol">Vol. V, No. 14</span> · Kathmandu, Nepal<span class="clock"></span></span>
+      <span><span class="vol">Vol. V, No. 15</span> · Kathmandu, Nepal<span class="clock"></span></span>
       <div class="ear"><span class="ear-txt"></span><b class="late-stamp">Late Edition</b><button type="button" class="verify-btn" aria-expanded="false" aria-controls="verify" hidden>Verify</button><button type="button" class="edition-btn" data-edition aria-label="Switch to the basic edition: the same page with nothing in motion"><span class="ed-basic">Basic edition</span><span class="ed-full">Full edition</span></button></div>
       <a class="open-note" href="#contact">Open to Solution Architect Roles</a>
     </div>
@@ -3052,7 +3056,7 @@ ORDER  BY DueDate</pre>
   <div class="plate">
     <div class="container"><div class="footer-inner">
       <div class="footer-mark" aria-hidden="true"><span style="--i:0">R</span><span style="--i:1">a</span><span style="--i:2">h</span><span style="--i:3">u</span><span style="--i:4">l</span> <span style="--i:6">K</span><span style="--i:7">a</span><span style="--i:8">r</span><span style="--i:9">n</span></div>
-      <p class="colophon">Vol. V, No. 14 · Set in Newsreader · Printed in Kathmandu</p>
+      <p class="colophon">Vol. V, No. 15 · Set in Newsreader · Printed in Kathmandu</p>
       <p class="footer-copy">&copy; <span id="footerYear"></span> Rahul Karn · Kalanki, Kathmandu, Nepal</p>
       <div class="footer-social">
         <a href="https://linkedin.com/in/rahulkarn52" target="_blank" rel="noopener">LinkedIn</a>
