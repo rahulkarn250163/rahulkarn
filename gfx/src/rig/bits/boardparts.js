@@ -1,5 +1,5 @@
 // Motherboard components on a board facing -x (surface at x=-38.1).
-import {THREE, mats, rbox, box, merge, mesh, plate, canvasTex, normalFromHeight, brushedCanvas, std} from '../../core.js';
+import {THREE, mats, rbox, box, merge, mesh, canvasTex, normalFromHeight, brushedCanvas, std} from '../../core.js';
 
 const S = -38.1;
 
@@ -25,10 +25,8 @@ export function make() {
 
   // Chokes beside the sinks
   for (let i = 0; i < 6; i++) {
-    const z = -6.3 + 0, y = 37.2 + 0;
     const cz = -17.8 + i * 1.75;
     chip.push(rbox(-38.95, 37.1, cz, S, 38.3, cz + 1.3, .14));
-    void z; void y;
   }
 
   // Ten capacitors, axis along x

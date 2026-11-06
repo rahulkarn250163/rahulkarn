@@ -74,7 +74,7 @@ function foil({le, te, y, t, z}) {
   const skin = up => (s, c) => [X(s, c), y(s) + chord(s) * t(s) * naca(c) * (up ? 1.08 : -.72), z(s)];
   const inside = (s, c) => [X(s, c), y(s), z(s)];
   return {
-    X, chord, inside,
+    X, chord,
     /* both skins of a stretch of it, closed */
     both: (s0, s1, c0, c1, ns = 2, nc = 4) => merge([patch(skin(true), s0, s1, c0, c1, ns, nc, inside), patch(skin(false), s0, s1, c0, c1, ns, nc, inside)]),
     top: (s0, s1, c0, c1, ns = 2, nc = 3) => patch(skin(true), s0, s1, c0, c1, ns, nc, inside),

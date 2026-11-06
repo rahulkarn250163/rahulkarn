@@ -57,7 +57,7 @@ export function makeSand(groups, {size = 1.6} = {}) {
   });
   const geo = new THREE.BufferGeometry();
   const set = (name, arr, k) => geo.setAttribute(name, new THREE.BufferAttribute(arr, k));
-  // position mirrors aStart so three has a position attribute to count vertices and bound by
+  // position is a zeroed placeholder so three has a position attribute to count vertices by; frustum culling is off
   geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(total * 3), 3));
   set('aTarget', target, 2); set('aStart', start, 2); set('aDelay', delay, 1);
   set('aGroup', group, 1); set('aZ', z, 1); set('aColor', color, 3);

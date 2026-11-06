@@ -18,7 +18,6 @@ export function keyAtlas() {
     ctx.fillStyle = '#17181a';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#cfcabd';
-    ctx.font = "46px Newsreader, Georgia, serif";
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     KEYS.forEach((label, k) => {

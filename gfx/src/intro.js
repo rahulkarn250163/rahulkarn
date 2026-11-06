@@ -5,8 +5,8 @@
    glass until the lit screen fills the frame, and only then does the page fade up.
    The lit screen itself is a DOM sheet in the page's own paper colour, so it matches
    the page exactly whatever the tone mapping does. Times are seconds after the lift
-   and must stay in step with the press run's CSS beats. */
-import gsap from 'gsap';
+   and must stay in step with the press run's CSS beats. On the page the run is a job on the page's motor
+   (window.__motor), one frame with everything else that moves; the lab, which has no motor, gets a loop. */
 import {THREE, createStage, studioEnv, breathe, canvasTex} from './core.js';
 import {buildRig, SCREEN} from './rig/index.js';
 import {addLights} from './rig/bits/lights.js';
@@ -45,7 +45,10 @@ export async function create({canvas, tier, press, word, preserve = false}) {
   halo.visible = false;
   scene.add(halo);
 
-  let ticks = 0, mirror = null, parts = [], lights = null, panelPart = null, cablesPart = null, tl = null, ticking = false, done = false;
+  let ticks = 0, mirror = null, parts = [], lights = null, panelPart = null, cablesPart = null, ticking = false, done = false;
+  /* the clock: seconds since play(), capped at the end of the push, or a frame held by seek() */
+  let t0 = 0, held = -1, job = null, raf = 0;
+  const time = () => (held >= 0 ? held : t0 ? Math.min((performance.now() - t0) / 1000, PUSH[1] + .4) : 0);
   let vw = 1, vh = 1, fpx = 1, D0 = 430, Dface = 120, Dfill = 90, reach = 100, fitted = false, lastNow = 0, base = {};
   const lit = press ? press.querySelector('.press-lit') : null;
   const v = new THREE.Vector3(), T = new THREE.Vector3();
@@ -158,7 +161,7 @@ export async function create({canvas, tier, press, word, preserve = false}) {
     if (lastNow) stage.tune(now - lastNow);
     const dt = lastNow ? now - lastNow : 16.7;
     lastNow = now;
-    const t = tl.time();
+    const t = time();
     apply(t);
     /* parts in the air smear; the turn barely; from switch-on the frame must stay crisp for the hole */
     if (stage.fx.trail) stage.fx.trail.damp = Math.pow(t < TURN[0] ? .45 : t < POWER ? .25 : 0, dt / 16.7);
@@ -173,8 +176,11 @@ export async function create({canvas, tier, press, word, preserve = false}) {
     if (t >= PUSH[1] + .4) stopTicking();
   }
   function stopTicking() {
-    if (ticking) gsap.ticker.remove(frame);
     ticking = false;
+    if (job && window.__motor) window.__motor.remove(job);
+    job = null;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
   }
 
   const api = {
@@ -225,21 +231,21 @@ export async function create({canvas, tier, press, word, preserve = false}) {
       if (mirror) mirror.update();
       report(1);
       apply(0);
-      tl = gsap.timeline({paused: true});
-      tl.to({}, {duration: PUSH[1] + .4});
     },
     resize: size,
     play() {
-      gsap.ticker.lagSmoothing(0);
-      tl.play(0);
+      held = -1;
+      t0 = performance.now();
       lastNow = 0;
       ticking = true;
-      gsap.ticker.add(frame);
+      const motor = window.__motor;
+      if (motor) job = motor.add({name: 'intro', z: -2, write: () => { if (ticking && !done) frame(); return ticking && !done; }});
+      else { const loop = () => { if (!ticking || done) return; frame(); raf = requestAnimationFrame(loop); }; raf = requestAnimationFrame(loop); }
       addEventListener('resize', size, {passive: true});
     },
     /* A held frame, for the lab and for tests. */
     seek(t, keep) {
-      if (tl) tl.pause().time(t);
+      held = t;
       apply(t);
       renderer.shadowMap.needsUpdate = true;
       if (mirror) mirror.update();

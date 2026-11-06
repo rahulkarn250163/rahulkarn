@@ -39,7 +39,7 @@ function fit(entry) {
   part.resize(w, h);
 }
 
-async function prepareFig(fig, tier, report, offset, share) {
+async function prepareFig(fig, tier, report) {
   const host = fig.host();
   if (!host) return null;
   const twin = fig.twin(host), canvas = document.createElement('canvas');
@@ -50,7 +50,7 @@ async function prepareFig(fig, tier, report, offset, share) {
   const entry = {key: fig.key, host, twin, canvas, part, bleed: fig.bleed};
   fit(entry);
   await part.prepare();
-  report(offset + share);
+  report(1);
   await breathe();
   return entry;
 }
@@ -98,7 +98,7 @@ export async function boot({report = () => {}, wantIntro = true, press, word} = 
   const entries = [];
   for (const fig of FIGS) {
     try {
-      const entry = await prepareFig(fig, tier, k => report((done + k * fig.weight) / total), 0, 1);
+      const entry = await prepareFig(fig, tier, k => report((done + k * fig.weight) / total));
       if (entry) entries.push(entry);
     } catch (e) {
       console.error(fig.key, e);

@@ -44,7 +44,7 @@ export async function create({canvas, tier, preserve, theme}) {
 
   function resize(w, h) { W = w; H = h; stage.size(w, h); labels?.size(); }
 
-  function placeCamera(P, N, t) {
+  function placeCamera(P, N) {
     /* a clear three-quarter view that eases toward plan as the board completes; no drift, so the type holds still */
     const k = clamp(P / N), tilt = (30 - 14 * k) * RAD, az = -.2 + .2 * k;
     const dist = FIT / Math.tan(camera.fov * RAD / 2) * Math.max(1, 1 / Math.max(camera.aspect, .001));
@@ -55,7 +55,7 @@ export async function create({canvas, tier, preserve, theme}) {
   function draw({W: w, H: h, P, N, cur, t}) {
     build();
     if (w !== W || h !== H) resize(w, h);
-    placeCamera(P, N, t);
+    placeCamera(P, N);
     const die = clamp((clamp(P / .32, 0, 1.2) - .55) / .4);
     const done = ease((P - (N - .25)) / .25);
     board.setDie(die);
@@ -91,7 +91,7 @@ export async function create({canvas, tier, preserve, theme}) {
     await stage.warm();
   }
 
-  function dispose() { for (const o of [board, traces, labels, sand]) o?.dispose?.(); stage.dispose?.(); }
+  function dispose() { for (const o of [board, traces, labels, sand]) o?.dispose?.(); ring?.geometry.dispose(); ring?.material.dispose(); stage.dispose?.(); }
 
   return {stage, prepare, resize, draw, setTheme, dispose};
 }

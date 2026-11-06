@@ -145,6 +145,8 @@ export function make() {
     /* where the window goes in the host, or null when there is no room for it */
     place(r) {
       room = r;
+      /* the rows' middles are measured again on the next beam, once, not in every frame that draws one */
+      rows.forEach(row => { row.mid = undefined; });
       if (!win) return;
       if (!r) { win.style.display = beam.style.display = 'none'; return; }
       win.style.display = beam.style.display = 'block';
@@ -185,7 +187,10 @@ export function make() {
       let best = -1, k = 0;
       for (let i = 0; i < 5; i++) { const age = project.t - TIMES[i + 1].end + .1; if (age >= 0 && age < .6) { best = i; k = 1 - age / .6; } }
       if (best < 0) { beam.style.opacity = 0; return; }
-      const row = rows[best + 1], x0 = room.x + room.w, y0 = room.y + row.offsetTop + row.offsetHeight / 2;
+      const row = rows[best + 1], x0 = room.x + room.w;
+      /* a row's height is fixed by the sheet, so its middle holds while its letters are typed */
+      if (row.mid === undefined) row.mid = row.offsetTop + row.offsetHeight / 2;
+      const y0 = room.y + row.mid;
       point.set(-.5, LEVEL[best], .2);
       const p = project.at(point), dx = p.x - x0, dy = p.y - y0;
       beam.style.opacity = k;

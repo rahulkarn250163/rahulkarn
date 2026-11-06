@@ -41,7 +41,7 @@ export async function create({canvas, tier, preserve, theme}) {
   };
 
   const M = new THREE.Matrix4(), P = new THREE.Vector3(), Q = new THREE.Quaternion(), S = new THREE.Vector3();
-  const UP = new THREE.Vector3(0, 1, 0), A = new THREE.Vector3(), B = new THREE.Vector3(), D = new THREE.Vector3();
+  const UP = new THREE.Vector3(0, 1, 0), A = new THREE.Vector3(), B = new THREE.Vector3(), D = new THREE.Vector3(), MID = new THREE.Vector3();
   const put = (mesh, i, a, b, r) => {
     D.subVectors(b, a); const len = D.length();
     if (len < 1e-4 || r <= 0) { M.makeScale(0, 0, 0); mesh.setMatrixAt(i, M); return; }
@@ -107,11 +107,10 @@ export async function create({canvas, tier, preserve, theme}) {
       for (let i = 0; i < n; i++) {
         const vis = shown(i), hotR = i === hot;
         pt(A, i, 1); pt(B, i, -1);
-        const size = z => (hotR ? 5.5 : 3 + 1.6 * (z / R + 1) / 2) * fade * (vis ? 1 : 0);
-        dot(nodes[0], i, A, size(A.z));
-        dot(nodes[1], i, B, size(B.z));
-        D.addVectors(A, B).multiplyScalar(.5);
-        const mid = D.clone(), r = (hotR ? 1.7 : 1) * fade * (vis ? 1 : 0);
+        const sk = fade * (vis ? 1 : 0);
+        dot(nodes[0], i, A, (hotR ? 5.5 : 3 + 1.6 * (A.z / R + 1) / 2) * sk);
+        dot(nodes[1], i, B, (hotR ? 5.5 : 3 + 1.6 * (B.z / R + 1) / 2) * sk);
+        const mid = MID.addVectors(A, B).multiplyScalar(.5), r = (hotR ? 1.7 : 1) * fade * (vis ? 1 : 0);
         put(rungs[0], i, A, mid, r);
         put(rungs[1], i, mid, B, r);
         if (vis && kx < .02) {

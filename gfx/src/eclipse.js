@@ -176,7 +176,6 @@ export async function create({canvas, tier, preserve, theme}){
   tri.frustumCulled = false;
   scene.add(tri);
   stage.scene = scene; stage.camera = camera;
-  let curTheme = theme;
 
   return {
     stage,
@@ -192,8 +191,8 @@ export async function create({canvas, tier, preserve, theme}){
       uniforms.uRay.value = s.ray; uniforms.uT.value = s.t;
       stage.render();
     },
-    setTheme(t){ curTheme = t; uniforms.uLimb.value.set(...limbFor(t)); },
-    dispose(){ geo.dispose(); mat.dispose(); stage.dispose?.(); },
+    setTheme(t){ uniforms.uLimb.value.set(...limbFor(t)); },
+    dispose(){ geo.dispose(); mat.dispose(); uniforms.uNoise.value.dispose(); stage.dispose?.(); },
   };
 }
 

@@ -9,7 +9,7 @@ export const css = `
 .ty-echo .ty-c,.ty-echo-a .ty-c{opacity:0}
 .ty-echo .ty-sl,.ty-echo-a .ty-sl{position:absolute;left:0;top:0;white-space:nowrap;pointer-events:none}
 .ty-echo .ty-sl .ty-c,.ty-echo-a .ty-sl .ty-c{opacity:1}
-.ty-echo .ty-yr{position:absolute;right:0;top:-1.15em;font-size:.3em;font-variant-numeric:tabular-nums lining-nums;letter-spacing:.08em;color:${PAST}}
+.ty-echo .ty-yr{position:absolute;font-variant-numeric:tabular-nums lining-nums;letter-spacing:.08em;color:${PAST}}
 `;
 
 // A cancelled animation rejects .finished; cancellation is not a failure here.

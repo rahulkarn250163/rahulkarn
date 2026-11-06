@@ -33,6 +33,9 @@ const waiting = new Set();
 let armed = false, io = null, near = null, off = null, idle = 0, stopped = false;
 /* phones keep it simple: each effect plays once there */
 const again = () => innerWidth >= 1024;
+/* Setting a headline again measures every character, a layout of the whole page. It is only ever done for
+   one that has left the screen, so it waits for an idle moment rather than landing in a scroll frame. */
+const later = fn => (window.requestIdleCallback ? requestIdleCallback(fn, {timeout: 900}) : setTimeout(fn, 60));
 
 function finish(e) {
   if (e.t && !e.finished) e.t.restore();
@@ -64,7 +67,7 @@ async function go(e) {
    screen as such, so its effect says when it has gone. */
 function rearm(e) {
   if (stopped || !io || !again()) return;
-  if (e.mod.leave && !e.accent) e.mod.leave(e.t, () => { if (!stopped && e.t) prepare(e); });
+  if (e.mod.leave && !e.accent) e.mod.leave(e.t, () => later(() => { if (!stopped && e.t && e.finished) prepare(e); }));
   else off.observe(e.el);
 }
 
@@ -117,7 +120,8 @@ function watch() {
     list.forEach(x => {
       if (x.isIntersecting) return;
       off.unobserve(x.target);
-      back(entry(x.target));
+      const e = entry(x.target);
+      later(() => back(e));
     });
   });
   entries.forEach(e => {
@@ -145,6 +149,8 @@ function stop() {
 
 export async function start() {
   try { await document.fonts.ready; } catch (err) { /* measure with what there is */ }
+  /* the reader took the basic edition while this bundle was on its way: nothing is set */
+  if (!document.documentElement.classList.contains('motion')) return;
   const sheet = document.createElement('style');
   sheet.textContent = BASE + Object.values(FX).map(m => m.css || '').join('\n');
   document.head.appendChild(sheet);

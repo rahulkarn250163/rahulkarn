@@ -6,7 +6,7 @@ const CORE_ALPHA = 0.22;
 
 export const css = `
 .ty-quantum .ty-c,.ty-quantum-a .ty-c{opacity:0;position:relative}
-.ty-quantum .ty-gh,.ty-quantum-a .ty-gh{position:absolute;left:0;top:0;opacity:.2;pointer-events:none;white-space:pre}
+.ty-quantum .ty-gh,.ty-quantum-a .ty-gh{position:absolute;left:0;top:0;pointer-events:none;white-space:pre}
 `;
 
 export const accents = '.case-figure';

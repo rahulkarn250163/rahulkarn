@@ -59,7 +59,6 @@ export function makeMirror(stage, desk, {scale = .5, strength = 1, lod = 1.6} = 
       camera.updateMatrixWorld();
       vcam.copy(camera, false);
       vcam.layers.set(1);
-      vcam.projectionMatrix.copy(camera.projectionMatrix);
       vcam.position.set(camera.position.x, -camera.position.y, camera.position.z);
       camera.getWorldDirection(dir);
       tgt.copy(camera.position).add(dir);

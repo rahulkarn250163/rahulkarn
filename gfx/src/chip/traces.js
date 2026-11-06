@@ -44,7 +44,7 @@ function pointAt(pts, d, out) {
 export function makeTraces(L) {
   const group = new THREE.Group();
   const mat = std({color: 0xb8743f, metalness: 1, roughness: .3});
-  const traces = L.groups.map(g => g.pads.map(p => { const r = ribbon(p.pts); r.m = mesh(r.geo, mat, {cast: true}); r.k = 0; r.pts = p.pts; r.len = p.len || r.total; group.add(r.m); return r; }));
+  const traces = L.groups.map(g => g.pads.map(p => { const r = ribbon(p.pts); r.m = mesh(r.geo, mat, {cast: true}); r.k = 0; r.pts = p.pts; group.add(r.m); return r; }));
   const count = traces.flat().length * MAX_REPS;
   const coreGeo = new THREE.SphereGeometry(.3, 10, 8), haloGeo = new THREE.SphereGeometry(.85, 12, 10);
   const coreMat = new THREE.MeshBasicMaterial({color: '#fff3e6', transparent: true, opacity: 0, depthWrite: false});

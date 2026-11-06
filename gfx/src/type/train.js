@@ -71,7 +71,7 @@ function rig(t) {
     xChannelSelector: 'R',
     yChannelSelector: 'G',
   }, filter);
-  return { layer, svg, noise, warp, url: `url(#${id})` };
+  return { layer, noise, warp, url: `url(#${id})` };
 }
 
 function attach(t, url) {
@@ -100,7 +100,7 @@ export async function play(t) {
   readout.className = 'ty-rd';
   layer.appendChild(readout);
   const spot = t.beside(2.6 * t.fs);
-  readout.style.cssText = `right:auto;left:${spot.left}px;top:${spot.top}px;font-size:${Math.max(10, .27 * t.fs)}px;top:${spot.top}px`;
+  readout.style.cssText = `right:auto;left:${spot.left}px;top:${spot.top}px;font-size:${Math.max(10, .27 * t.fs)}px`;
   // Stretched viewBox with a non scaling stroke holds the line at 1px at any size.
   const spark = make('svg', { class: 'ty-sp', viewBox: '0 0 100 100', preserveAspectRatio: 'none' }, layer);
   spark.style.cssText = `right:auto;left:${spot.left}px;top:${spot.top + .36 * t.fs}px;width:${2.2 * t.fs}px;height:${.3 * t.fs}px`;

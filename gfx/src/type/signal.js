@@ -66,9 +66,10 @@ async function run(t, ms, fade, keepDot) {
       const d = Math.max(0, hx - x);
       const calm = Math.exp(-d / (fs * 1.8));
       let noise = 0;
-      waves.forEach(([len, weight, drift], i) => {
-        noise += weight * Math.sin(x * TAU / (len * fs) + tr.phases[i] + now * drift);
-      });
+      for (let i = 0; i < waves.length; i++) {
+        const w = waves[i];
+        noise += w[1] * Math.sin(x * TAU / (w[0] * fs) + tr.phases[i] + now * w[2]);
+      }
       const s = tr.spike[Math.round((x - tr.x0) / STEP)] || 0;
       return tr.y + (noise * fs * .1 - s * fs * .55) * calm;
     };

@@ -101,8 +101,6 @@ export function makeBoard(L) {
   parts.visible = false;
   group.add(parts);
 
-  /* set once, before the shaders compile: changing it later would recompile mid-scroll */
-  dieMat.transparent = true;
   return {
     group,
     setDie(k) { k = clamp(k); pkgMat.opacity = sealMat.opacity = dieMat.opacity = k; pkg.visible = seal.visible = die.visible = k > 0; },

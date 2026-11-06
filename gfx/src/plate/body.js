@@ -5,7 +5,6 @@ function fade(ms,k){
   const v=Math.min(1,Math.max(0,k)), t=v<1;
   for(const m of ms){
     m.opacity=v;
-    m.transparent=true; /* always, so the shader never has to recompile mid-scroll */
     m.depthWrite=!t;
   }
   return v;

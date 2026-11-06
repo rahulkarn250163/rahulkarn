@@ -170,9 +170,8 @@ export function createStage(canvas, options = {}) {
         });
       });
       await breathe();
-      const w = stage.w, h = stage.h, was = scene.visible;
+      const w = stage.w, h = stage.h;
       stage.render();
-      scene.visible = was;
       if (stage.w !== w || stage.h !== h) stage.size(w, h);
       await breathe();
     },
@@ -262,7 +261,7 @@ export function studioEnv(renderer, {mood = 'dark', sigma = .02} = {}) {
   panel(16, 4, 0, -6, 6, [.32, .3, .28], bright ? 1.5 : .5);
   panel(12, 7, 12, -1, 11, [1, .99, .97], bright ? 1 : 1.1);   /* a soft card behind the camera, for glass */
   panel(.7, 14, -13, 3, -3, [1, .98, .94], bright ? 4 : 14);   /* a thin strip behind left: bright edges on every bevel */
-  panel(.7, 14, 13, 3, -7, [.85, .9, 1], bright ? 3 : 10);     /* and its cool twin behind right */  /* bounce off the desk */
+  panel(.7, 14, 13, 3, -7, [.85, .9, 1], bright ? 3 : 10);     /* and its cool twin behind right */
   const pm = new THREE.PMREMGenerator(renderer);
   const env = pm.fromScene(room, sigma).texture;
   pm.dispose();

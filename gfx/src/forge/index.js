@@ -198,7 +198,7 @@ export async function prepare(report = () => {}) {
   }
 
   /* set one product where it belongs in its canvas, at the size its space allows */
-  function aim(e, x, w, h, u, t, spread, HH, clock = t) {
+  function aim(e, x, w, h, u, t, spread, clock = t) {
     const {prod} = e, v = prod.view ? prod.view(t, clock) : prod, scale = Math.min(w / 2 / v.ex, h / 2 / v.ey), D = (e.ch / (2 * Math.tan(FOV * Math.PI / 360))) / scale;
     pose(prod, t, spread, clock);
     prod.root.rotation.set(v.pitch + u * .24, v.yaw - u * 1.15 * (prod.turn || 1) + Math.sin(clock * .35) * .06, v.roll || 0);
@@ -208,7 +208,6 @@ export async function prepare(report = () => {}) {
     camera.far = D * 4;
     camera.aspect = e.cw / e.ch;
     camera.setViewOffset(e.cw, e.ch, e.cw / 2 - (x - e.left), 0, e.cw, e.ch);
-    void HH;
   }
   /* draw it in the buffer's bottom left corner, and copy that to its canvas */
   function shoot(e) {
@@ -249,19 +248,26 @@ export async function prepare(report = () => {}) {
   await stage.warm();
   report(1);
 
-  let raf = 0, alive = true, prevS = scrollY, prevT = 0, lag = 0;
+  let raf = 0, alive = true, prevS = scrollY, prevT = 0, lag = 0, job = null;
   const state = {frames: 0, cost: 0, on: []};
   const hide = e => { if (e.shown) { e.shown = false; e.canvas.style.visibility = 'hidden'; if (e.prod.show) e.prod.show(false); } };
+  /* what the page's motor read for this frame, so nothing here reads the layout after someone has written to it */
+  const view = {s: 0, g: 0, H: 0, W: 0};
 
   function frame(now) {
     raf = 0;
-    if (!alive) return;
-    if (innerWidth < MIN_WIDTH) { live.forEach(hide); return; }
-    const c0 = performance.now(), s = scrollY, dt = Math.min(64, now - prevT || 16), HH = H();
+    view.s = view.g = scrollY; view.H = H(); view.W = innerWidth;
+    if (draw(now)) raf = requestAnimationFrame(frame);
+  }
+  function draw(now) {
+    if (!alive) return false;
+    if (view.W < MIN_WIDTH) { live.forEach(hide); return false; }
+    const c0 = performance.now(), s = view.s, dt = Math.min(64, now - prevT || 16), HH = view.H;
     prevT = now;
     lag += (clamp((s - prevS) / dt / 2.4, -1, 1) - lag) * (1 - Math.exp(-dt / 130));
     prevS = s;
-    const spread = Math.abs(lag) * .3;
+    /* the turn follows the glided scroll, so a wheel step turns a product in one smooth push */
+    const spread = Math.abs(lag) * .3, glide = s - view.g;
     state.on.length = 0;
     for (const e of live) {
       if (!e.ok) continue;
@@ -284,18 +290,22 @@ export async function prepare(report = () => {}) {
         t = e.play;
         shake = 0;
       }
-      aim(e, x, w, h, y / HH - .5, t, shake, HH, clock);
+      aim(e, x, w, h, (y + glide) / HH - .5, t, shake, clock);
       shoot(e);
       if (e.prod.after) { projector.t = t; projector.e = e; e.prod.after(projector); }
       state.on.push(e.def.id);
     }
     if (state.on.length) {
-      raf = requestAnimationFrame(frame);
       state.frames++;
       state.cost += performance.now() - c0;
     }
+    return state.on.length > 0;
   }
-  const wake = () => { if (!raf && alive) raf = requestAnimationFrame(frame); };
+  const wake = () => {
+    if (!alive) return;
+    if (job) window.__motor.wake(job);
+    else if (!raf) raf = requestAnimationFrame(frame);
+  };
 
   let timer = 0;
   const relayout = () => { clearTimeout(timer); timer = setTimeout(() => { measure(); wake(); }, 150); };
@@ -307,7 +317,10 @@ export async function prepare(report = () => {}) {
     start() {
       ro = new ResizeObserver(relayout);
       ro.observe(document.body);
-      addEventListener('scroll', wake, {passive: true});
+      /* on the page's motor when there is one: its read pass gives the scroll, the glide and the viewport */
+      const motor = window.__motor;
+      if (motor) job = motor.add({name: 'forge', scroll: true, glide: true, z: 2, read(m) { view.s = m.y; view.g = m.gy; view.H = H(); view.W = innerWidth; }, write: m => draw(m.t)});
+      else addEventListener('scroll', wake, {passive: true});
       addEventListener('resize', relayout, {passive: true});
       document.addEventListener('press:off', relayout, {once: true});
       measure();
@@ -316,10 +329,12 @@ export async function prepare(report = () => {}) {
     stop() {
       alive = false;
       cancelAnimationFrame(raf);
+      if (job) { window.__motor.remove(job); job = null; }
       clearTimeout(timer);
       if (ro) ro.disconnect();
       removeEventListener('scroll', wake);
       removeEventListener('resize', relayout);
+      document.removeEventListener('press:off', relayout);
       live.forEach(e => e.host.remove());
       live.length = 0;
       try { stage.dispose(); } catch (err) { /* the context may already be gone */ }
