@@ -1,6 +1,6 @@
 /* Open Source: grahan is a sky engine, so here the sky is a machine. A brass orrery, assembled
    gear, column and arm by arm, with the Moon's arm round the Earth. */
-import {THREE, std, mats, box, merge, M, cyl, tor, ball, lathe, blob, builder, glowing, glide} from './kit.js';
+import {THREE, std, mats, box, merge, M, cyl, tor, ball, lathe, blob, builder, glowing, glide, turned, turnedMetal} from './kit.js';
 
 const ARMS = [
   {R: .44, r: .036, c: 0x9c8f83, rate: 1.42, y: .1},
@@ -24,7 +24,8 @@ export function make() {
   const gear = new THREE.Group(), gearSpot = new THREE.Group(), teeth = [];
   gearSpot.position.y = -.285;
   for (let i = 0; i < 44; i++) { const t = box(.33, -.012, -.014, .362, .012, .014); t.rotateY(i / 44 * Math.PI * 2); teeth.push(t); }
-  gear.add(M(merge(teeth), brass), M(cyl(.335, .335, .022, 64), brass), M(cyl(.1, .1, .03, 32), dark));
+  /* the gear's face is turned brass, with one groove cut in it */
+  gear.add(M(merge(teeth), brass), M(turned([[0, -.011], [.335, -.011], [.335, .011], [.3, .011], [.296, .007], [.276, .007], [.272, .011], [0, .011]], 72), turnedMetal(0xd7ad5b, .3)), M(cyl(.1, .1, .03, 32), dark));
   for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2, h = M(cyl(.05, .05, .026, 18), dark); h.position.set(Math.cos(a) * .2, 0, Math.sin(a) * .2); gear.add(h); }
   gearSpot.add(gear);
   b.part(gearSpot, {at: .16, dur: .5, from: [-1, .2, .6], tumble: .6, heavy: true});

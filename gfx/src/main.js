@@ -146,5 +146,5 @@ export async function boot({report = () => {}, wantIntro = true, press, word} = 
     mounted = [];
     if (api.intro) { try { api.intro.skip(); api.intro.dispose(); } catch (err) { /* same */ } api.intro = null; }
   };
-  return {three: true, intro: !!api.intro};
+  return {three: true, intro: !!api.intro, forge: !!forge};
 }

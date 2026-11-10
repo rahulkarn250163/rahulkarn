@@ -22,7 +22,7 @@ export function makeLinks(n = 6) {
   const cores = inst(new THREE.SphereGeometry(.55, 8, 6),
     new THREE.MeshBasicMaterial({color: 0xfff3e6}), n * SIGNALS);
   const halos = inst(new THREE.SphereGeometry(1.5, 8, 6),
-    new THREE.MeshBasicMaterial({color: 0xe0644f, transparent: true, opacity: .45,
+    new THREE.MeshBasicMaterial({color: 0xff6a45, transparent: true, opacity: .45,
       blending: THREE.AdditiveBlending, depthWrite: false}), n * SIGNALS);
 
   function set(reveal, speed, t, from, rFrom, to) {

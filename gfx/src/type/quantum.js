@@ -1,6 +1,6 @@
 // Quantum: every letter is a probability cloud until the measurement line reaches it.
 
-const FLASH = '#e0644f';
+const FLASH = '#ff6a45';
 const GHOST_ALPHA = 0.2;
 const CORE_ALPHA = 0.22;
 

@@ -36,7 +36,7 @@ export function make() {
   }
   g.add(mesh(merge(screwGeo), mats.steel()));
 
-  const dark = new THREE.Color(0x120505), lit = new THREE.Color(0xe0644f).multiplyScalar(3);
+  const dark = new THREE.Color(0x120505), lit = new THREE.Color(0xff6a45).multiplyScalar(3);
   const ledMat = new THREE.MeshBasicMaterial({color: dark.clone(), toneMapped: true});
   const led = new THREE.Mesh(new THREE.CircleGeometry(.12, 20), ledMat);
   led.position.set(7, 15.2, ZF + .03);

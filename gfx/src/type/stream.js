@@ -1,9 +1,9 @@
 export const css = `
 .ty-stream .ty-c{opacity:0}
-.ty-stream .ty-cur{position:absolute;width:2px;height:1.05em;background:#e0644f;left:0;top:0}
+.ty-stream .ty-cur{position:absolute;width:2px;height:1.05em;background:#ff6a45;left:0;top:0}
 `;
 
-const FRESH = '#e0644f';
+const FRESH = '#ff6a45';
 
 // The reel keeps every caption mounted, so run only when this shot is the live one.
 export function arm(t, play) {

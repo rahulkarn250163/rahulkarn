@@ -3,8 +3,8 @@ import {THREE, phys, createStage, studioEnv} from './core.js';
 
 const rr = s => { const v = Math.sin(s * 91.7 + 17.3) * 24634.6345; return v - Math.floor(v); };
 const COL = {
-  light: {ink: {color: 0x111111, metalness: .8, roughness: .25}, red: {color: 0x9e1c1c, metalness: 0, roughness: .3}, line: 0x111111},
-  dark: {ink: {color: 0xf2efe7, metalness: .1, roughness: .4}, red: {color: 0xe0644f, metalness: 0, roughness: .35}, line: 0xf2efe7},
+  light: {ink: {color: 0x111111, metalness: .8, roughness: .25}, red: {color: 0xc22a14, metalness: 0, roughness: .3}, line: 0x111111},
+  dark: {ink: {color: 0xf2efe7, metalness: .1, roughness: .4}, red: {color: 0xff6a45, metalness: 0, roughness: .35}, line: 0xf2efe7},
 };
 const SEG = .08, MAX_N = 64, MAX_S = Math.ceil((MAX_N + 1) / SEG) + 2;
 

@@ -34,7 +34,7 @@ export async function create({canvas, tier, preserve, theme}) {
     const h = 124;
     ring = new THREE.LineLoop(
       new THREE.BufferGeometry().setFromPoints([[-h, -h], [h, -h], [h, h], [-h, h]].map(([x, z]) => new THREE.Vector3(x, z, 1))),
-      new THREE.LineBasicMaterial({color: 0xe0644f, transparent: true, opacity: 0}));
+      new THREE.LineBasicMaterial({color: 0xff6a45, transparent: true, opacity: 0}));
     for (const o of [board, traces, labels, sand]) { const n = o.group || o.object || o.points; if (n) scene.add(n); }
     scene.add(ring);
     setTheme(theme);

@@ -112,7 +112,7 @@ export function make() {
   /* the paint: a white gloss over the top, a pearl grey belly and wings, and the page's red */
   const gloss = {clearcoat: 1, clearcoatRoughness: .14, side: THREE.DoubleSide};
   const paint = phys({color: 0xf2f0ea, metalness: 0, roughness: .42, ...gloss}), belly = phys({color: 0xaeb2b8, metalness: .1, roughness: .44, ...gloss});
-  const wing = phys({color: 0xcdd0d4, metalness: .25, roughness: .42, ...gloss}), flapPaint = phys({color: 0x9fa4aa, metalness: .35, roughness: .46, ...gloss}), red = phys({color: 0x9e1c1c, metalness: .1, roughness: .34, ...gloss});
+  const wing = phys({color: 0xcdd0d4, metalness: .25, roughness: .42, ...gloss}), flapPaint = phys({color: 0x9fa4aa, metalness: .35, roughness: .46, ...gloss}), red = phys({color: 0xc22a14, metalness: .1, roughness: .34, ...gloss});
   const inner = std({color: 0x2a2c30, metalness: .7, roughness: .5, side: THREE.DoubleSide}), core = std({color: 0x4b4d52, metalness: .9, roughness: .4, side: THREE.DoubleSide}), edge = std({color: 0xd9dbdd, metalness: 1, roughness: .2, side: THREE.DoubleSide});
   const pane = phys({color: 0x10161d, metalness: .4, roughness: .08, clearcoat: 1, clearcoatRoughness: .04, side: THREE.DoubleSide}), seam = std({color: 0x85878a, metalness: .2, roughness: .6, side: THREE.DoubleSide});
   const navGreen = glowing(0x46ff8e, 1.8), navRed = glowing(0xff3b30, 1.8), beacon = glowing(0xff2a20, 2.4);

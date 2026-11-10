@@ -4,10 +4,10 @@ export const css = `
 .ty-lens .ty-c{opacity:0}
 .ty-lens .ty-mass{position:absolute;left:0;top:0;width:.62em;height:.62em;margin:-.31em 0 0 -.31em;border-radius:50%;background:#050505;box-shadow:0 0 0 1px rgba(224,100,79,.95),0 0 .55em .12em rgba(224,100,79,.5)}
 .ty-lens .ty-mass-core{position:absolute;inset:0;border-radius:50%;background:#fff;opacity:0}
-.ty-lens .ty-mass-ring{position:absolute;left:0;top:0;width:.62em;height:.62em;margin:-.31em 0 0 -.31em;border-radius:50%;border:.05em solid #e0644f;box-sizing:border-box;box-shadow:0 0 .3em #e0644f;opacity:0}
+.ty-lens .ty-mass-ring{position:absolute;left:0;top:0;width:.62em;height:.62em;margin:-.31em 0 0 -.31em;border-radius:50%;border:.05em solid #ff6a45;box-sizing:border-box;box-shadow:0 0 .3em #ff6a45;opacity:0}
 `;
 
-const HOT = '#e0644f';
+const HOT = '#ff6a45';
 const SETTLE_AT = 0.92;
 const SETTLE_MS = 144;
 

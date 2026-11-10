@@ -19,6 +19,19 @@ export const glowing = (c, power = 1) => { const m = new THREE.MeshBasicMaterial
 /* the Lathe's axis is y; everything spun about x goes through alongX */
 export const lathe = (pts, seg = 64, start = 0, len = Math.PI * 2) => new THREE.LatheGeometry(pts.map(p => new THREE.Vector2(p[0], p[1])), seg, start, len);
 export const alongX = g => g.rotateZ(-Math.PI / 2);
+/* A part turned on a lathe: flats stay flat and every corner is an edge. The Lathe smooths any corner that is
+   not given twice, so each inner point of the profile is doubled. List the profile from the axis out along the
+   underside, up the wall and back in along the top, and the faces look outward. */
+export const hard = pts => pts.flatMap((p, i) => (i && i < pts.length - 1 ? [p, p] : [p]));
+export const turned = (pts, seg = 96) => lathe(hard(pts), seg);
+/* Metal that was turned: its grain runs round the axis, so light fans out across a face and runs in streaks down
+   a wall. One program for all of them, whatever the colour. Only on a lathe: its u runs round the axis. */
+const spun = new Map();
+export function turnedMetal(color = 0xc4c7cb, roughness = .36) {
+  const k = color + ':' + roughness;
+  if (!spun.has(k)) spun.set(k, phys({color, metalness: 1, roughness, anisotropy: .85, anisotropyRotation: Math.PI / 2}));
+  return spun.get(k);
+}
 
 /* a thin shape cut from sheet, with a small bevel to catch the light */
 export function sheet(shape, depth = .02, bevel = .006) {

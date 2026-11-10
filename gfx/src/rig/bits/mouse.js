@@ -89,6 +89,6 @@ export function make() {
   const wheelY = surfaceY(CX, wheelZ) + .35 - R;
   const place = (g, x) => { g.rotateZ(Math.PI / 2); g.translate(x, wheelY, wheelZ); return g; };
   group.add(mesh(place(new THREE.CylinderGeometry(R, R, .55, 24), CX), wheelMat));
-  group.add(mesh(place(new THREE.CylinderGeometry(R + .002, R + .002, .03, 24), CX + .2), mats.glow(0xe0644f, 1), {cast: false}));
+  group.add(mesh(place(new THREE.CylinderGeometry(R + .002, R + .002, .03, 24), CX + .2), mats.glow(0xff6a45, 1), {cast: false}));
   return group;
 }

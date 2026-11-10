@@ -50,7 +50,7 @@ export function makeFan(x, y, z, r, {frame = true} = {}) {
   const ring = new THREE.TorusGeometry(r * .22, Math.max(.012, r * .012), 8, 48);
   ring.rotateY(Math.PI / 2);
   ring.translate(x - .5, y, z);
-  group.add(mesh(ring, mats.lacquer(0x9e1c1c)));
+  group.add(mesh(ring, mats.lacquer(0xc22a14)));
 
   if (frame) {
     const h = r + .6, sr = h - .42;

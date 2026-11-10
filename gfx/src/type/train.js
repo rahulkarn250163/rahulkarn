@@ -28,7 +28,7 @@ export const css = `
   width: 3.4em;
   height: .5em;
   overflow: visible;
-  stroke: #e0644f;
+  stroke: #ff6a45;
   fill: none;
   stroke-width: 1;
 }

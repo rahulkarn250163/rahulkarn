@@ -1,7 +1,7 @@
 import {THREE, rbox, box, merge, mesh, std} from '../core.js';
 
 const BASE_EDGE = 1.3, HOT_EDGE = 3;
-const edgeBase = new THREE.Color(0xe0644f);
+const edgeBase = new THREE.Color(0xff6a45);
 
 export function makeModules(mods) {
   const group = new THREE.Group();

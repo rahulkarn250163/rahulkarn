@@ -1,16 +1,16 @@
 /* Case Studies: the three systems, each put together in turn. The portal on a laptop, the database
    as a stack of platters with their activity lights, and the payment terminal taking one card. */
-import {THREE, std, mats, rbox, box, merge, canvasTex, M, cyl, tor, sheet, glide, swing, blob, builder, glowing} from './kit.js';
+import {THREE, std, mats, rbox, box, merge, canvasTex, M, cyl, tor, sheet, glide, swing, blob, builder, glowing, turned, turnedMetal} from './kit.js';
 
 function screenUI(c, w, h) {
   c.fillStyle = '#10151c'; c.fillRect(0, 0, w, h);
-  c.fillStyle = '#9e1c1c'; c.fillRect(0, 0, w, h * .1);
+  c.fillStyle = '#c22a14'; c.fillRect(0, 0, w, h * .1);
   c.fillStyle = '#1c2530'; c.fillRect(0, h * .1, w * .2, h * .9);
   c.fillStyle = '#3c4a5a';
   for (let i = 0; i < 6; i++) c.fillRect(w * .03, h * (.17 + i * .11), w * .13, h * .04);
   [['#e9e5da', .24], ['#d3cfc4', .49], ['#e9e5da', .74]].forEach(([col, x]) => {
     c.fillStyle = col; c.fillRect(w * x, h * .17, w * .22, h * .28);
-    c.fillStyle = '#9e1c1c'; c.fillRect(w * (x + .02), h * .21, w * .08, h * .05);
+    c.fillStyle = '#c22a14'; c.fillRect(w * (x + .02), h * .21, w * .08, h * .05);
     c.fillStyle = '#7b7a74'; c.fillRect(w * (x + .02), h * .31, w * .17, h * .025); c.fillRect(w * (x + .02), h * .37, w * .12, h * .025);
   });
   c.strokeStyle = '#54c8e8'; c.lineWidth = h * .012; c.beginPath();
@@ -47,18 +47,20 @@ function laptop(b, parent) {
 }
 
 function platters(b, parent) {
-  const metal = mats.aluminium(), seam = mats.blackAnodised(), rings = [];
+  /* each platter is turned from the solid, with a chamfer top and bottom to catch the light */
+  const metal = turnedMetal(0xb4b7bb, .4), seam = mats.blackAnodised(), rings = [];
+  const platterG = turned([[0, -.0675], [.352, -.0675], [.36, -.0595], [.36, .0595], [.352, .0675], [0, .0675]], 72);
   for (let i = 0; i < 4; i++) {
     const g = new THREE.Group(), light = glowing(0x54c8e8, 1.4);
     g.position.y = .08 + i * .175;
-    g.add(M(cyl(.36, .36, .135, 56), metal), M(cyl(.345, .345, .17, 56), seam), M(tor(.362, .0075, 64).rotateX(Math.PI / 2), light));
+    g.add(M(platterG, metal), M(cyl(.345, .345, .17, 56), seam), M(tor(.362, .0075, 64).rotateX(Math.PI / 2), light));
     rings.push(light);
     for (let k = 0; k < 3; k++) { const d = M(new THREE.SphereGeometry(.009, 10, 8), glowing(0x2bbd77, 1.6)); d.position.set(.13 + k * .05, 0, .35); g.add(d); }
     b.part(g, {at: .9 + i * .13, dur: .46, from: [(i % 2 ? 1 : -1) * .3, 1, .1], tumble: .35, heavy: true, parent});
   }
   const cap = new THREE.Group();
   cap.position.y = .08 + 4 * .175 - .08;
-  cap.add(M(cyl(.36, .36, .02, 56), mats.spaceGrey()), M(tor(.14, .006, 40).rotateX(Math.PI / 2).translate(0, .012, 0), mats.chrome()));
+  cap.add(M(turned([[0, -.01], [.354, -.01], [.36, -.004], [.36, .004], [.354, .01], [.2, .01], [.196, .006], [.176, .006], [.172, .01], [0, .01]], 72), turnedMetal(0x5c5f65, .42)), M(tor(.14, .006, 40).rotateX(Math.PI / 2).translate(0, .012, 0), mats.chrome()));
   b.part(cap, {at: 1.44, dur: .34, from: [0, 1, 0], tumble: .2, parent});
   return t => {
     const head = (t * 1.4) % 4;
@@ -91,7 +93,7 @@ function terminal(b, spot) {
   const W = .17, H = .105, R = .014, s = new THREE.Shape();
   s.moveTo(-W + R, -H); s.lineTo(W - R, -H); s.quadraticCurveTo(W, -H, W, -H + R); s.lineTo(W, H - R); s.quadraticCurveTo(W, H, W - R, H); s.lineTo(-W + R, H); s.quadraticCurveTo(-W, H, -W, H - R); s.lineTo(-W, -H + R); s.quadraticCurveTo(-W, -H, -W + R, -H);
   const card = new THREE.Group(), slot = new THREE.Group();
-  card.add(M(sheet(s, .006, .001), mats.lacquer(0x9e1c1c)), M(rbox(-.13, -.012, .003, -.07, .04, .006, .004), mats.gold()), M(box(-.14, -.075, .0034, .14, -.06, .0045), mats.gold()));
+  card.add(M(sheet(s, .006, .001), mats.lacquer(0xc22a14)), M(rbox(-.13, -.012, .003, -.07, .04, .006, .004), mats.gold()), M(box(-.14, -.075, .0034, .14, -.06, .0045), mats.gold()));
   slot.position.set(.02, .5, -.3);
   slot.add(card);
   b.part(slot, {at: 2.02, dur: .5, from: [-.7, .6, .8], tumble: 1.1, parent});

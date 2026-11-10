@@ -1,6 +1,6 @@
 // A Merkle tree verifies the headline, then the verified text appears.
 const NS = 'http://www.w3.org/2000/svg';
-const RED = '#e0644f';
+const RED = '#ff6a45';
 const EASE = 'cubic-bezier(.4,0,.2,1)';
 const RISE = 'cubic-bezier(.2,.7,.2,1)';
 

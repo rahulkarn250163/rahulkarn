@@ -39,7 +39,7 @@ export function makeBus() {
   const group = new THREE.Group(), copper = std({color: 0xc47a4a, metalness: 1, roughness: .32, transparent: true});
   const coreGeo = new THREE.SphereGeometry(0.28, 12, 10), haloGeo = new THREE.SphereGeometry(0.75, 12, 10);
   const coreMat = new THREE.MeshBasicMaterial({color: 0xfff3e6, transparent: true});
-  const haloMat = new THREE.MeshBasicMaterial({color: 0xe0644f, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false});
+  const haloMat = new THREE.MeshBasicMaterial({color: 0xff6a45, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false});
   const runs = LINES.map(([step, line]) => {
     const pts = line.map(([x, y]) => [x, 100 - y]), geo = ribbon(pts), m = mesh(geo, copper);
     const pulse = new THREE.Group();

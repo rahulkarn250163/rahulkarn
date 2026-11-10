@@ -49,7 +49,7 @@ export function make() {
   g.add(mesh(merge(mouths), mats.plastic(0x050506), {cast: false}));
   g.add(mesh(merge(tongues), mats.plastic(0x232427), {cast: false}));
 
-  const dim = new THREE.Color(0x2a0806), lit = new THREE.Color(0xe0644f).multiplyScalar(2);
+  const dim = new THREE.Color(0x2a0806), lit = new THREE.Color(0xff6a45).multiplyScalar(2);
   g.userData.tick = (t, power) => { ring.color.copy(dim).lerp(lit, power); };
   return g;
 }

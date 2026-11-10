@@ -15,7 +15,7 @@ export function makeHub() {
 
   const ringGeo = new THREE.TorusGeometry(7.6, .22, 12, 96);
   ringGeo.rotateX(Math.PI / 2);
-  const ring = mesh(ringGeo, new THREE.MeshBasicMaterial({color: new THREE.Color(0xe0644f).multiplyScalar(1.5)}));
+  const ring = mesh(ringGeo, new THREE.MeshBasicMaterial({color: new THREE.Color(0xff6a45).multiplyScalar(1.5)}));
   ring.position.y = 12;
 
   // A notch off-centre keeps the rotation visible on an otherwise round disc.

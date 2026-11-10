@@ -65,7 +65,7 @@ export function make() {
 
   // Red strip along the top edge of the -x face
   const stripMat = new THREE.MeshBasicMaterial({color: 0x000000});
-  const lit = new THREE.Color(0xe0644f).multiplyScalar(1.35);
+  const lit = new THREE.Color(0xff6a45).multiplyScalar(1.35);
   group.add(mesh(plate('-x', -45.43, 18.6, -20, 19, 6), stripMat, {cast: false, receive: false}));
 
   group.userData.tick = (t, power) => {

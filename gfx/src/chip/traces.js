@@ -48,7 +48,7 @@ export function makeTraces(L) {
   const count = traces.flat().length * MAX_REPS;
   const coreGeo = new THREE.SphereGeometry(.3, 10, 8), haloGeo = new THREE.SphereGeometry(.85, 12, 10);
   const coreMat = new THREE.MeshBasicMaterial({color: '#fff3e6', transparent: true, opacity: 0, depthWrite: false});
-  const haloMat = new THREE.MeshBasicMaterial({color: '#e0644f', transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending});
+  const haloMat = new THREE.MeshBasicMaterial({color: '#ff6a45', transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending});
   const core = new THREE.InstancedMesh(coreGeo, coreMat, count), halo = new THREE.InstancedMesh(haloGeo, haloMat, count);
   for (const m of [core, halo]) { m.count = 0; m.frustumCulled = false; m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); group.add(m); }
   const M = new THREE.Matrix4(), v = new THREE.Vector3();

@@ -28,7 +28,7 @@ export function make() {
     ctx.font = '700 66px Arial'; ctx.fillText('RK 8TB', 28, 80);
     ctx.font = '24px Arial'; ['P/N RK-8T35-7200', 'S/N 52K0917A', '7200 RPM   256 MB   SATA 6 Gb/s', '+5V 0.6A   +12V 0.8A'].forEach((s, i) => ctx.fillText(s, 28, 130 + i * 34));
     ctx.fillRect(28, 268, 300, 3);
-    ctx.fillStyle = '#9e1c1c'; ctx.fillRect(w - 76, 28, 48, 48);
+    ctx.fillStyle = '#c22a14'; ctx.fillRect(w - 76, 28, 48, 48);
   });
   const lg = plate('+y', Y1 + .08, -51.2, 6.6, -43.8, 11.4);
   g.add(mesh(lg, std({map: label, roughness: .6, metalness: 0}), {cast: false}));

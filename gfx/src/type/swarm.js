@@ -100,7 +100,7 @@ export async function play(t) {
         }
       }
       ctx.globalAlpha = (0.9 * ((b % ALPHA_STEPS) + 1)) / ALPHA_STEPS;
-      ctx.fillStyle = b < ALPHA_STEPS ? ink : '#e0644f';
+      ctx.fillStyle = b < ALPHA_STEPS ? ink : '#ff6a45';
       ctx.fill();
     }
     ctx.globalAlpha = 1;

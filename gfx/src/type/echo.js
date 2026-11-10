@@ -1,5 +1,5 @@
 // Time-slicing: ghost layers of each line fold out of the past into the present.
-const PAST = '#e0644f';
+const PAST = '#ff6a45';
 const FOLD = 'cubic-bezier(.16,.84,.24,1)';
 const LINE_GAP = 240;
 const STAGGER = 48;

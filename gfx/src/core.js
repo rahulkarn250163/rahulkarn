@@ -382,11 +382,11 @@ export const mats = {
   plastic: (c = 0x151618) => once('pla' + c, () => std({color: c, metalness: 0, roughness: .52, normalMap: speckN(), normalScale: new THREE.Vector2(.12, .12)})),
   gloss: (c = 0x0c0c0d) => once('glo' + c, () => phys({color: c, metalness: 0, roughness: .22, clearcoat: 1, clearcoatRoughness: .08})),
   rubber: (c = 0x0b0b0c) => once('rub' + c, () => std({color: c, metalness: 0, roughness: .88})),
-  lacquer: (c = 0x9e1c1c) => once('lac' + c, () => phys({color: c, metalness: .3, roughness: .34, clearcoat: 1, clearcoatRoughness: .1})),
+  lacquer: (c = 0xc22a14) => once('lac' + c, () => phys({color: c, metalness: .3, roughness: .34, clearcoat: 1, clearcoatRoughness: .1})),
   /* glass that does not need a transmission pass: thin, reflective, see-through */
   glass: (opacity = .14) => once('gla' + opacity, () => phys({color: 0x07090a, metalness: 0, roughness: .04, transparent: true, opacity, envMapIntensity: 2.2, clearcoat: 1, clearcoatRoughness: .02, side: THREE.DoubleSide, depthWrite: false})),
   /* light sources; bloom picks up anything brighter than 1 */
-  glow: (c = 0xe0644f, power = 3) => once('glw' + c + power, () => new THREE.MeshBasicMaterial({color: new THREE.Color(c).multiplyScalar(power), toneMapped: true})),
+  glow: (c = 0xff6a45, power = 3) => once('glw' + c + power, () => new THREE.MeshBasicMaterial({color: new THREE.Color(c).multiplyScalar(power), toneMapped: true})),
 };
 
 /* ===== Geometry helpers =====

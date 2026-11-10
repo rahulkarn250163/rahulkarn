@@ -87,8 +87,8 @@ export function mount(fig) {
   el('clipPath', {id: 'skClip'}, defs).appendChild(document.createElementNS(NS, 'circle')).setAttribute('r', R);
   const glowG = el('radialGradient', {id: 'skGlow', gradientUnits: 'userSpaceOnUse', r: R * .95}, defs);
   el('stop', {offset: 0, 'stop-color': '#ffb066', 'stop-opacity': .95}, glowG);
-  el('stop', {offset: .45, 'stop-color': '#e0644f', 'stop-opacity': .32}, glowG);
-  el('stop', {offset: 1, 'stop-color': '#e0644f', 'stop-opacity': 0}, glowG);
+  el('stop', {offset: .45, 'stop-color': '#ff6a45', 'stop-opacity': .32}, glowG);
+  el('stop', {offset: 1, 'stop-color': '#ff6a45', 'stop-opacity': 0}, glowG);
   el('circle', {class: 'sk-band', r: R + BAND / 2, 'stroke-width': BAND});
   el('circle', {class: 'sk-day', r: R});
   const night = el('circle', {class: 'sk-night', r: R, opacity: 0});

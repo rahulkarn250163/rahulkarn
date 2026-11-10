@@ -33,7 +33,7 @@ export function makeFuture({count = 700} = {}) {
   const group = new THREE.Group();
   group.visible = false;
 
-  const ringMat = new THREE.MeshBasicMaterial({color: '#e0644f', transparent: true});
+  const ringMat = new THREE.MeshBasicMaterial({color: '#ff6a45', transparent: true});
   const rings = [72, 86].map(R => {
     const m = new THREE.Mesh(new THREE.TorusGeometry(R, .14, 6, 96), ringMat);
     m.rotation.x = Math.PI / 2;

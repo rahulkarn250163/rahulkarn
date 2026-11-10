@@ -4,7 +4,7 @@ import {THREE, std, mats, rbox, box, merge, M, cyl, tor, blob, builder, clamp} f
 
 const BOOKS = [
   {c: 0x16233b, w: 1.04, d: .76, h: .2, turn: .06},
-  {c: 0x9e1c1c, w: .96, d: .7, h: .17, turn: -.1},
+  {c: 0xc22a14, w: .96, d: .7, h: .17, turn: -.1},
   {c: 0x1f4a3b, w: .88, d: .64, h: .19, turn: .14},
 ];
 
@@ -31,7 +31,7 @@ export function make() {
   roll.rotation.y = -.12;
   rollIn.add(M(cyl(.075, .075, .92, 32).rotateZ(Math.PI / 2), paper));
   rollIn.add(M(cyl(.048, .048, .925, 24, true).rotateZ(Math.PI / 2), std({color: 0xd7cfba, roughness: .9, metalness: 0, side: THREE.BackSide})));
-  rollIn.add(M(cyl(.079, .079, .07, 32).rotateZ(Math.PI / 2), mats.lacquer(0x9e1c1c)));
+  rollIn.add(M(cyl(.079, .079, .07, 32).rotateZ(Math.PI / 2), mats.lacquer(0xc22a14)));
   roll.add(rollIn);
   b.part(roll, {at: .7, dur: .6, from: [1, 0, .15], tumble: 0});
 

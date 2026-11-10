@@ -1,11 +1,11 @@
-const HOT = '#e0644f';
+const HOT = '#ff6a45';
 const EASE = 'cubic-bezier(.2,.9,.2,1)';
 const STEP = 1.5;
 const TAU = Math.PI * 2;
 
 export const css = `
 .ty-signal .ty-c,.ty-signal-a .ty-c{opacity:0;transform-origin:50% 100%}
-.motion .ty-open{display:inline-block;width:.16em;height:.16em;margin-left:.22em;border-radius:50%;background:#e0644f;vertical-align:.12em;animation:ty-open-beat 1.6s ease-in-out infinite}
+.motion .ty-open{display:inline-block;width:.16em;height:.16em;margin-left:.22em;border-radius:50%;background:#ff6a45;vertical-align:.12em;animation:ty-open-beat 1.6s ease-in-out infinite}
 @keyframes ty-open-beat{50%{opacity:.3;transform:scale(.72)}}
 `;
 

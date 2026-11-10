@@ -54,7 +54,7 @@ export function make() {
   const atlas = typeof keyAtlas === 'function' ? keyAtlas() : keyAtlas;
   const map = atlas.texture || atlas.map || atlas;
   const capMat = std({map, roughness: .58, metalness: 0});
-  const enterMat = phys({color: 0x9e1c1c, roughness: .3, metalness: 0, clearcoat: 1, clearcoatRoughness: .15});
+  const enterMat = phys({color: 0xc22a14, roughness: .3, metalness: 0, clearcoat: 1, clearcoatRoughness: .15});
   const blank = cellRect(atlas, 0);
   const keys = [];
   ROWS.forEach((row, r) => {

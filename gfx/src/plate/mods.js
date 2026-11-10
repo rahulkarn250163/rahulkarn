@@ -17,7 +17,7 @@ export function makeMods(mods) {
     const ins = Math.min(.42, w * .2, h * .2), insZ = Z1 + .12;
     const insetMat = track(phys({color: m.fab ? 0x121316 : 0x24262b, metalness: .8, roughness: .36, clearcoat: .4, clearcoatRoughness: .3, iridescence: .001, transparent: true}));
     g.add(mesh(track(rbox(x0 + ins, y0 + ins, Z1 - .1, x1 - ins, y1 - ins, insZ, Math.min(.08, ins * .4))), insetMat));
-    const frameMat = track(new THREE.MeshBasicMaterial({color: new THREE.Color('#e0644f').multiplyScalar(2.2), transparent: true}));
+    const frameMat = track(new THREE.MeshBasicMaterial({color: new THREE.Color('#ff6a45').multiplyScalar(2.2), transparent: true}));
     const e = EDGE, a = Z1 + .02, b = Z1 + .08;
     const frame = mesh(track(merge([
       box(x0, y0, a, x1, y0 + e, b), box(x0, y1 - e, a, x1, y1, b),

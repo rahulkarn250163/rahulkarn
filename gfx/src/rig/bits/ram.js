@@ -26,10 +26,10 @@ export function make() {
     c.fillStyle = '#17171a'; c.font = 'bold 26px sans-serif'; c.fillText('32 GB', 14, 42);
     c.font = '15px sans-serif'; c.fillText('DDR5 6000', 14, 70);
     for (let x = 14; x < w - 14; x += 5) c.fillRect(x, 96, 1 + (x * 7 % 3), 44);
-    c.fillStyle = '#9e1c1c'; c.fillRect(14, 156, w - 28, 8);
+    c.fillStyle = '#c22a14'; c.fillRect(14, 156, w - 28, 8);
   })});
   const barMat = new THREE.MeshBasicMaterial({color: 0x000000});
-  const lit = new THREE.Color(0xe0644f).multiplyScalar(1.4);
+  const lit = new THREE.Color(0xff6a45).multiplyScalar(1.4);
 
   const sticks = [0, 1, 2, 3].map(i => {
     const g = new THREE.Group();

@@ -36,7 +36,7 @@ function rowHtml(line, n) {
 }
 
 export function make() {
-  const b = builder(29), steel = mats.steel(), chrome = mats.chrome(), copper = mats.copper(), dark = mats.blackAnodised(), red = mats.lacquer(0x9e1c1c);
+  const b = builder(29), steel = mats.steel(), chrome = mats.chrome(), copper = mats.copper(), dark = mats.blackAnodised(), red = mats.lacquer(0xc22a14);
   const deck = std({color: 0x83868b, metalness: .85, roughness: .4}), paper = std({color: 0xe9e6de, metalness: .2, roughness: .5});
   const lamp = glowing(0xff8a4a, 1.5), green = glowing(0x7fe0a0, 1.4), beads = [], spinners = [];
 
