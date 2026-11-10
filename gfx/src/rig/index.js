@@ -21,6 +21,7 @@ import * as deck from './bits/deck.js';
 import * as keys from './bits/keys.js';
 import * as mouse from './bits/mouse.js';
 import * as desk from './bits/desk.js';
+import * as man from './bits/man.js';
 import * as cables from './bits/cables.js';
 
 const F = (at, dur, from, tumble, heavy = false) => ({at, dur, from, tumble, heavy});
@@ -31,6 +32,8 @@ const wrap = (name, group, flight) => ({name, group, flight, tick: group.userDat
 function plan() {
   const list = [
     ['desk', desk, null],
+    /* whoever sits at it is there from the first frame: the machine is built in front of them */
+    ['man', man, null],
     ['cables', cables, null],
     ['chassis', chassis, F(.12, .8, [-1.3, .3, .35], [.5, .9, .3], true)],
     ['psu', psu, F(.34, .66, [-1, -.95, .3], [.7, .3, .5], true)],

@@ -14,7 +14,10 @@ import {makeMirror} from './rig/mirror.js';
 
 const LIGHTS_UP = [0, .7], DRIFT = [-.1, 2.4], TURN = [2.35, 3.05], POWER = 2.48, PUSH = [3.4, 4.25], WIRES = [1.8, 2.4];
 const REFLECTED = ['chassis', 'front', 'roof', 'shell', 'panel', 'foot', 'neck', 'deck', 'mouse'];
-const NO_SHADOW = /^(key-|board|boardparts|cpu|ram|drive|psu)/;
+/* the figure casts none either: the shadow map stops updating before they fade, and would keep their shape */
+const NO_SHADOW = /^(key-|board|boardparts|cpu|ram|drive|psu|man)/;
+/* the camera stands back and a little toward the chair while someone is in it, then takes their seat */
+const WIDE = 1.3, SEAT = [2.28, 2.62];
 const SW = SCREEN.x1 - SCREEN.x0, SH = SCREEN.y1 - SCREEN.y0, SCX = (SCREEN.x0 + SCREEN.x1) / 2, SCY = (SCREEN.y0 + SCREEN.y1) / 2;
 const clamp01 = k => (k < 0 ? 0 : k > 1 ? 1 : k);
 const glide = k => { k = clamp01(k); return k * k * (3 - 2 * k); };
@@ -45,7 +48,7 @@ export async function create({canvas, tier, press, word, preserve = false}) {
   halo.visible = false;
   scene.add(halo);
 
-  let ticks = 0, mirror = null, parts = [], lights = null, panelPart = null, cablesPart = null, ticking = false, done = false;
+  let ticks = 0, mirror = null, parts = [], lights = null, panelPart = null, cablesPart = null, manPart = null, ticking = false, done = false;
   /* the clock: seconds since play(), capped at the end of the push, or a frame held by seek() */
   let t0 = 0, held = -1, job = null, raf = 0;
   const time = () => (held >= 0 ? held : t0 ? Math.min((performance.now() - t0) / 1000, PUSH[1] + .4) : 0);
@@ -79,8 +82,8 @@ export async function create({canvas, tier, press, word, preserve = false}) {
 
   function placeCamera(t) {
     const a = glide((t - DRIFT[0]) / (DRIFT[1] - DRIFT[0]));
-    let yaw = (60 - 14 * a) * Math.PI / 180, pit = (24 - 7 * a) * Math.PI / 180, D = D0 * (1.12 - .12 * a);
-    T.set(-11, 19, -2);
+    let yaw = (60 - 14 * a) * Math.PI / 180, pit = (24 - 7 * a) * Math.PI / 180, D = D0 * (1.12 - .12 * a) * (manPart ? WIDE : 1);
+    if (manPart) T.set(1, 15, 18); else T.set(-11, 19, -2);
     const b = snap((t - TURN[0]) / (TURN[1] - TURN[0]));
     if (b > 0) {
       if (!fitted) fitFace();
@@ -101,6 +104,8 @@ export async function create({canvas, tier, press, word, preserve = false}) {
     camera.near = Math.max(3, D * .2);
     camera.far = D * 9;
     camera.updateProjectionMatrix();
+    /* the lit screen's DOM sheet is placed from this camera in the same frame: without this it would be set from last frame's view and trail the turn */
+    camera.updateMatrixWorld();
     return D;
   }
 
@@ -149,6 +154,7 @@ export async function create({canvas, tier, press, word, preserve = false}) {
     }
     placeCamera(t);
     placeParts(t);
+    if (manPart) manPart.group.userData.fade(1 - glide((t - SEAT[0]) / (SEAT[1] - SEAT[0])));
     if (cablesPart && cablesPart.group.userData.setDraw) cablesPart.group.userData.setDraw(clamp01((t - WIRES[0]) / (WIRES[1] - WIRES[0])));
     for (const p of pivots) if (p.part.tick) p.part.tick(t, pw);
     placeScreen(t);
@@ -199,6 +205,7 @@ export async function create({canvas, tier, press, word, preserve = false}) {
         if (!part.flight) {
           scene.add(part.group);
           if (part.name === 'cables') cablesPart = part;
+          if (part.name === 'man') manPart = part;
           continue;
         }
         if (part.name === 'panel') panelPart = part;

@@ -1,7 +1,7 @@
 /* The opening shot. While the page loads, the camera runs fast through empty space: the loading is the journey.
    When the load is done Earth appears dead ahead and grows, then down into the cloud, out over the Himalaya, across
-   the foothills to the valley, round the city to one lit window, past someone working at a monitor and into the
-   screen, where the press run takes over. Raw WebGL on its own thread in a Web Worker, so the main thread can
+   the foothills to the valley, round the city to one lit window and up behind someone
+   working at a desk, where the press run takes over and builds their machine in front of them. Raw WebGL on its own thread in a Web Worker, so the main thread can
    compile the whole 3D layer without this ever dropping a frame, and the heavy part of the load falls on the
    slowest part of the shot. */
 import {EARTH_FS, STAR_VS, STAR_FS, FULL_VS, SKY_FS, GROUND_FS, BLD_VS, BLD_FS, MESH_VS, MESH_FS, VEIL_FS, CLOUD_FS, SHADOW_VS, SHADOW_FS, TERRAIN_FS, SEA_FS, GLOW_VS, GLOW_FS, STREAK_VS, STREAK_FS} from './shaders.js';
@@ -26,7 +26,7 @@ const EAST = norm(cross([0, 1, 0], KTM));
 const SUN = norm(add(add(mul(KTM, .9), mul(EAST, -.08)), mul(NORTH, .1)));
 
 /* the beats, in seconds */
-const CLOUD_IN = 3.2, CUT = 5, CLOUD_OUT = 6.6, HOLD = 11.9, WINDOW = 12.6, END = 14.9;
+const CLOUD_IN = 3.2, CUT = 5, CLOUD_OUT = 6.6, HOLD = 11.9, WINDOW = 12.6, END = 14.05;
 /* how long deep space will wait for the Earth image, in ms, once the load is done, before going without it */
 const EARTH_WAIT = 5000;
 
@@ -44,9 +44,9 @@ const SHOT = [
   [12.32, [-5, 50, 40], [0, WY, WZ]],
   [WINDOW, [0, WY, WZ + 1.3], [0, WY - .3, 0]],
   [13.15, [.42, WY - .05, 4.3], [-.06, SY - .05, SZ]],
-  [13.8, [.66, WY + .02, 1.5], [-.02, SY + .02, SZ]],
-  [14.42, [.26, SY + .36, -.72], [0, SY + .02, SZ]],
-  [END, [0, SY, SZ + .56], [0, SY, SZ - 1]],
+  [13.65, [.62, WY + .02, 2.3], [-.02, SY + .02, SZ]],
+  /* it stops behind whoever is working there: the desk it cuts to is theirs, and the machine is built in front of them */
+  [END, [.56, SY + .34, 1.2], [0, SY + .04, SZ]],
 ];
 function shotAt(t) {
   let i = 0;
@@ -541,8 +541,8 @@ function draw(t) {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     gl.bindVertexArray(null);
   }
-  /* the screen fills the frame: the same near black the press run's lights come up from */
-  veil(smooth(END - .22, END - .02, t), .0235, .0235, .0235);
+  /* the room goes dark behind them: the same near black the press run's lights come up from */
+  veil(smooth(END - .3, END - .02, t), .0235, .0235, .0235);
   return hud || {alt: y, unit: 'm'};
 }
 
