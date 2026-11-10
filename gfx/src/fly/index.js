@@ -1,11 +1,11 @@
 /* The opening shot. While the page loads, the camera runs fast through empty space: the loading is the journey.
    When the load is done Earth appears dead ahead and grows, then down into the cloud, out over the Himalaya, across
-   the foothills to the valley, round the city to one lit window and up behind someone
-   working at a desk, where the press run takes over and builds their machine in front of them. Raw WebGL on its own thread in a Web Worker, so the main thread can
+   the foothills to the valley, round the city to one lit window and through it,
+   where the press run takes over: someone at a desk, and their machine built in front of them. Raw WebGL on its own thread in a Web Worker, so the main thread can
    compile the whole 3D layer without this ever dropping a frame, and the heavy part of the load falls on the
    slowest part of the shot. */
 import {EARTH_FS, STAR_VS, STAR_FS, FULL_VS, SKY_FS, GROUND_FS, BLD_VS, BLD_FS, MESH_VS, MESH_FS, VEIL_FS, CLOUD_FS, SHADOW_VS, SHADOW_FS, TERRAIN_FS, SEA_FS, GLOW_VS, GLOW_FS, STREAK_VS, STREAK_FS} from './shaders.js';
-import {cityData, heroMesh, stupaMesh, roomMesh, riverMesh, buildPatch, heightAt, PATCHES, HERO, DESK} from './city.js';
+import {cityData, heroMesh, stupaMesh, riverMesh, buildPatch, heightAt, PATCHES, HERO, DESK} from './city.js';
 
 const D2R = Math.PI / 180;
 const dirOf = (lat, lon) => [Math.cos(lat * D2R) * Math.sin(lon * D2R), Math.sin(lat * D2R), Math.cos(lat * D2R) * Math.cos(lon * D2R)];
@@ -26,7 +26,7 @@ const EAST = norm(cross([0, 1, 0], KTM));
 const SUN = norm(add(add(mul(KTM, .9), mul(EAST, -.08)), mul(NORTH, .1)));
 
 /* the beats, in seconds */
-const CLOUD_IN = 3.2, CUT = 5, CLOUD_OUT = 6.6, HOLD = 11.9, WINDOW = 12.6, END = 14.05;
+const CLOUD_IN = 3.2, CUT = 5, CLOUD_OUT = 6.6, HOLD = 11.9, WINDOW = 12.6, END = 12.94;
 /* how long deep space will wait for the Earth image, in ms, once the load is done, before going without it */
 const EARTH_WAIT = 5000;
 
@@ -43,10 +43,9 @@ const SHOT = [
   [HOLD, [-58, 70, 168], [0, WY, WZ]],
   [12.32, [-5, 50, 40], [0, WY, WZ]],
   [WINDOW, [0, WY, WZ + 1.3], [0, WY - .3, 0]],
-  [13.15, [.42, WY - .05, 4.3], [-.06, SY - .05, SZ]],
-  [13.65, [.62, WY + .02, 2.3], [-.02, SY + .02, SZ]],
-  /* it stops behind whoever is working there: the desk it cuts to is theirs, and the machine is built in front of them */
-  [END, [.56, SY + .34, 1.2], [0, SY + .04, SZ]],
+  /* through the window and no further: the room it cuts to is the press run's, where someone sits at a desk and
+     their machine is built in front of them. Nothing in here is shown standing still first. */
+  [END, [.12, WY - .12, WZ - 1.9], [-.04, SY, SZ]],
 ];
 function shotAt(t) {
   let i = 0;
@@ -204,7 +203,7 @@ async function loadAsia() {
   try { asiaTex = await loadImage('earth-asia.jpg', gl.TEXTURE2, gl.CLAMP_TO_EDGE); self.postMessage({t: 'asia'}); } catch (e) { /* the globe's own map carries on */ }
 }
 
-let stars, cityVao, cityCount, groundVao, heroVao, heroN, stupaVao, stupaN, roomVao, roomN, riverVao, riverN, seaVao, emptyVao;
+let stars, cityVao, cityCount, groundVao, heroVao, heroN, stupaVao, stupaN, riverVao, riverN, seaVao, emptyVao;
 const land = [];
 let landGen = null, landBuilt = false;
 
@@ -301,10 +300,9 @@ function build() {
   const quad = (G, y, z0, z1) => mesh(new Float32Array([-G, y, z0, 0, 0, 0, -G, y, z1, 0, 0, 0, G, y, z1, 0, 0, 0, -G, y, z0, 0, 0, 0, G, y, z1, 0, 0, 0, G, y, z0, 0, 0, 0]));
   groundVao = quad(9000, 0, -9000, 9000);
   seaVao = quad(70000, 4700, -70000, -9000);
-  const hero = heroMesh(), stupa = stupaMesh(), room = roomMesh(), river = riverMesh();
+  const hero = heroMesh(), stupa = stupaMesh(), river = riverMesh();
   heroVao = mesh(hero); heroN = hero.length / 6;
   stupaVao = mesh(stupa); stupaN = stupa.length / 6;
-  roomVao = mesh(room); roomN = room.length / 6;
   riverVao = mesh(river); riverN = river.length / 6;
 }
 
@@ -487,11 +485,6 @@ function drawWorld(t) {
     gl.bindVertexArray(heroVao);
     gl.drawArrays(gl.TRIANGLES, 0, heroN);
   }
-  if (t > WINDOW - .02) {
-    gl.uniform1f(u.uFog, 0);
-    gl.bindVertexArray(roomVao);
-    gl.drawArrays(gl.TRIANGLES, 0, roomN);
-  }
   gl.disable(gl.DEPTH_TEST);
   gl.bindVertexArray(null);
   return eye[1];
@@ -541,8 +534,10 @@ function draw(t) {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     gl.bindVertexArray(null);
   }
-  /* the room goes dark behind them: the same near black the press run's lights come up from */
-  veil(smooth(END - .3, END - .02, t), .0235, .0235, .0235);
+  /* Past the pane there is only its light: it fills the frame, then dims to the near black the press run's lights
+     come up from. No room is drawn here, so nobody is seen sitting still before the one who is built for. */
+  veil(smooth(WINDOW - .09, WINDOW + .01, t), 1, .93, .74);
+  veil(smooth(WINDOW + .03, END - .04, t), .0235, .0235, .0235);
   return hud || {alt: y, unit: 'm'};
 }
 

@@ -12,7 +12,7 @@ import {buildRig, SCREEN} from './rig/index.js';
 import {addLights} from './rig/bits/lights.js';
 import {makeMirror} from './rig/mirror.js';
 
-const LIGHTS_UP = [0, .7], DRIFT = [-.1, 2.4], TURN = [2.35, 3.05], POWER = 2.48, PUSH = [3.4, 4.25], WIRES = [1.8, 2.4];
+const LIGHTS_UP = [0, .42], DRIFT = [-.1, 2.4], TURN = [2.35, 3.05], POWER = 2.48, PUSH = [3.4, 4.25], WIRES = [1.8, 2.4];
 const REFLECTED = ['chassis', 'front', 'roof', 'shell', 'panel', 'foot', 'neck', 'deck', 'mouse'];
 /* the figure casts none either: the shadow map stops updating before they fade, and would keep their shape */
 const NO_SHADOW = /^(key-|board|boardparts|cpu|ram|drive|psu|man)/;
@@ -83,6 +83,8 @@ export async function create({canvas, tier, press, word, preserve = false}) {
   function placeCamera(t) {
     const a = glide((t - DRIFT[0]) / (DRIFT[1] - DRIFT[0]));
     let yaw = (60 - 14 * a) * Math.PI / 180, pit = (24 - 7 * a) * Math.PI / 180, D = D0 * (1.12 - .12 * a) * (manPart ? WIDE : 1);
+    /* the shot opens still moving forward, the way the flight came in through the window, and settles into its drift */
+    if (manPart) D *= 1 + .5 * Math.pow(1 - clamp01(t / 1.25), 3);
     if (manPart) T.set(1, 15, 18); else T.set(-11, 19, -2);
     const b = snap((t - TURN[0]) / (TURN[1] - TURN[0]));
     if (b > 0) {

@@ -1,6 +1,6 @@
 /* The world of the descent, in metres, with Kathmandu's tall building at the origin. The Himalaya stands to
    the north, foothills run down either side of a river's valley, a few thousand low brick and plaster blocks
-   spread along it and out along its roads, and behind one lit window is a dark room with someone at a monitor. */
+   spread along it and out along its roads, and one lit window is where the flight goes in. */
 export const HERO = {half: 8, height: 62, z: 8, winY: 46, winW: 2.7, winH: 1.9};
 
 const srgb = h => [(h >> 16 & 255) / 255, (h >> 8 & 255) / 255, (h & 255) / 255];
@@ -285,135 +285,8 @@ export function stupaMesh() {
   return new Float32Array(b.v);
 }
 
-/* The room, in the monitor's light and the last of the window's. */
+/* Where the desk stands behind that window: the flight aims at it on the way in. The room itself is the press run's. */
 export const DESK = (() => {
   const F = HERO.winY - 1.5;
   return {F, sy: F + 1.1, sz: -2.26, sw: .56, sh: .33};
 })();
-
-export function roomMesh() {
-  const b = builder(), {winY: Y, z: Z} = HERO, F = DESK.F, C = Y + 1.7, X = 4.2, back = -3.6, front = Z - .02;
-  const {sy: MY, sz: MZ, sw: MW, sh: MH} = DESK;
-  const glow = [.62, .78, 1];
-
-  /* how a surface takes the light here: the screen in front of it, the window behind, a little from everywhere */
-  const shade = (p, n, base) => {
-    const lx = 0 - p[0], ly = MY - p[1], lz = MZ - p[2], d = Math.hypot(lx, ly, lz) || 1;
-    const fromScreen = Math.max(0, (n[0] * lx + n[1] * ly + n[2] * lz) / d) * 1.5 / (1 + d * d * .55);
-    const fromWindow = Math.max(0, n[2] * .8 + n[1] * .3) * .34;
-    /* the rim that outlines someone against a bright screen */
-    const rim = Math.pow(1 - Math.max(0, n[2]), 3) * .55 / (1 + d * .55);
-    return [
-      base[0] * (.035 + fromWindow * 1 + fromScreen * glow[0]) + rim * glow[0] * .5,
-      base[1] * (.032 + fromWindow * .82 + fromScreen * glow[1]) + rim * glow[1] * .5,
-      base[2] * (.034 + fromWindow * .62 + fromScreen * glow[2]) + rim * glow[2] * .5,
-    ];
-  };
-  /* a smooth lump between two points: heads, shoulders, arms */
-  const blob = (cx, cy, cz, rx, ry, rz, base, seg = 20, rings = 14) => {
-    const P = (a, t) => [cx + Math.cos(a) * Math.cos(t) * rx, cy + Math.sin(t) * ry, cz + Math.sin(a) * Math.cos(t) * rz];
-    const Q = (a, t) => { const n = [Math.cos(a) * Math.cos(t) / rx, Math.sin(t) / ry, Math.sin(a) * Math.cos(t) / rz], m = 1 / Math.hypot(n[0], n[1], n[2]); return [n[0] * m, n[1] * m, n[2] * m]; };
-    for (let i = 0; i < seg; i++) {
-      for (let j = 0; j < rings; j++) {
-        const a0 = i / seg * Math.PI * 2, a1 = (i + 1) / seg * Math.PI * 2, t0 = -Math.PI / 2 + j / rings * Math.PI, t1 = -Math.PI / 2 + (j + 1) / rings * Math.PI;
-        const pa = P(a0, t0), pb = P(a0, t1), pc = P(a1, t1), pd = P(a1, t0);
-        b.quad(pa, pb, pc, pd, shade(pa, Q(a0, t0), base), shade(pb, Q(a0, t1), base), shade(pc, Q(a1, t1), base), shade(pd, Q(a1, t0), base));
-      }
-    }
-  };
-  /* a limb: a tube from one point to another */
-  const limb = (p, q, r0, r1, base, seg = 12) => {
-    const d = [q[0] - p[0], q[1] - p[1], q[2] - p[2]], L = Math.hypot(d[0], d[1], d[2]), w = [d[0] / L, d[1] / L, d[2] / L];
-    const up = Math.abs(w[1]) > .9 ? [1, 0, 0] : [0, 1, 0], u0 = [w[1] * up[2] - w[2] * up[1], w[2] * up[0] - w[0] * up[2], w[0] * up[1] - w[1] * up[0]], ul = 1 / Math.hypot(u0[0], u0[1], u0[2]), u = [u0[0] * ul, u0[1] * ul, u0[2] * ul];
-    const v2 = [w[1] * u[2] - w[2] * u[1], w[2] * u[0] - w[0] * u[2], w[0] * u[1] - w[1] * u[0]];
-    const ring = (c, r, a) => [c[0] + (u[0] * Math.cos(a) + v2[0] * Math.sin(a)) * r, c[1] + (u[1] * Math.cos(a) + v2[1] * Math.sin(a)) * r, c[2] + (u[2] * Math.cos(a) + v2[2] * Math.sin(a)) * r];
-    const nn = a => [u[0] * Math.cos(a) + v2[0] * Math.sin(a), u[1] * Math.cos(a) + v2[1] * Math.sin(a), u[2] * Math.cos(a) + v2[2] * Math.sin(a)];
-    for (let i = 0; i < seg; i++) {
-      const a0 = i / seg * Math.PI * 2, a1 = (i + 1) / seg * Math.PI * 2, pa = ring(p, r0, a0), pb = ring(q, r1, a0), pc = ring(q, r1, a1), pd = ring(p, r0, a1);
-      b.quad(pa, pb, pc, pd, shade(pa, nn(a0), base), shade(pb, nn(a0), base), shade(pc, nn(a1), base), shade(pd, nn(a1), base));
-    }
-    blob(q[0], q[1], q[2], r1, r1, r1, base, 10, 6);
-  };
-  /* a box in this room's light */
-  const room = (x0, y0, z0, x1, y1, z1, base) => {
-    const f = (a, c, d, e, n) => b.quad(a, c, d, e, shade(a, n, base), shade(c, n, base), shade(d, n, base), shade(e, n, base));
-    f([x1, y0, z1], [x1, y1, z1], [x0, y1, z1], [x0, y0, z1], [0, 0, 1]);
-    f([x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1], [1, 0, 0]);
-    f([x0, y0, z1], [x0, y1, z1], [x0, y1, z0], [x0, y0, z0], [-1, 0, 0]);
-    f([x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0], [0, 1, 0]);
-  };
-
-  /* the walls, floor and ceiling */
-  const wall = [.17, .155, .145], wallFar = [.07, .07, .078];
-  const floorNear = [.36, .27, .19], floorFar = [.06, .054, .05];
-  b.quad([-X, F, front], [X, F, front], [X, F, back], [-X, F, back], floorNear, floorNear, floorFar, floorFar);
-  b.quad([-X, C, back], [X, C, back], [X, C, front], [-X, C, front], wallFar, wallFar, wall, wall);
-  b.quad([-X, F, back], [X, F, back], [X, C, back], [-X, C, back], wallFar);
-  b.quad([-X, F, front], [-X, F, back], [-X, C, back], [-X, C, front], wall, wallFar, wallFar, wall);
-  b.quad([X, F, back], [X, F, front], [X, C, front], [X, C, back], wallFar, wall, wall, wallFar);
-  /* the screen's glow on the wall behind it */
-  const halo = [.26, .33, .44];
-  const hc = [0, MY, back + .012], SEG = 28;
-  for (let i = 0; i < SEG; i++) {
-    const a0 = i / SEG * Math.PI * 2, a1 = (i + 1) / SEG * Math.PI * 2;
-    b.tri(hc, [Math.cos(a0) * 2.5, MY + Math.sin(a0) * 1.25, back + .012], [Math.cos(a1) * 2.5, MY + Math.sin(a1) * 1.25, back + .012], halo, wallFar, wallFar);
-  }
-
-  /* the window's patch of light across the floor, with the shadow of its bars */
-  const sun = [.74, .55, .36], fade = [.3, .23, .16], bar = [.11, .085, .065];
-  b.quad([-.95, F + .004, Z - .6], [.95, F + .004, Z - .6], [1.45, F + .004, .9], [-1.45, F + .004, .9], sun, sun, fade, fade);
-  b.quad([-.05, F + .006, Z - .6], [.05, F + .006, Z - .6], [.08, F + .006, .9], [-.08, F + .006, .9], bar);
-  b.quad([-1.1, F + .006, Z - 3.9], [1.1, F + .006, Z - 3.9], [1.14, F + .006, Z - 4.1], [-1.14, F + .006, Z - 4.1], bar);
-
-  /* the desk, the keyboard, the monitor on its stand */
-  const wood = [.42, .33, .25], black = [.07, .07, .08], grey = [.2, .2, .22], D0 = -2.86, D1 = -1.56, TOP = F + .74;
-  room(-1.25, TOP - .04, D0, 1.25, TOP, D1, wood);
-  [[-1.18, D1 + .07], [1.18, D1 + .07], [-1.18, D0 + .07], [1.18, D0 + .07]].forEach(([x, z]) => room(x - .03, F, z - .03, x + .03, TOP - .04, z + .03, grey));
-  room(-.24, TOP, -1.92, .22, TOP + .018, -1.74, grey);
-  room(.3, TOP, -1.86, .37, TOP + .022, -1.76, grey);
-  room(-.17, TOP, MZ - .13, .17, TOP + .014, MZ + .05, grey);
-  room(-.024, TOP, MZ - .05, .024, MY - MH, MZ - .022, grey);
-  const e = .018;
-  room(-MW - e, MY - MH - e, MZ - .03, MW + e, MY + MH + e, MZ - .004, black);
-
-  /* the screen itself: a dark page of code, the brightest thing in the room */
-  const S = [.06, .08, .13], sz = MZ + .001;
-  b.quad([MW, MY - MH, sz], [MW, MY + MH, sz], [-MW, MY + MH, sz], [-MW, MY - MH, sz], [.09, .12, .19], S, S, [.09, .12, .19]);
-  const lines = [[.1, .55, 0], [.15, .4, 1], [.15, .62, 2], [.2, .3, 3], [.2, .5, 1], [.15, .36, 2], [.1, .2, 0], [.1, .64, 1], [.15, .46, 3], [.2, .52, 2], [.15, .26, 1], [.1, .48, 0], [.1, .34, 3]];
-  const inks = [[1, .78, .46], [.5, .84, 1], [.56, .94, .7], [.96, .56, .52]];
-  lines.forEach(([ind, len, c], i) => {
-    const y1 = MY + MH * .86 - i * MH * .135, y0 = y1 - MH * .062, x0 = -MW * .88 + ind * MW, x1 = x0 + len * MW * 1.45;
-    b.quad([x1, y0, sz + .001], [x1, y1, sz + .001], [x0, y1, sz + .001], [x0, y0, sz + .001], inks[c]);
-  });
-
-  /* the chair */
-  const seatZ = -.72;
-  limb([0, F, seatZ], [0, F + .4, seatZ], .03, .03, black);
-  for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2; limb([0, F + .05, seatZ], [Math.cos(a) * .3, F + .04, seatZ + Math.sin(a) * .3], .022, .018, black, 8); }
-  blob(0, F + .44, seatZ, .25, .05, .24, black);
-  limb([0, F + .46, seatZ + .24], [0, F + .72, seatZ + .28], .025, .025, black, 8);
-  blob(0, F + .9, seatZ + .29, .21, .25, .045, black);
-
-  /* the person, from behind: a dark jumper, dark hair, leaning in toward the screen */
-  const top = [.15, .165, .21], skin = [.62, .45, .35], hair = [.05, .045, .05], legs = [.1, .11, .14];
-  const hip = [0, F + .54, seatZ - .03], chest = [0, F + .98, seatZ - .15], neck = [0, F + 1.13, seatZ - .2];
-  limb(hip, chest, .17, .185, top, 18);
-  blob(chest[0], chest[1] - .02, chest[2], .225, .15, .135, top, 22, 14);
-  limb(chest, neck, .055, .05, skin, 10);
-  blob(0, F + 1.235, seatZ - .225, .1, .125, .11, skin, 20, 14);
-  blob(0, F + 1.26, seatZ - .205, .104, .115, .112, hair, 20, 14);
-  /* both arms to the keyboard and the mouse */
-  const shL = [-.22, F + 1.01, seatZ - .15], shR = [.22, F + 1.01, seatZ - .15];
-  limb(shL, [-.27, F + .8, seatZ - .42], .06, .052, top, 12);
-  limb([-.27, F + .8, seatZ - .42], [-.14, TOP + .04, -1.72], .052, .036, top, 12);
-  limb(shR, [.28, F + .8, seatZ - .42], .06, .052, top, 12);
-  limb([.28, F + .8, seatZ - .42], [.33, TOP + .04, -1.68], .052, .036, top, 12);
-  blob(-.14, TOP + .03, -1.76, .035, .018, .05, skin, 10, 6);
-  blob(.33, TOP + .03, -1.72, .035, .018, .05, skin, 10, 6);
-  /* the legs, under the desk */
-  limb([-.1, F + .5, seatZ - .08], [-.14, F + .5, seatZ - .5], .075, .06, legs, 10);
-  limb([.1, F + .5, seatZ - .08], [.14, F + .5, seatZ - .5], .075, .06, legs, 10);
-  limb([-.14, F + .5, seatZ - .5], [-.15, F + .06, seatZ - .55], .055, .04, legs, 10);
-  limb([.14, F + .5, seatZ - .5], [.15, F + .06, seatZ - .55], .055, .04, legs, 10);
-  return new Float32Array(b.v);
-}
